@@ -1,0 +1,172 @@
+import LayoutTwo from "@/components/users/layoutTwo";
+import {
+  Box,
+  Container,
+  Grid,
+  Pagination,
+  Stack,
+  Typography,
+  useMediaQuery,
+  useTheme,
+} from "@mui/material";
+import Head from "next/head";
+import React from "react";
+import { Cabin } from "next/font/google";
+import { Input, InputGroup, Nav } from "rsuite";
+import useSWR from "swr";
+import SearchIcon from "@rsuite/icons/Search";
+import { fetcher } from "@/utils/swr_fetcher";
+import EventListingCard, {
+  UserEventListingCard,
+} from "@/components/admin/eventListing";
+import { useState } from "react";
+import { useEffect } from "react";
+import useDebounce from "@/hooks/debounce";
+import {
+  getEndOfDayRange,
+  getWeekDates,
+  getWeekendDates,
+} from "@/utils/dateFormat";
+import { removeNullStrings } from "@/utils/clip";
+import GridLoading from "@/components/shared/loading/gridLoading";
+
+export const cabin = Cabin({
+  weight: ["400", "600", "700"],
+  subsets: ["latin", "latin-ext"],
+  display: "swap",
+  fallback: ["Helvetica", "Arial", "sans-serif"],
+});
+
+const styles = {
+  width: 300,
+  // marginBottom: 10,
+};
+
+const tabDateRange = {
+  All: {},
+  Today: getEndOfDayRange(),
+  "This week": getWeekDates(),
+  "This weekend": getWeekendDates(),
+};
+
+export default function EventListing() {
+  const [query, setQuery] = useState("");
+  const debounceQuery = useDebounce(query, 500);
+  const [activeTab, setActiveTab] = useState("All");
+  const [pageNumber, setPageNumber] = useState(1);
+  const [totalPageCount, setTotalPageCount] = useState(1);
+  const [dateRanges, setDateRanges] = useState({});
+  const {
+    data: events,
+    error,
+    isLoading,
+  } = useSWR(
+    removeNullStrings(
+      `/users/events/mini?query=${debounceQuery}${
+        dateRanges?.start_date ? `&start_date=${dateRanges?.start_date}` : null
+      }${dateRanges?.end_date ? `&end_date=${dateRanges?.end_date}` : null}`
+    ),
+    fetcher
+  );
+
+  useEffect(() => {
+    if (events !== undefined) {
+      setTotalPageCount(Math.ceil(events.total / 50));
+    }
+  }, [events]);
+
+  useEffect(() => {
+    setDateRanges(tabDateRange[activeTab]);
+  }, [activeTab]);
+
+  const handleQueryChange = (value) => {
+    setQuery(value);
+  };
+  const handlePageChange = (event, value) => {
+    setPageNumber(value);
+  };
+
+  const theme = useTheme();
+  const sm = useMediaQuery(theme.breakpoints.down("sm"));
+
+  return (
+    <Box sx={{ px: { xs: 2, md: 0 } }}>
+      <Head>
+        <title>Events</title>
+      </Head>
+
+      <Stack
+        flexDirection={"row"}
+        justifyContent="space-between"
+        gap={1}
+        flexWrap={{ xs: "wrap", md: "nowrap" }}
+        alignItems="center"
+      >
+        <Typography
+          variant="h4"
+          fontWeight={700}
+          fontFamily={cabin.style.fontFamily}
+          fontStyle={cabin.style.fontStyle}
+        >
+          Events
+        </Typography>
+        <InputGroup inside style={{ width: sm ? "100%" : 300 }}>
+          <Input placeholder="Search event" onChange={handleQueryChange} />
+          <InputGroup.Button>
+            <SearchIcon />
+          </InputGroup.Button>
+        </InputGroup>
+      </Stack>
+      <Box my={2} width={{ xs: "100%", md: "50%" }}>
+        <Nav
+          appearance="subtle"
+          justified
+          activeKey={activeTab}
+          onSelect={setActiveTab}
+        >
+          <Nav.Item eventKey="All">All</Nav.Item>
+          <Nav.Item eventKey="Today">Today</Nav.Item>
+          <Nav.Item eventKey="This week">This week</Nav.Item>
+          <Nav.Item eventKey="This weekend">This weekend</Nav.Item>
+        </Nav>
+      </Box>
+      {isLoading && <GridLoading />}
+      {!isLoading && events?.items && events?.items.length === 0 && (
+        <Stack height={100} alignItems={"center"} justifyContent={"center"}>
+          <Typography variant="subtitle" fontWeight={700} fontSize={22}>
+            There are no events{" "}
+            {activeTab !== "All" && `for ${activeTab.toLowerCase()}`}
+          </Typography>
+        </Stack>
+      )}
+      {!isLoading && events?.items && events?.items.length > 0 && (
+        <Grid
+          container
+          rowSpacing={5}
+          columnSpacing={{ xs: 2, sm: 3, md: 4 }}
+          // mt={2}
+        >
+          {events.items.map((item, index) => (
+            <Grid item xs={12} sm={6} md={4} lg={4} xl={2} key={index}>
+              <UserEventListingCard event={item} />
+            </Grid>
+          ))}
+        </Grid>
+      )}
+      {events && events.items.length > 0 && (
+        <Stack alignItems={"center"} justifyContent={"center"} mt={2}>
+          <Pagination
+            page={pageNumber}
+            total={totalPageCount}
+            limit={50}
+            onChange={setPageNumber}
+          />
+        </Stack>
+      )}
+    </Box>
+  );
+}
+
+EventListing.getLayout = function (page) {
+  return <LayoutTwo>{page}</LayoutTwo>;
+};
