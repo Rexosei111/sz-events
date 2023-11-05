@@ -15,12 +15,8 @@ import React, { useContext, useEffect, useState } from "react";
 import useSWR from "swr";
 import Markdown from "react-markdown";
 import { DateRange, LocationCity, LocationOn } from "@mui/icons-material";
-import AliceCarousel from "react-alice-carousel";
-import "react-alice-carousel/lib/alice-carousel.css";
-import ImageDisplay from "@/components/admin/carousel";
-import { image } from "@cloudinary/url-gen/qualifiers/source";
 import Link from "next/link";
-import { Gallery } from "@/components/shared/gallery";
+import { ImageCarousel } from "@/components/shared/gallery";
 import Head from "next/head";
 
 const DetailsLoadingSkeleton = () => {
@@ -131,7 +127,7 @@ export default function EventDetailsPage() {
         alignItems={"center"}
         justifyContent={"center"}
       >
-        <Gallery images={eventImages} />
+        <ImageCarousel images={eventImages} />
       </Stack>
       <Stack
         width={"100%"}

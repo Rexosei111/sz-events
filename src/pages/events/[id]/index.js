@@ -1,4 +1,4 @@
-import { Gallery, ImageCarousel } from "@/components/shared/gallery";
+import { ImageCarousel } from "@/components/shared/gallery";
 import EventDetailLoading from "@/components/users/eventDetailsLoading";
 import LayoutTwo from "@/components/users/layoutTwo";
 import RSVPModal, { SuccessModal } from "@/components/users/rsvpModal";

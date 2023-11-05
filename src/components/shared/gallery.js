@@ -1,8 +1,6 @@
 import { Box } from "@mui/material";
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
-import AliceCarousel from "react-alice-carousel";
-import "react-alice-carousel/lib/alice-carousel.css";
 import { Carousel } from "rsuite";
 
 const handleDragStart = (e) => e.preventDefault();
@@ -33,36 +31,6 @@ const ImageRender = ({ height = 300, image_url }) => {
         style={{ objectFit: "cover" }}
       />
     </Box>
-  );
-};
-
-const responsive = {
-  0: { items: 1 },
-  500: { items: 2 },
-  900: { items: 3 },
-  1024: { items: 4 },
-};
-export const Gallery = ({ images = [] }) => {
-  const [items, setItems] = useState([]);
-  useEffect(() => {
-    const data = images.map((image, index) => (
-      <ImageRender image_url={image} />
-    ));
-    setItems(data);
-  }, [images]);
-
-  const onRenderDotsItem = (e) => {
-    console.log(e);
-  };
-  return (
-    <AliceCarousel
-      mouseTracking
-      items={items}
-      responsive={responsive}
-      controlsStrategy="responsive"
-      //   renderDotsItem={onRenderDotsItem}
-      renderSlideInfo={onRenderDotsItem}
-    />
   );
 };
 
