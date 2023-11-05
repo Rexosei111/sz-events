@@ -21,7 +21,7 @@ export default function Index() {
     data: events,
     error,
     isLoading,
-  } = useSWR(`/events?query=${debouncedQuery}&page=${pageNumber}`, fetcher);
+  } = useSWR(`/events/?query=${debouncedQuery}&page=${pageNumber}`, fetcher);
   const handleQueryChange = (event) => {
     setQuery(event.target.value);
   };
