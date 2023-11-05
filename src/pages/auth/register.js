@@ -4,7 +4,7 @@ import Image from "next/image";
 import React, { useState } from "react";
 import loginSVG from "../../../public/file.png";
 import Head from "next/head";
-import { Animation } from "rsuite";
+import { Animation, Navbar } from "rsuite";
 import RegistrationForm from "@/components/users/registrationForm";
 
 export default function UserLoginPage() {
@@ -20,9 +20,9 @@ export default function UserLoginPage() {
       </Head>
       <Stack flexDirection={"row"} width={"100vw"} minHeight={"100vh"}>
         <Box width={{ xs: "100%", md: "50%" }} minHeight={"100%"} p={2}>
-          {/* <Typography variant="h5" fontWeight={700} gutterBottom>
-            SZ Events
-          </Typography> */}
+          <Navbar style={{ backgroundColor: "transparent" }}>
+            <Navbar.Brand href="/events">Home</Navbar.Brand>
+          </Navbar>
           <Stack
             alignItems={"center"}
             justifyContent={"center"}

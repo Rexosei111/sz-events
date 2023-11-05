@@ -47,6 +47,8 @@ export default function Index() {
         width={"100%"}
         flexDirection={"row"}
         alignItems={"center"}
+        flexWrap={{ xs: "wrap-reverse", md: "nowrap" }}
+        gap={2}
         my={2}
         justifyContent={"space-between"}
       >
@@ -61,7 +63,7 @@ export default function Index() {
           LinkComponent={Link}
           href="/admin/events/new"
           disableElevation
-          sx={{ textTransform: "capitalize" }}
+          sx={{ textTransform: "capitalize", ml: "auto" }}
           variant="contained"
           color="secondary"
         >

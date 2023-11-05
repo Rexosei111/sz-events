@@ -4,6 +4,7 @@ import Image from "next/image";
 import React from "react";
 import loginSVG from "../../../public/file.png";
 import Head from "next/head";
+import { Navbar } from "rsuite";
 
 export default function AdminLoginPage() {
   return (
@@ -13,9 +14,9 @@ export default function AdminLoginPage() {
       </Head>
       <Stack flexDirection={"row"} width={"100vw"} minHeight={"100vh"}>
         <Box width={{ xs: "100%", md: "50%" }} minHeight={"100%"} p={2}>
-          <Typography variant="h5" fontWeight={700} gutterBottom>
-            Admin
-          </Typography>
+          <Navbar style={{ backgroundColor: "transparent" }}>
+            <Navbar.Brand href="/events">Home</Navbar.Brand>
+          </Navbar>
 
           <Stack
             alignItems={"center"}

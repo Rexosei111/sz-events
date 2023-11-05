@@ -1,9 +1,15 @@
 import React, { useContext, useState } from "react";
-import { Modal, Toggle, ButtonToolbar, Placeholder, IconButton } from "rsuite";
+import {
+  Modal,
+  Toggle,
+  ButtonToolbar,
+  Placeholder,
+  IconButton,
+  Button,
+} from "rsuite";
 import { TextInputField } from "../shared/inputs";
 import {
   Box,
-  Button,
   FormControlLabel,
   InputAdornment,
   Stack,
@@ -59,7 +65,12 @@ export const SuccessModal = ({ open, handleClose, event_name }) => {
   );
 };
 
-export default function RSVPModal({ open, handleClose, handleSuccessOpen }) {
+export default function RSVPModal({
+  open,
+  handleClose,
+  handleSuccessOpen,
+  event_id,
+}) {
   const { handleOpen: handleSnackbarOpen, setSnackSeverity } =
     useContext(SnackbarContext);
   const {
@@ -75,10 +86,9 @@ export default function RSVPModal({ open, handleClose, handleSuccessOpen }) {
   const onSubmit = async (form_data) => {
     try {
       const { data } = await APIClient.post(
-        `users/attendance/${event_id}`,
+        `users/event/${event_id}`,
         form_data
       );
-      console.log(data);
       reset({
         first_name: null,
         last_name: null,
@@ -210,18 +220,14 @@ export default function RSVPModal({ open, handleClose, handleSuccessOpen }) {
             </Stack>
           </Modal.Body>
           <Modal.Footer>
-            <LoadingButton
-              //   appearance="primary"
-
-              color="info"
-              disableElevation
-              variant="contained"
+            <Button
+              appearance="primary"
               type="submit"
               form="rsvp-form"
               loading={isSubmitting}
             >
               Submit
-            </LoadingButton>
+            </Button>
             <Button onClick={handleClose}>Cancel</Button>
           </Modal.Footer>
         </form>

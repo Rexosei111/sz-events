@@ -77,7 +77,7 @@ export default function LoginForm({
       if (type === "user") {
         router.push("/");
       } else {
-        router.push("/admin/dashboard");
+        router.push("/admin/events");
       }
     } catch (error) {
       if (isAxiosError(error)) {

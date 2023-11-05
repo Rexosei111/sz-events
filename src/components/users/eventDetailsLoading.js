@@ -32,36 +32,12 @@ export default function EventDetailLoading() {
         <Skeleton variant="rectangular" width={"100%"} height={250} />
       </Box>
       <Box mt={2}>
-        <Skeleton
-          variant="text"
-          width={{ xs: "100%", md: "70%" }}
-          height={30}
-        />
-        <Skeleton
-          variant="text"
-          width={{ xs: "100%", md: "80%" }}
-          height={30}
-        />
-        <Skeleton
-          variant="text"
-          width={{ xs: "100%", md: "90%" }}
-          height={30}
-        />
-        <Skeleton
-          variant="text"
-          width={{ xs: "100%", md: "70%" }}
-          height={30}
-        />
-        <Skeleton
-          variant="text"
-          width={{ xs: "100%", md: "60%" }}
-          height={30}
-        />
-        <Skeleton
-          variant="text"
-          width={{ xs: "100%", md: "50%" }}
-          height={30}
-        />
+        <Skeleton variant="text" width={"100%"} height={30} />
+        <Skeleton variant="text" width={"100%"} height={30} />
+        <Skeleton variant="text" width={"100%"} height={30} />
+        <Skeleton variant="text" width={"100%"} height={30} />
+        <Skeleton variant="text" width={"100%"} height={30} />
+        <Skeleton variant="text" width={"100%"} height={30} />
       </Box>
     </Container>
   );

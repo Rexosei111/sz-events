@@ -65,10 +65,11 @@ export default function EventDetailsPage() {
         alignItems={"center"}
         justifyContent={"space-between"}
         flexWrap={{ xs: "wrap", sm: "nowrap" }}
+        mb={2}
       >
-        <Typography variant="h6" fontSize={13} gutterBottom mb={1}>
+        {/* <Typography variant="h6" fontSize={13} gutterBottom mb={1}>
           by Spirit zone
-        </Typography>
+        </Typography> */}
         <Chip label={event?.published ? "Published" : "Draft"} />
       </Stack>
       <Typography
@@ -77,7 +78,7 @@ export default function EventDetailsPage() {
         fontWeight={700}
         gutterBottom
         color={(theme) => theme.palette.primary.main}
-        mb={1}
+        mb={2}
       >
         {event?.name}
       </Typography>
@@ -120,7 +121,7 @@ export default function EventDetailsPage() {
       <Markdown components={{ h1: "h3" }}>{event?.description}</Markdown>
 
       <Stack
-        mt={3}
+        my={10}
         width={"100%"}
         maxHeight={300}
         flexDirection={"row"}

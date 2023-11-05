@@ -59,14 +59,19 @@ export default function AdminUsers() {
         <Typography variant="h5" fontSize={21} fontWeight={700}>
           Users
         </Typography>
-        <Stack flexDirection={"row"} gap={2} my={2}>
+        <Stack
+          flexDirection={"row"}
+          gap={2}
+          my={2}
+          flexWrap={{ xs: "wrap-reverse", md: "nowrap" }}
+        >
           <TextInputField
             variant="outlined"
             size="small"
             placeholder="Search users"
             onChange={handleQueryChange}
             sx={{
-              minWidth: 270,
+              minWidth: { xs: "100%", md: 270 },
               bgcolor: (theme) => theme.palette.background.paper,
             }}
           />

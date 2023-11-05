@@ -255,7 +255,12 @@ export default function EventDetails() {
         )}
       </Box>
 
-      <RSVPModal open={rsvpOpen} handleClose={handleOpen} />
+      <RSVPModal
+        open={rsvpOpen}
+        handleClose={handleOpen}
+        handleSuccessOpen={handleSuccessOpen}
+        event_id={event?.id}
+      />
       <SuccessModal
         open={successOpen}
         handleClose={handleSuccessOpen}
