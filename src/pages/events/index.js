@@ -111,14 +111,8 @@ export default function EventListing() {
         flexWrap={{ xs: "wrap", md: "nowrap" }}
         alignItems="center"
       >
-        <Typography
-          variant="h4"
-          fontWeight={700}
-          fontFamily={cabin.style.fontFamily}
-          fontStyle={cabin.style.fontStyle}
-        >
-          Events
-        </Typography>
+        <h3>Events</h3>
+
         <InputGroup inside style={{ width: sm ? "100%" : 300 }}>
           <Input placeholder="Search event" onChange={handleQueryChange} />
           <InputGroup.Button>
