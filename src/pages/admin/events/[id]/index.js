@@ -206,10 +206,11 @@ export default function EventDetailsPage() {
           Delete
         </LoadingButton>
         <Button
-          LinkComponent={Link}
+          // component={Link}
+          onClick={() => router.push(`/admin/events/${event?.id}/edit`)}
           variant="contained"
           disableElevation
-          href={`/admin/events/${event?.id}/edit`}
+          // href={`/admin/events/${event?.id}/edit`}
           sx={{ textTransform: "none" }}
         >
           Edit
