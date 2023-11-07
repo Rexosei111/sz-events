@@ -188,22 +188,11 @@ export default function EventBasicForm({
             Start time
           </InputLabel>
           <TimeField
-            label={"00:00 AM"}
             value={dateTime.startTime}
-            // defaultValue={new dayjs(new Date().setHours(0, 0, 0, 0))}
+            defaultValue={new dayjs(new Date().setHours(0, 0, 0, 0))}
             onChange={handleTimeChange}
             sx={{
               width: { xs: "100%" },
-              // "& label.Mui-focused": {
-              //   zIndex: -10,
-              //   bgcolor: "transparent",
-              //   color: "transparent",
-              // },
-              "&: active label": {
-                // zIndex: -10,
-                bgcolor: "transparent",
-                color: "transparent",
-              },
             }}
           />
         </Box>
