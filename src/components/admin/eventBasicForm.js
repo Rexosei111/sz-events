@@ -8,9 +8,11 @@ import {
   Typography,
 } from "@mui/material";
 import {
+  DatePicker,
   DateTimePicker,
   StaticDatePicker,
   StaticTimePicker,
+  TimeField,
 } from "@mui/x-date-pickers";
 import TitleIcon from "@mui/icons-material/Title";
 import { createContext } from "react";
@@ -91,6 +93,7 @@ export default function EventBasicForm({
             id="name"
             {...register("name")}
             variant="outlined"
+            // required
             type={"text"}
             error={errors.name ? true : false}
             helperText={errors.name ? errors.name?.message : null}
@@ -165,49 +168,32 @@ export default function EventBasicForm({
         direction={"row"}
         justifyContent={"space-between"}
         flexWrap={"wrap"}
+        gap={2}
       >
-        <Box width={{ xs: "100%", md: "50%" }}>
+        <Box width={{ xs: "100%", md: "45%" }}>
           <InputLabel shrink htmlFor="date">
-            Start Date and Time
+            Start Date
           </InputLabel>
-          <DateTimePicker
-            defaultValue={dayjs(new Date())}
+
+          <DatePicker
             disablePast
-            onChange={handleDateTimeChange}
-            sx={{ width: "100%" }}
-          />
-          {/* <StaticDatePicker
+            value={dateTime.startDate}
             onChange={handleDateChange}
-            id="date"
-            sx={{ bgcolor: "#f5f5f599", borderRadius: "20px 0 0 20px" }}
-            disablePast
-          /> */}
+            sx={{ width: { xs: "100%" } }}
+          />
         </Box>
-        <Typography variant="subtitle2" color={"GrayText"} my={1}>
-          Select the starting date and time for the event.
-        </Typography>
-        {/* <Box width={{ xs: "100%", md: "50%" }}>
+
+        <Box width={{ xs: "100%", md: "45%" }}>
           <InputLabel shrink htmlFor="time">
             Start time
           </InputLabel>
-          <StaticTimePicker
+          <TimeField
+            value={dateTime.startTime}
             onChange={handleTimeChange}
-            id="time"
-            sx={{ bgcolor: "#f5f5f599", borderRadius: "0 20px 20px 0" }}
+            sx={{ width: { xs: "100%" } }}
           />
-        </Box> */}
+        </Box>
       </Stack>
-      {/* <Stack
-        direction={"row"}
-        justifyContent={"space-between"}
-        spacing={2}
-        flexWrap={{ xs: "wrap", md: "wrap" }}
-      >
-        <Typography variant="subtitle2" color={"GrayText"}>
-          This will be displayed as the cover photo on the event listing and
-          detail page.
-        </Typography>
-      </Stack> */}
     </Stack>
   );
 }
@@ -376,37 +362,29 @@ export function EventEditBasicForm({
         justifyContent={"space-between"}
         flexWrap={"wrap"}
       >
-        <Box width={{ xs: "100%", md: "50%" }}>
+        <Box width={{ xs: "100%", md: "45%" }}>
           <InputLabel shrink htmlFor="date">
-            Start Date and Time
+            Start Date
           </InputLabel>
-          <DateTimePicker
-            value={new dayjs(event?.startDate)}
+
+          <DatePicker
             disablePast
-            onChange={handleDateTimeChange}
-            sx={{ width: "100%" }}
-          />
-          {/* <StaticDatePicker
+            value={dateTime?.startDate}
             onChange={handleDateChange}
-            id="date"
-            sx={{ bgcolor: "#f5f5f599", borderRadius: "20px 0 0 20px" }}
-            disablePast
-          /> */}
+            sx={{ width: { xs: "100%" } }}
+          />
         </Box>
-        <Typography variant="subtitle2" color={"GrayText"} my={1}>
-          Select the starting date and time for the event.
-        </Typography>
-      </Stack>
-      <Stack
-        direction={"row"}
-        justifyContent={"space-between"}
-        spacing={2}
-        flexWrap={{ xs: "wrap", md: "wrap" }}
-      >
-        <Typography variant="subtitle2" color={"GrayText"}>
-          This will be displayed as the cover photo on the event listing and
-          detail page.
-        </Typography>
+
+        <Box width={{ xs: "100%", md: "45%" }}>
+          <InputLabel shrink htmlFor="time">
+            Start time
+          </InputLabel>
+          <TimeField
+            value={dateTime?.startTime}
+            onChange={handleTimeChange}
+            sx={{ width: { xs: "100%" } }}
+          />
+        </Box>
       </Stack>
     </Stack>
   );

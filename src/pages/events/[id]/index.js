@@ -75,7 +75,11 @@ export default function EventDetails() {
     data: following,
     error: followingError,
     isLoading: followingIsLoading,
-  } = useSWR("users/me/following/" + event?.organiser.id, fetcher);
+  } = useSWR(
+    () =>
+      event?.organiser.id ? "users/me/following/" + event?.organiser.id : null,
+    fetcher
+  );
 
   const handleFollow = async () => {
     try {

@@ -4,6 +4,7 @@ import {
   Box,
   Card,
   CardActionArea,
+  CardActions,
   Chip,
   Grid,
   IconButton,
@@ -29,6 +30,7 @@ import {
 import { LoadingButton } from "@mui/lab";
 import theme from "@/theme";
 import AttendeeDetails from "../shared/dialog/attendeeDetails";
+import AttendeeDeleteConfirmation from "../shared/dialog/attendeeDeleteConfirmation";
 
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",
@@ -121,6 +123,8 @@ export default function Attendance({ event = "", query = "" }) {
   const [totalPageCount, setTotalPageCount] = useState(1);
   const [pageNumber, setPageNumber] = useState(1);
   const [openAttendeeDetails, setOpenAttendeeDetails] = useState(false);
+  const [openAttendeeDeleteConfirmation, setOpenAttendeeDeleteConfirmation] =
+    useState(false);
   const [attendee, setAttendee] = useState(null);
   const { handleOpen: handleSnackbarOpen, setSnackSeverity } =
     useContext(SnackbarContext);
@@ -139,6 +143,11 @@ export default function Attendance({ event = "", query = "" }) {
     setAttendee(attendee);
     setOpenAttendeeDetails(!openAttendeeDetails);
   };
+  const handleOpenAttendeeDeleteConfirmation = (attendee) => {
+    setAttendee(attendee);
+    setOpenAttendeeDeleteConfirmation(!openAttendeeDeleteConfirmation);
+  };
+
   const {
     data: summary,
     error: summaryError,
@@ -232,6 +241,7 @@ export default function Attendance({ event = "", query = "" }) {
         absent:
           attendee.present === false ? summary.absent - 1 : summary.absent,
       });
+      setOpenAttendeeDetails(false);
     } catch (error) {
       setSnackSeverity("error");
       handleSnackbarOpen(`Unable to remove attendee ${attendee.first_name}`);
@@ -289,7 +299,7 @@ export default function Attendance({ event = "", query = "" }) {
                     >
                       <Stack
                         flexDirection={"column"}
-                        gap={2}
+                        gap={1}
                         alignItems={"center"}
                         justifyContent={"space-between"}
                       >
@@ -300,80 +310,89 @@ export default function Attendance({ event = "", query = "" }) {
                           variant="caption"
                           fontSize={15}
                           fontWeight={700}
+                          mt={1}
+                          // gutterBottom
                         >
                           {`${item.first_name} ${item.last_name}`}
                         </Typography>
-                        <Stack
-                          width={"100%"}
-                          flexDirection={"row"}
-                          gap={2}
-                          px={2}
-                          justifyContent={"space-between"}
+                        <Typography
+                          variant="subtitle1"
+                          fontSize={13}
+                          // fontWeight={700}
                         >
-                          <Tooltip title={"Mark as present"}>
-                            <IconButton
-                              // label={"P"}
-
-                              onClick={() => handleMarkAttendance(item, true)}
-                              sx={{
-                                fontSize: 18,
-                                width: 40,
-                                height: 40,
-                                bgcolor:
-                                  item.present === true
-                                    ? "#05df05"
-                                    : "#57575729",
-                              }}
-                            >
-                              <CheckCircle
-                                htmlColor={
-                                  item.present === true ? "white" : "black"
-                                }
-                              />
-                            </IconButton>
-                          </Tooltip>
-                          {/* <MarkAttendanceBtn item={item} present={true} />
-                      <MarkAttendanceBtn item={item} present={false} /> */}
-
-                          <Tooltip title={"Mark as absent"}>
-                            <IconButton
-                              onClick={() => handleMarkAttendance(item, false)}
-                              size="small"
-                              sx={{
-                                fontSize: 18,
-                                width: 40,
-                                height: 40,
-                                bgcolor:
-                                  item.present === false
-                                    ? "#dd125b"
-                                    : "#57575729",
-                              }}
-                            >
-                              <CloseOutlined
-                                htmlColor={
-                                  item.present === false
-                                    ? "white"
-                                    : "rgba(0,0,0,0.4)"
-                                }
-                              />
-                            </IconButton>
-                          </Tooltip>
-                          <Tooltip title={"Delete this attendee"}>
-                            <IconButton
-                              onClick={() => deleteAttendee(item)}
-                              sx={{
-                                fontSize: 18,
-                                width: 40,
-                                height: 40,
-                                bgcolor: "red",
-                              }}
-                            >
-                              <DeleteOutline htmlColor={"white"} />
-                            </IconButton>
-                          </Tooltip>
-                        </Stack>
+                          Status: {item?.present ? "Present" : "Absent"}
+                        </Typography>
                       </Stack>
                     </CardActionArea>
+                    <CardActions>
+                      <Stack
+                        width={"100%"}
+                        flexDirection={"row"}
+                        gap={2}
+                        px={2}
+                        justifyContent={"space-between"}
+                      >
+                        <Tooltip title={"Mark as present"}>
+                          <IconButton
+                            // label={"P"}
+
+                            onClick={() => handleMarkAttendance(item, true)}
+                            sx={{
+                              fontSize: 18,
+                              width: 40,
+                              height: 40,
+                              bgcolor: item.present === true ? "#05df05" : null,
+                            }}
+                          >
+                            <CheckCircle
+                              htmlColor={
+                                item.present === true
+                                  ? "white"
+                                  : "rgba(0,0,0,0.4)"
+                              }
+                            />
+                          </IconButton>
+                        </Tooltip>
+                        {/* <MarkAttendanceBtn item={item} present={true} />
+                      <MarkAttendanceBtn item={item} present={false} /> */}
+
+                        <Tooltip title={"Mark as absent"}>
+                          <IconButton
+                            onClick={() => handleMarkAttendance(item, false)}
+                            size="small"
+                            sx={{
+                              fontSize: 18,
+                              width: 40,
+                              height: 40,
+                              bgcolor:
+                                item.present === false ? "#dd125b" : null,
+                            }}
+                          >
+                            <CloseOutlined
+                              htmlColor={
+                                item.present === false
+                                  ? "white"
+                                  : "rgba(0,0,0,0.4)"
+                              }
+                            />
+                          </IconButton>
+                        </Tooltip>
+                        <Tooltip title={"Delete this attendee"}>
+                          <IconButton
+                            onClick={() =>
+                              handleOpenAttendeeDeleteConfirmation(item)
+                            }
+                            sx={{
+                              fontSize: 18,
+                              width: 40,
+                              height: 40,
+                            }}
+                          >
+                            <DeleteOutline htmlColor={"rgba(0,0,0,0.4)"} />
+                          </IconButton>
+                        </Tooltip>
+                      </Stack>
+                    </CardActions>
                   </Card>
                 </Grid>
               ))}
@@ -389,6 +408,14 @@ export default function Attendance({ event = "", query = "" }) {
         summaryMutate={summaryMutate}
         event_id={event?.id}
         summary={summary}
+        handleMarkAttendance={handleMarkAttendance}
+        deleteAttendee={deleteAttendee}
+      />
+      <AttendeeDeleteConfirmation
+        open={openAttendeeDeleteConfirmation}
+        handleClose={handleOpenAttendeeDeleteConfirmation}
+        attendee={attendee}
+        handleDelete={deleteAttendee}
       />
       {attendance && attendance.items.length > 0 && (
         <Stack alignItems={"center"} justifyContent={"center"} mt={2}>

@@ -44,7 +44,6 @@ export const ImageCarousel = ({ images = [] }) => {
   return (
     // <Carousel autoplay className="custom-slider" shape="bar">
     <div
-      flexDirection={"row"}
       style={{
         overflowX: "auto",
         display: "flex",

@@ -4,12 +4,18 @@ import {
   DialogContent,
   DialogTitle,
   FormControlLabel,
+  IconButton,
   InputAdornment,
   Stack,
+  Typography,
 } from "@mui/material";
 import React, { useContext, useState } from "react";
 import { TextInputField } from "../inputs";
 import {
+  CheckCircleOutline,
+  CheckOutlined,
+  CloseOutlined,
+  DeleteOutline,
   EmailOutlined,
   LocationOnOutlined,
   Person2Outlined,
@@ -28,6 +34,7 @@ export default function AttendeeDetails({
   summaryMutate,
   summary,
   event_id,
+  deleteAttendee,
 }) {
   const { handleOpen: handleSnackbarOpen, setSnackSeverity } =
     useContext(SnackbarContext);
@@ -63,7 +70,18 @@ export default function AttendeeDetails({
   };
   return (
     <Dialog open={open} onClose={handleClose} fullWidth>
-      <DialogTitle>Details of Attendee</DialogTitle>
+      <DialogTitle>
+        <Stack
+          flexDirection={"row"}
+          alignItems={"center"}
+          justifyContent={"space-between"}
+        >
+          <Typography variant="h5">Details of Attendee</Typography>
+          <IconButton onClick={() => deleteAttendee(attendee)}>
+            <DeleteOutline />
+          </IconButton>
+        </Stack>
+      </DialogTitle>
       <DialogContent>
         <Stack gap={2}>
           <TextInputField
@@ -149,6 +167,8 @@ export default function AttendeeDetails({
           <Box width={"100%"}>
             <LoadingButton
               variant="contained"
+              disableElevation
+              startIcon={<CheckCircleOutline />}
               loading={presentLoading}
               color="success"
               onClick={() => handleMarkAttendance(attendee, true)}
@@ -158,6 +178,8 @@ export default function AttendeeDetails({
             </LoadingButton>
             <LoadingButton
               loading={absentLoading}
+              disableElevation
+              startIcon={<CloseOutlined />}
               variant="contained"
               onClick={() => handleMarkAttendance(attendee, false)}
               color="error"

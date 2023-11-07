@@ -116,18 +116,16 @@ export default function EventDetailsPage() {
         flexWrap={{ xs: "wrap", sm: "nowrap" }}
         mb={2}
       >
-        {publishing && (
-          <Chip
-            label={event?.published ? "Unpublishing..." : "Publishing"}
-            icon={<CircularProgress size={20} />}
-          />
-        )}
-        {!publishing && (
-          <Chip
-            label={event?.published ? "Unpublish" : "Publish"}
-            onClick={handlePublish}
-          />
-        )}
+        <LoadingButton
+          sx={{ textTransform: "capitalize" }}
+          onClick={handlePublish}
+          loading={publishing}
+          disableElevation
+          variant="contained"
+          color={event?.published ? "warning" : "info"}
+        >
+          {event?.published ? "Unpublish" : "Publish"}
+        </LoadingButton>
       </Stack>
       <Typography
         variant="h4"

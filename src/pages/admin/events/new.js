@@ -18,14 +18,13 @@ import { useRouter } from "next/router";
 const newEventFormSchema = yup
   .object({
     name: yup.string().required(),
-    summary: yup.string(),
-    description: yup.string(),
-    start_date: yup.string(),
-    cover_image: yup.string(),
-    address: yup.string(),
-    latitude: yup.string(),
-    longitude: yup.string(),
-    // name: yup.string().required(),
+    summary: yup.string().nullable(),
+    description: yup.string().nullable(),
+    start_date: yup.string().nullable(),
+    cover_image: yup.string().nullable(),
+    address: yup.string().nullable(),
+    latitude: yup.string().nullable(),
+    longitude: yup.string().nullable(),
   })
   .required();
 
@@ -61,7 +60,7 @@ export default function New() {
     } catch (error) {
       if (isAxiosError(error)) {
         setSnackSeverity("error");
-        handleSnackbarOpen("Unable to save event");
+        handleSnackbarOpen("All required fields must be field!");
       }
     }
   };
