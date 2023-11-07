@@ -341,7 +341,7 @@ export default function Attendance({ event = "", query = "" }) {
                               fontSize: 18,
                               width: 40,
                               height: 40,
-                              bgcolor: item.present === true ? "#05df05" : null,
+                              bgcolor: item.present === true ? "#14ab14" : null,
                             }}
                           >
                             <CheckCircle
