@@ -35,6 +35,7 @@ export default function AttendeeDetails({
   summary,
   event_id,
   deleteAttendee,
+  handleDeleteConfirmation,
 }) {
   const { handleOpen: handleSnackbarOpen, setSnackSeverity } =
     useContext(SnackbarContext);
@@ -58,7 +59,6 @@ export default function AttendeeDetails({
       });
       handleClose();
     } catch (error) {
-      console.log(error);
       setSnackSeverity("error");
       handleSnackbarOpen(
         `Unable to take attendance for ${attendee.first_name}`
@@ -77,7 +77,7 @@ export default function AttendeeDetails({
           justifyContent={"space-between"}
         >
           <Typography variant="h5">Details of Attendee</Typography>
-          <IconButton onClick={() => deleteAttendee(attendee)}>
+          <IconButton onClick={() => handleDeleteConfirmation(attendee)}>
             <DeleteOutline />
           </IconButton>
         </Stack>

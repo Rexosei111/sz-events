@@ -409,6 +409,7 @@ export default function Attendance({ event = "", query = "" }) {
         event_id={event?.id}
         summary={summary}
         handleMarkAttendance={handleMarkAttendance}
+        handleDeleteConfirmation={handleOpenAttendeeDeleteConfirmation}
         deleteAttendee={deleteAttendee}
       />
       <AttendeeDeleteConfirmation
