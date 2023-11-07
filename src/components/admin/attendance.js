@@ -254,25 +254,27 @@ export default function Attendance({ event = "", query = "" }) {
           <Chip label={`Absent: ${summary.absent}`} />
         </Stack>
       )}
-      {Object.keys(groupedItems).map((letter, index) => (
-        <Box key={index} mb={4}>
-          <Typography variant="h5" mb={2} color={"rgba(0,0,0,0.8)"}>
-            {letter}
+      {attendance && attendance?.total === 0 && (
+        <Stack
+          width={"100%"}
+          height={300}
+          alignItems={"center"}
+          justifyContent={"center"}
+        >
+          <Typography variant="h5" textAlign={"center"}>
+            There are no attendee(s) {query !== "" && `with name "${query}"`}{" "}
+            for this event.
           </Typography>
-          {attendance && attendance?.total === 0 && (
-            <Stack
-              width={"100%"}
-              height={300}
-              alignItems={"center"}
-              justifyContent={"center"}
-            >
-              <Typography variant="h4">
-                There are no attendee(s){" "}
-                {query !== "" && `with name "${query}"`}
-              </Typography>
-            </Stack>
-          )}
-          {attendance?.total > 0 && (
+        </Stack>
+      )}
+      {attendance !== undefined &&
+        attendance?.total > 0 &&
+        Object.keys(groupedItems).map((letter, index) => (
+          <Box key={index} mb={4}>
+            <Typography variant="h5" mb={2} color={"rgba(0,0,0,0.8)"}>
+              {letter}
+            </Typography>
+
             <Grid
               container
               rowSpacing={3}
@@ -376,9 +378,9 @@ export default function Attendance({ event = "", query = "" }) {
                 </Grid>
               ))}
             </Grid>
-          )}
-        </Box>
-      ))}
+            {/* )} */}
+          </Box>
+        ))}
       <AttendeeDetails
         open={openAttendeeDetails}
         handleClose={handleOpenAttendeeDetails}

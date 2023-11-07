@@ -59,6 +59,9 @@ export default function UpdateUser({ open, handleClose, user }) {
 
   const onSubmit = async (form_data) => {
     // console.log(form_data);
+    if (form_data.password === "") {
+      delete form_data.password;
+    }
     try {
       const { data } = await APIClient.patch(`/admins/${user.id}`, form_data);
       reset({
@@ -207,7 +210,6 @@ export default function UpdateUser({ open, handleClose, user }) {
                 style: { fontSize: 13 },
               }}
               fullWidth
-              placeholder="Location of the attendee"
             />
           </Stack>
         </form>

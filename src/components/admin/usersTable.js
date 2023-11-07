@@ -48,7 +48,7 @@ export default function UsersTable({
 }) {
   const handleClick = (row) => {
     setSelectedUser(row);
-    setSelectedUserOpen(true);
+    setSelectedUserOpen();
   };
   return (
     <TableContainer component={Paper} elevation={5}>
@@ -63,12 +63,8 @@ export default function UsersTable({
           </TableRow>
         </TableHead>
         <TableBody>
-          {users.map((row) => (
-            <StyledTableRow
-              key={row.name}
-              hover
-              onClick={() => handleClick(row)}
-            >
+          {users.map((row, index) => (
+            <StyledTableRow key={index} hover onClick={() => handleClick(row)}>
               <StyledTableCell component="th" scope="row">
                 {row.first_name}
               </StyledTableCell>

@@ -90,7 +90,7 @@ export default function AdminUsers() {
           <UsersTable
             users={users.items}
             setSelectedUser={setSelectedUser}
-            setSelectedUserOpen={setSelectedUserOpen}
+            setSelectedUserOpen={handleSelecetedUserOpen}
           />
         )}
       </Paper>
