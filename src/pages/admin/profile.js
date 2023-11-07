@@ -14,6 +14,7 @@ import { fetcher } from "@/utils/swr_fetcher";
 import * as yup from "yup";
 import { SnackbarContext } from "../_app";
 import { LoadingButton } from "@mui/lab";
+import AdminUpdateForm from "@/components/admin/adminUpateForm";
 
 const profileUpdateSchema = yup
   .object({
@@ -24,6 +25,7 @@ const profileUpdateSchema = yup
     // name: yup.string().required(),
   })
   .required();
+
 export default function Profile() {
   const { handleOpen: handleSnackbarOpen, setSnackSeverity } =
     useContext(SnackbarContext);
@@ -35,6 +37,7 @@ export default function Profile() {
     error,
     isLoading,
   } = useSWR("/admins/admin/organiser", fetcher);
+
   const {
     register,
     handleSubmit,
@@ -51,6 +54,7 @@ export default function Profile() {
       reset(organiser);
     }
   }, [organiser]);
+
   const onSubmit = async (form_data) => {
     const final_data = { ...form_data };
     try {
@@ -67,6 +71,7 @@ export default function Profile() {
       }
     }
   };
+
   return (
     <>
       <Head>
@@ -113,6 +118,11 @@ export default function Profile() {
           </LoadingButton>
         </Stack>
       </form>
+      <EventFormWrapper
+        title={"Admin Personal Details"}
+        subtitle={"This section contains the basic details about the admin"}
+        sectionForm={<AdminUpdateForm />}
+      />
     </>
   );
 }

@@ -155,6 +155,22 @@ export function getEndOfDayRange() {
   };
 }
 
+export function getMonthToDateRange() {
+  const currentDate = new Date();
+  const year = currentDate.getFullYear();
+  const month = currentDate.getMonth() + 1; // Adding 1 to convert from 0-indexed to 1-indexed month
+  const day = currentDate.getDate();
+
+  const startOfMonth = new Date(year, month - 1, day); // Start from the current day in the current month
+  const endOfMonth = new Date(year, month, 0); // Setting the day to 0 will give the last day of the current month
+
+  // Adjust the time to the start and end of the day
+  startOfMonth.setHours(0, 0, 0, 0);
+  endOfMonth.setHours(23, 59, 59, 999);
+
+  return { startOfMonth, endOfMonth };
+}
+
 export function formatDateInCustomFormat(dateString) {
   const options = {
     weekday: "long",

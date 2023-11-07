@@ -5,6 +5,8 @@ import {
   Grid,
   Pagination,
   Stack,
+  Tab,
+  Tabs,
   Typography,
   useMediaQuery,
   useTheme,
@@ -24,11 +26,13 @@ import { useEffect } from "react";
 import useDebounce from "@/hooks/debounce";
 import {
   getEndOfDayRange,
+  getMonthToDateRange,
   getWeekDates,
   getWeekendDates,
 } from "@/utils/dateFormat";
 import { removeNullStrings } from "@/utils/clip";
 import GridLoading from "@/components/shared/loading/gridLoading";
+import { AntTab, AntTabs } from "@/components/shared/tabs";
 
 export const cabin = Cabin({
   weight: ["400", "600", "700"],
@@ -47,6 +51,7 @@ const tabDateRange = {
   Today: getEndOfDayRange(),
   "This week": getWeekDates(),
   "This weekend": getWeekendDates(),
+  "This month": getMonthToDateRange(),
 };
 
 export default function EventListing() {
@@ -88,6 +93,10 @@ export default function EventListing() {
 
   const theme = useTheme();
   const sm = useMediaQuery(theme.breakpoints.down("sm"));
+  const handleTabChange = (event, newValue) => {
+    console.log(newValue);
+    setActiveTab(newValue);
+  };
 
   return (
     <Box sx={{ px: { xs: 2, md: 0 } }}>
@@ -117,19 +126,79 @@ export default function EventListing() {
           </InputGroup.Button>
         </InputGroup>
       </Stack>
-      <Box my={2} width={{ xs: "100%", md: "50%" }}>
-        <Nav
-          appearance="subtle"
-          justified
-          activeKey={activeTab}
-          onSelect={setActiveTab}
+      <Box
+        sx={{
+          maxWidth: { xs: "100%", sm: 480, md: 600 },
+          bgcolor: "background.paper",
+        }}
+        my={2}
+      >
+        <AntTabs
+          value={activeTab}
+          onChange={handleTabChange}
+          variant="scrollable"
+          scrollButtons
+          allowScrollButtonsMobile
+          aria-label="scrollable auto tabs example"
         >
-          <Nav.Item eventKey="All">All</Nav.Item>
-          <Nav.Item eventKey="Today">Today</Nav.Item>
-          <Nav.Item eventKey="This week">This week</Nav.Item>
-          <Nav.Item eventKey="This weekend">This weekend</Nav.Item>
-        </Nav>
+          <AntTab
+            label="All"
+            value={"All"}
+            sx={{
+              textTransform: "capitalize",
+              // color: (theme) => theme.palette.info.main,
+            }}
+          />
+          <AntTab
+            label="Today"
+            value={"Today"}
+            sx={{
+              textTransform: "capitalize",
+              // color: (theme) => theme.palette.info.main,
+            }}
+          />
+          <AntTab
+            label="This week"
+            value={"This week"}
+            sx={{
+              textTransform: "capitalize",
+              // color: (theme) => theme.palette.info.main,
+            }}
+          />
+          <AntTab
+            label="This weekend"
+            value={"This weekend"}
+            sx={{
+              textTransform: "capitalize",
+              // color: (theme) => theme.palette.info.main,
+            }}
+          />
+          <AntTab
+            label="This month"
+            value={"This month"}
+            sx={{
+              textTransform: "capitalize",
+              // color: (theme) => theme.palette.info.main,
+            }}
+          />
+        </AntTabs>
       </Box>
+      {/* <Box my={2} width={{ xs: "100%", md: "60%" }} sx={{ overflowX: "auto" }}> */}
+
+      {/* <Nav
+        appearance="subtle"
+        justified
+        activeKey={activeTab}
+        onSelect={setActiveTab}
+        style={{ overflowX: "auto", width: "300px" }}
+      >
+        <Nav.Item eventKey="All">All</Nav.Item>
+        <Nav.Item eventKey="Today">Today</Nav.Item>
+        <Nav.Item eventKey="This week">This week</Nav.Item>
+        <Nav.Item eventKey="This weekend">This weekend</Nav.Item>
+        <Nav.Item eventKey="This month">This Month</Nav.Item>
+      </Nav> */}
+      {/* </Box> */}
       {isLoading && <GridLoading />}
       {!isLoading && events?.items && events?.items.length === 0 && (
         <Stack height={100} alignItems={"center"} justifyContent={"center"}>

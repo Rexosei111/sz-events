@@ -17,6 +17,7 @@ import * as yup from "yup";
 import { useForm } from "react-hook-form";
 import {
   EmailOutlined,
+  LocationOnOutlined,
   Person2Outlined,
   PhoneAndroidOutlined,
 } from "@mui/icons-material";
@@ -167,7 +168,7 @@ export default function NewAttendee({ open, handleClose, event_id, mutate }) {
               InputProps={{
                 startAdornment: (
                   <InputAdornment position="start">
-                    <Person2Outlined fontSize="small" />
+                    <LocationOnOutlined fontSize="small" />
                   </InputAdornment>
                 ),
                 style: { fontSize: 13 },

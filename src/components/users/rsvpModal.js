@@ -50,15 +50,9 @@ export const SuccessModal = ({ open, handleClose, event_name }) => {
             size="lg"
             icon={<CheckCircle htmlColor="green" fontSize="large" />}
           />
-          <Typography
-            variant="subtitle"
-            fontWeight={700}
-            mt={2}
-            fontSize={15}
-            textAlign={"center"}
-          >
+          <h5 style={{ marginTop: "10px", textAlign: "center" }}>
             You have successfully registered for {event_name}
-          </Typography>
+          </h5>
         </Stack>
       </Modal.Body>
     </Modal>

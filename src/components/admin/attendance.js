@@ -2,11 +2,15 @@ import { fetcher } from "@/utils/swr_fetcher";
 import {
   Avatar,
   Box,
+  Card,
+  CardActionArea,
   Chip,
   Grid,
+  IconButton,
   Pagination,
   Paper,
   Stack,
+  Tooltip,
   Typography,
   styled,
 } from "@mui/material";
@@ -16,6 +20,15 @@ import GridLoading from "../shared/loading/gridLoading";
 import { SnackbarContext } from "@/pages/_app";
 import { APIClient } from "@/utils/axios";
 import useDebounce from "@/hooks/debounce";
+import {
+  Check,
+  CheckCircle,
+  CloseOutlined,
+  DeleteOutline,
+} from "@mui/icons-material";
+import { LoadingButton } from "@mui/lab";
+import theme from "@/theme";
+import AttendeeDetails from "../shared/dialog/attendeeDetails";
 
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",
@@ -32,12 +45,83 @@ function countObjectsWithPresentTrue(arr, value = true) {
   return arr.reduce((count, obj) => count + (obj.present === value ? 1 : 0), 0);
 }
 
+const MarkAttendanceBtn = ({ item, present }) => {
+  const [loading, setLoading] = useState(false);
+  const handleMarkAttendance = async (attendee, present) => {
+    setLoading(false);
+    try {
+      const { data } = await APIClient.patch(
+        `attendance/${event.id}?attendee_id=${attendee.id}&present=${present}`
+      );
+      mutate();
+      summaryMutate({
+        ...summary,
+        present: present === true ? summary?.present + 1 : summary?.present,
+        absent: present === false ? summary.absent + 1 : summary.absent,
+      });
+    } catch (error) {
+      setSnackSeverity("error");
+      handleSnackbarOpen(
+        `Unable to take attendance for ${attendee.first_name}`
+      );
+    } finally {
+      setLoading(false);
+    }
+  };
+  if (present === false) {
+    return (
+      <Tooltip title={"Mark as absent"}>
+        <LoadingButton
+          loading={loading}
+          // label={"P"}
+          disableElevation
+          startIcon={
+            <CloseOutlined
+              htmlColor={item.present === false ? "white" : "black"}
+            />
+          }
+          onClick={() => handleMarkAttendance(item, present)}
+          variant="contained"
+          color={item.present === false ? "error" : "warning"}
+          sx={{
+            textTransform: "capitalize",
+            // bgcolor: item.present === true ? "#05df05" : "#57575729",
+          }}
+        >
+          {"Absent"}
+        </LoadingButton>
+      </Tooltip>
+    );
+  }
+  return (
+    <Tooltip title={"Mark as present"}>
+      <LoadingButton
+        loading={loading}
+        // label={"P"}
+        disableElevation
+        startIcon={
+          <CheckCircle htmlColor={item.present === true ? "white" : "black"} />
+        }
+        onClick={() => handleMarkAttendance(item, present)}
+        variant="contained"
+        color={item.present === true ? "success" : "warning"}
+        sx={{
+          textTransform: "capitalize",
+          // bgcolor: item.present === true ? "#05df05" : "#57575729",
+        }}
+      >
+        {"Present"}
+      </LoadingButton>
+    </Tooltip>
+  );
+};
 export default function Attendance({ event = "", query = "" }) {
   const debouncedQuery = useDebounce(query, 500);
   const [groupedItems, setGroupedItems] = useState({});
   const [totalPageCount, setTotalPageCount] = useState(1);
   const [pageNumber, setPageNumber] = useState(1);
-
+  const [openAttendeeDetails, setOpenAttendeeDetails] = useState(false);
+  const [attendee, setAttendee] = useState(null);
   const { handleOpen: handleSnackbarOpen, setSnackSeverity } =
     useContext(SnackbarContext);
 
@@ -51,6 +135,10 @@ export default function Attendance({ event = "", query = "" }) {
     fetcher
   );
 
+  const handleOpenAttendeeDetails = (attendee) => {
+    setAttendee(attendee);
+    setOpenAttendeeDetails(!openAttendeeDetails);
+  };
   const {
     data: summary,
     error: summaryError,
@@ -171,85 +259,135 @@ export default function Attendance({ event = "", query = "" }) {
           <Typography variant="h5" mb={2} color={"rgba(0,0,0,0.8)"}>
             {letter}
           </Typography>
-          <Grid
-            container
-            rowSpacing={3}
-            columnSpacing={{ xs: 1, sm: 2, md: 3 }}
-          >
-            {groupedItems[letter].map((item, index) => (
-              <Grid item xs={12} sm={4} md={3} lg={3} xl={2} key={index}>
-                <Item>
-                  <Stack
-                    flexDirection={"column"}
-                    gap={2}
-                    alignItems={"center"}
-                    justifyContent={"space-between"}
-                  >
-                    <Avatar sx={{ width: 80, height: 80 }}>
-                      {item.first_name.charAt(0)}
-                    </Avatar>
-                    <Typography
-                      variant="caption"
-                      fontSize={15}
-                      fontWeight={700}
+          {attendance && attendance?.total === 0 && (
+            <Stack
+              width={"100%"}
+              height={300}
+              alignItems={"center"}
+              justifyContent={"center"}
+            >
+              <Typography variant="h4">
+                There are no attendee(s){" "}
+                {query !== "" && `with name "${query}"`}
+              </Typography>
+            </Stack>
+          )}
+          {attendance?.total > 0 && (
+            <Grid
+              container
+              rowSpacing={3}
+              columnSpacing={{ xs: 1, sm: 2, md: 3 }}
+            >
+              {groupedItems[letter].map((item, index) => (
+                <Grid item xs={12} sm={4} md={3} lg={3} xl={2} key={index}>
+                  <Card>
+                    <CardActionArea
+                      sx={{ p: 2 }}
+                      onClick={() => handleOpenAttendeeDetails(item)}
                     >
-                      {`${item.first_name} ${item.last_name}`}
-                    </Typography>
-                    <Stack
-                      width={"100%"}
-                      flexDirection={"row"}
-                      gap={2}
-                      px={2}
-                      justifyContent={"space-between"}
-                    >
-                      <Chip
-                        label={"P"}
-                        onClick={() => handleMarkAttendance(item, true)}
-                        sx={{
-                          fontSize: 18,
-                          width: 40,
-                          height: 40,
-                          bgcolor: item.present === true ? "#05df05" : null,
-                          color:
-                            item.present === true ? "white" : "rgba(0,0,0,0.4)",
-                          borderRadius: "50%",
-                        }}
-                      />
-                      <Chip
-                        label={"A"}
-                        onClick={() => handleMarkAttendance(item, false)}
-                        sx={{
-                          fontSize: 18,
-                          width: 40,
-                          height: 40,
-                          bgcolor: item.present === false ? "#dd125b" : null,
-                          color:
-                            item.present === false
-                              ? "white"
-                              : "rgba(0,0,0,0.4)",
-                          borderRadius: "50%",
-                        }}
-                      />
-                      <Chip
-                        label={"D"}
-                        onClick={() => deleteAttendee(item)}
-                        sx={{
-                          fontSize: 18,
-                          width: 40,
-                          height: 40,
-                          bgcolor: "red",
-                          color: "white",
-                          borderRadius: "50%",
-                        }}
-                      />
-                    </Stack>
-                  </Stack>
-                </Item>
-              </Grid>
-            ))}
-          </Grid>
+                      <Stack
+                        flexDirection={"column"}
+                        gap={2}
+                        alignItems={"center"}
+                        justifyContent={"space-between"}
+                      >
+                        <Avatar sx={{ width: 80, height: 80 }}>
+                          {item.first_name.charAt(0)}
+                        </Avatar>
+                        <Typography
+                          variant="caption"
+                          fontSize={15}
+                          fontWeight={700}
+                        >
+                          {`${item.first_name} ${item.last_name}`}
+                        </Typography>
+                        <Stack
+                          width={"100%"}
+                          flexDirection={"row"}
+                          gap={2}
+                          px={2}
+                          justifyContent={"space-between"}
+                        >
+                          <Tooltip title={"Mark as present"}>
+                            <IconButton
+                              // label={"P"}
+
+                              onClick={() => handleMarkAttendance(item, true)}
+                              sx={{
+                                fontSize: 18,
+                                width: 40,
+                                height: 40,
+                                bgcolor:
+                                  item.present === true
+                                    ? "#05df05"
+                                    : "#57575729",
+                              }}
+                            >
+                              <CheckCircle
+                                htmlColor={
+                                  item.present === true ? "white" : "black"
+                                }
+                              />
+                            </IconButton>
+                          </Tooltip>
+                          {/* <MarkAttendanceBtn item={item} present={true} />
+                      <MarkAttendanceBtn item={item} present={false} /> */}
+
+                          <Tooltip title={"Mark as absent"}>
+                            <IconButton
+                              onClick={() => handleMarkAttendance(item, false)}
+                              size="small"
+                              sx={{
+                                fontSize: 18,
+                                width: 40,
+                                height: 40,
+                                bgcolor:
+                                  item.present === false
+                                    ? "#dd125b"
+                                    : "#57575729",
+                              }}
+                            >
+                              <CloseOutlined
+                                htmlColor={
+                                  item.present === false
+                                    ? "white"
+                                    : "rgba(0,0,0,0.4)"
+                                }
+                              />
+                            </IconButton>
+                          </Tooltip>
+                          <Tooltip title={"Delete this attendee"}>
+                            <IconButton
+                              onClick={() => deleteAttendee(item)}
+                              sx={{
+                                fontSize: 18,
+                                width: 40,
+                                height: 40,
+                                bgcolor: "red",
+                              }}
+                            >
+                              <DeleteOutline htmlColor={"white"} />
+                            </IconButton>
+                          </Tooltip>
+                        </Stack>
+                      </Stack>
+                    </CardActionArea>
+                  </Card>
+                </Grid>
+              ))}
+            </Grid>
+          )}
         </Box>
       ))}
+      <AttendeeDetails
+        open={openAttendeeDetails}
+        handleClose={handleOpenAttendeeDetails}
+        attendee={attendee}
+        mutate={mutate}
+        summaryMutate={summaryMutate}
+        event_id={event?.id}
+        summary={summary}
+      />
       {attendance && attendance.items.length > 0 && (
         <Stack alignItems={"center"} justifyContent={"center"} mt={2}>
           <Pagination

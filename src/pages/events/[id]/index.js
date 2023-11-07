@@ -2,6 +2,7 @@ import { ImageCarousel } from "@/components/shared/gallery";
 import EventDetailLoading from "@/components/users/eventDetailsLoading";
 import LayoutTwo from "@/components/users/layoutTwo";
 import RSVPModal, { SuccessModal } from "@/components/users/rsvpModal";
+import { SnackbarContext } from "@/pages/_app";
 import { APIClient } from "@/utils/axios";
 import { formatDateInCustomFormat } from "@/utils/dateFormat";
 import { fetcher } from "@/utils/swr_fetcher";
@@ -28,11 +29,12 @@ import {
   Stack,
   Typography,
 } from "@mui/material";
+import { isAxiosError } from "axios";
 import Head from "next/head";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import Markdown from "react-markdown";
 import { Button, IconButton, Panel, Whisper } from "rsuite";
 import useSWR from "swr";
@@ -42,6 +44,8 @@ export default function EventDetails() {
   const [rsvpOpen, setRSVPOpen] = useState(false);
   const [successOpen, setSuccessOpen] = useState(false);
   const [anchorEl, setAnchorEl] = React.useState(null);
+  const { handleOpen: handleSnackbarOpen, setSnackSeverity } =
+    useContext(SnackbarContext);
 
   const handlePopoverOpen = (event) => {
     setAnchorEl(event.currentTarget);
@@ -77,7 +81,13 @@ export default function EventDetails() {
     try {
       await APIClient.post("users/me/following/" + event.organiser.id);
     } catch (error) {
-      console.log(error);
+      if (isAxiosError(error)) {
+        if (error.response.status === 401) {
+          setSnackSeverity("info");
+          handleSnackbarOpen("You must login to follow an organiser!");
+          router.push("/auth/users");
+        }
+      }
     }
   };
 
@@ -140,7 +150,16 @@ export default function EventDetails() {
             <List dense>
               <ListItem disableGutters disablePadding>
                 <ListItemIcon>
-                  <IconButton icon={<LocationOn fontSize="small" />} />
+                  <IconButton
+                    icon={
+                      <LocationOn
+                        fontSize="small"
+                        htmlColor="rgba(0,0,0,0.5)"
+                      />
+                    }
+                    active
+                    disabled
+                  />
                 </ListItemIcon>
                 <ListItemText>
                   <h6 style={{ fontSize: "15px" }}>
@@ -215,7 +234,7 @@ export default function EventDetails() {
               <p
                 style={{ marginTop: "15px", fontSize: 16, textAlign: "center" }}
               >
-                organiserd by
+                organised by
               </p>
               <h2 style={{ marginTop: "15px", textAlign: "center" }}>
                 {event?.organiser?.name}

@@ -7,7 +7,11 @@ import {
   Stack,
   Typography,
 } from "@mui/material";
-import { StaticDatePicker, StaticTimePicker } from "@mui/x-date-pickers";
+import {
+  DateTimePicker,
+  StaticDatePicker,
+  StaticTimePicker,
+} from "@mui/x-date-pickers";
 import TitleIcon from "@mui/icons-material/Title";
 import { createContext } from "react";
 import RichTextEditor from "./textEditor";
@@ -30,6 +34,10 @@ export default function EventBasicForm({
   useEffect(() => {
     setValue("description", description);
   }, [description]);
+
+  const handleDateTimeChange = (dateObj) => {
+    setValue("start_date", dateObj?.$d.toISOString());
+  };
 
   const handleDateChange = (dateObj) => {
     if (dateObj === null) {
@@ -160,16 +168,25 @@ export default function EventBasicForm({
       >
         <Box width={{ xs: "100%", md: "50%" }}>
           <InputLabel shrink htmlFor="date">
-            Start Date
+            Start Date and Time
           </InputLabel>
-          <StaticDatePicker
+          <DateTimePicker
+            defaultValue={dayjs(new Date())}
+            disablePast
+            onChange={handleDateTimeChange}
+            sx={{ width: "100%" }}
+          />
+          {/* <StaticDatePicker
             onChange={handleDateChange}
             id="date"
             sx={{ bgcolor: "#f5f5f599", borderRadius: "20px 0 0 20px" }}
             disablePast
-          />
+          /> */}
         </Box>
-        <Box width={{ xs: "100%", md: "50%" }}>
+        <Typography variant="subtitle2" color={"GrayText"} my={1}>
+          Select the starting date and time for the event.
+        </Typography>
+        {/* <Box width={{ xs: "100%", md: "50%" }}>
           <InputLabel shrink htmlFor="time">
             Start time
           </InputLabel>
@@ -178,9 +195,9 @@ export default function EventBasicForm({
             id="time"
             sx={{ bgcolor: "#f5f5f599", borderRadius: "0 20px 20px 0" }}
           />
-        </Box>
+        </Box> */}
       </Stack>
-      <Stack
+      {/* <Stack
         direction={"row"}
         justifyContent={"space-between"}
         spacing={2}
@@ -190,7 +207,7 @@ export default function EventBasicForm({
           This will be displayed as the cover photo on the event listing and
           detail page.
         </Typography>
-      </Stack>
+      </Stack> */}
     </Stack>
   );
 }
@@ -211,6 +228,10 @@ export function EventEditBasicForm({
   useEffect(() => {
     setValue("description", description);
   }, [description]);
+
+  const handleDateTimeChange = (dateObj) => {
+    setValue("start_date", dateObj?.$d.toISOString());
+  };
 
   const handleDateChange = (dateObj) => {
     if (dateObj === null) {
@@ -357,27 +378,24 @@ export function EventEditBasicForm({
       >
         <Box width={{ xs: "100%", md: "50%" }}>
           <InputLabel shrink htmlFor="date">
-            Start Date
+            Start Date and Time
           </InputLabel>
-          <StaticDatePicker
+          <DateTimePicker
+            value={new dayjs(event?.startDate)}
+            disablePast
+            onChange={handleDateTimeChange}
+            sx={{ width: "100%" }}
+          />
+          {/* <StaticDatePicker
             onChange={handleDateChange}
-            value={dateTime?.startDate}
             id="date"
             sx={{ bgcolor: "#f5f5f599", borderRadius: "20px 0 0 20px" }}
             disablePast
-          />
+          /> */}
         </Box>
-        <Box width={{ xs: "100%", md: "50%" }}>
-          <InputLabel shrink htmlFor="time">
-            Start time
-          </InputLabel>
-          <StaticTimePicker
-            onChange={handleTimeChange}
-            value={dateTime?.startTime}
-            id="time"
-            sx={{ bgcolor: "#f5f5f599", borderRadius: "0 20px 20px 0" }}
-          />
-        </Box>
+        <Typography variant="subtitle2" color={"GrayText"} my={1}>
+          Select the starting date and time for the event.
+        </Typography>
       </Stack>
       <Stack
         direction={"row"}

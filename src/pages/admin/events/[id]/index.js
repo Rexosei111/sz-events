@@ -4,6 +4,7 @@ import {
   Box,
   Button,
   Chip,
+  CircularProgress,
   Paper,
   Skeleton,
   Stack,
@@ -14,10 +15,19 @@ import { useRouter } from "next/router";
 import React, { useContext, useEffect, useState } from "react";
 import useSWR from "swr";
 import Markdown from "react-markdown";
-import { DateRange, LocationCity, LocationOn } from "@mui/icons-material";
+import {
+  DateRange,
+  Delete,
+  LocationCity,
+  LocationOn,
+} from "@mui/icons-material";
 import Link from "next/link";
 import { ImageCarousel } from "@/components/shared/gallery";
 import Head from "next/head";
+import { APIClient } from "@/utils/axios";
+import { isAxiosError } from "axios";
+import { SnackbarContext } from "@/pages/_app";
+import { LoadingButton } from "@mui/lab";
 
 const DetailsLoadingSkeleton = () => {
   return (
@@ -35,7 +45,11 @@ const DetailsLoadingSkeleton = () => {
 
 export default function EventDetailsPage() {
   const { setTopBarTitle, topbarTitle } = useContext(LayoutContext);
+  const { handleOpen: handleSnackbarOpen, setSnackSeverity } =
+    useContext(SnackbarContext);
   const [eventImages, setEventImages] = useState([]);
+  const [deleting, setDeleting] = useState(false);
+  const [publishing, setPublishing] = useState(false);
   const router = useRouter();
   const {
     data: event,
@@ -51,6 +65,41 @@ export default function EventDetailsPage() {
     }
   }, [event]);
 
+  const handleDelete = async () => {
+    setDeleting(true);
+    try {
+      await APIClient.delete(`events/${router.query.id}`);
+      router.push("/admin/events");
+    } catch (error) {
+      if (isAxiosError(error)) {
+        setSnackSeverity("error");
+        handleSnackbarOpen("Unable to delete this event!");
+      }
+    } finally {
+      setDeleting(false);
+    }
+  };
+  const handlePublish = async () => {
+    setPublishing(true);
+    try {
+      const { data } = await APIClient.patch(`events/${router.query.id}`, {
+        ...event,
+        published: !event?.published,
+      });
+      setSnackSeverity("success");
+      handleSnackbarOpen(
+        `Event has been ${!event?.published ? "published" : "unpublished"}`
+      );
+      mutate(data);
+    } catch (error) {
+      if (isAxiosError(error)) {
+        setSnackSeverity("error");
+        handleSnackbarOpen("Unable to publish this event");
+      }
+    } finally {
+      setPublishing(false);
+    }
+  };
   if (isLoading) {
     return <DetailsLoadingSkeleton />;
   }
@@ -67,10 +116,18 @@ export default function EventDetailsPage() {
         flexWrap={{ xs: "wrap", sm: "nowrap" }}
         mb={2}
       >
-        {/* <Typography variant="h6" fontSize={13} gutterBottom mb={1}>
-          by Spirit zone
-        </Typography> */}
-        <Chip label={event?.published ? "Published" : "Draft"} />
+        {publishing && (
+          <Chip
+            label={event?.published ? "Unpublishing..." : "Publishing"}
+            icon={<CircularProgress size={20} />}
+          />
+        )}
+        {!publishing && (
+          <Chip
+            label={event?.published ? "Unpublish" : "Publish"}
+            onClick={handlePublish}
+          />
+        )}
       </Stack>
       <Typography
         variant="h4"
@@ -134,14 +191,28 @@ export default function EventDetailsPage() {
         width={"100%"}
         flexDirection={"row"}
         justifyContent={"flex-end"}
+        gap={2}
         mt={5}
       >
+        <LoadingButton
+          loading={deleting}
+          // LinkComponent={Link}
+          variant="contained"
+          color="error"
+          onClick={handleDelete}
+          startIcon={<Delete fontSize="small" />}
+          disableElevation
+          // href={`/admin/events/${event?.id}/edit`}
+          sx={{ textTransform: "none" }}
+        >
+          Delete
+        </LoadingButton>
         <Button
           LinkComponent={Link}
           variant="contained"
           disableElevation
           href={`/admin/events/${event?.id}/edit`}
-          sx={{ ml: "auto", textTransform: "none" }}
+          sx={{ textTransform: "none" }}
         >
           Edit
         </Button>

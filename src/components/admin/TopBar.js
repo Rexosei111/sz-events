@@ -20,6 +20,7 @@ import useSWR from "swr";
 import { fetcher } from "@/utils/swr_fetcher";
 import { useRouter } from "next/router";
 import Link from "next/link";
+import { clipText } from "@/utils/clip";
 
 const settings = [
   { name: "Profile", url: "/admin/profile" },
@@ -77,10 +78,11 @@ export default function TopBar() {
             variant="h6"
             textAlign={"center"}
             textOverflow={"ellipsis"}
+            fontSize={18}
             noWrap
             component="div"
           >
-            {topbarTitle}
+            {clipText(topbarTitle, 3)}
           </Typography>
         </Box>
         {data && (
