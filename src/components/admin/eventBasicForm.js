@@ -13,6 +13,7 @@ import {
   StaticDatePicker,
   StaticTimePicker,
   TimeField,
+  TimePicker,
 } from "@mui/x-date-pickers";
 import TitleIcon from "@mui/icons-material/Title";
 import { createContext } from "react";
@@ -187,7 +188,7 @@ export default function EventBasicForm({
           <InputLabel shrink htmlFor="time">
             Start time
           </InputLabel>
-          <TimeField
+          <TimePicker
             value={dateTime.startTime}
             defaultValue={new dayjs(new Date().setHours(0, 0, 0, 0))}
             onChange={handleTimeChange}
@@ -382,7 +383,7 @@ export function EventEditBasicForm({
           <InputLabel shrink htmlFor="time">
             Start time
           </InputLabel>
-          <TimeField
+          <TimePicker
             value={dateTime?.startTime}
             onChange={handleTimeChange}
             sx={{ width: { xs: "100%" } }}
