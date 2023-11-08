@@ -281,7 +281,12 @@ export default function Attendance({ event = "", query = "" }) {
         attendance?.total > 0 &&
         Object.keys(groupedItems).map((letter, index) => (
           <Box key={index} mb={4}>
-            <Typography variant="h5" mb={2} color={"rgba(0,0,0,0.8)"}>
+            <Typography
+              variant="h6"
+              mb={2}
+              color={"text.secondary"}
+              fontWeight={700}
+            >
               {letter}
             </Typography>
 
@@ -348,7 +353,7 @@ export default function Attendance({ event = "", query = "" }) {
                               htmlColor={
                                 item.present === true
                                   ? "white"
-                                  : "rgba(0,0,0,0.4)"
+                                  : theme.palette.text.primary
                               }
                             />
                           </IconButton>
@@ -372,7 +377,7 @@ export default function Attendance({ event = "", query = "" }) {
                               htmlColor={
                                 item.present === false
                                   ? "white"
-                                  : "rgba(0,0,0,0.4)"
+                                  : theme.palette.text.primary
                               }
                             />
                           </IconButton>
@@ -388,7 +393,7 @@ export default function Attendance({ event = "", query = "" }) {
                               height: 40,
                             }}
                           >
-                            <DeleteOutline htmlColor={"rgba(0,0,0,0.4)"} />
+                            <DeleteOutline htmlColor={"text.primary"} />
                           </IconButton>
                         </Tooltip>
                       </Stack>
