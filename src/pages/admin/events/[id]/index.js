@@ -129,10 +129,10 @@ export default function EventDetailsPage() {
       </Stack>
       <Typography
         variant="h4"
-        fontSize={24}
+        fontSize={35}
         fontWeight={700}
         gutterBottom
-        color={(theme) => theme.palette.primary.main}
+        color={(theme) => theme.palette.secondary.main}
         mb={2}
       >
         {event?.name}

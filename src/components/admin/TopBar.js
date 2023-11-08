@@ -58,12 +58,11 @@ export default function TopBar() {
       sx={{
         width: { sm: `calc(100% - ${desktopDrawerOpen ? drawerWidth : 0}px)` },
         ml: { sm: `${desktopDrawerOpen ? drawerWidth : 0}px` },
-        bgcolor: "white",
         color: (theme) => theme.palette.text.primary,
       }}
       elevation={2}
     >
-      <Toolbar>
+      <Toolbar sx={{ bgcolor: "background.paper" }}>
         <IconButton
           color="inherit"
           aria-label="open drawer"

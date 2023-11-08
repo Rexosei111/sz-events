@@ -56,7 +56,12 @@ export default function Index() {
         <title>Attendance</title>
       </Head>
       <Box>
-        <Typography variant="h5" fontWeight={500} color={"black"} gutterBottom>
+        <Typography
+          color={"text.primary"}
+          fontWeight={700}
+          variant="h5"
+          gutterBottom
+        >
           Attendance
         </Typography>
         <Stack
@@ -77,9 +82,16 @@ export default function Index() {
               fullWidth
               id="event-selection"
               labelId="event-selection-label"
+              displayEmpty
+              label="Select an event"
               value={selectedEvent}
               onChange={handleEventChange}
-              input={<BootstrapInput placeholder="Select event" />}
+              input={
+                <BootstrapInput
+                  placeholder="Select an event"
+                  label="Select an event"
+                />
+              }
             >
               {events?.items &&
                 events?.items.map((event, index) => (
@@ -112,6 +124,18 @@ export default function Index() {
             </>
           )}
         </Stack>
+        {selectedEvent === "" && (
+          <Stack
+            height={300}
+            alignItems={"center"}
+            // color={"text.primary"}
+            justifyContent={"center"}
+          >
+            <Typography variant="subtitle1" fontSize={20}>
+              Select an event
+            </Typography>
+          </Stack>
+        )}
         {selectedEvent !== "" && (
           <Attendance event={selectedEvent} query={query} />
         )}

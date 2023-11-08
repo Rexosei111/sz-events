@@ -12,7 +12,12 @@ export default function AdminLoginPage() {
       <Head>
         <title>Admin Login</title>
       </Head>
-      <Stack flexDirection={"row"} width={"100vw"} minHeight={"100vh"}>
+      <Stack
+        flexDirection={"row"}
+        width={"100vw"}
+        minHeight={"100vh"}
+        bgcolor={"background.default"}
+      >
         <Box width={{ xs: "100%", md: "50%" }} minHeight={"100%"} p={2}>
           <Navbar style={{ backgroundColor: "transparent" }}>
             <Navbar.Brand href="/events">Home</Navbar.Brand>

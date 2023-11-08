@@ -74,6 +74,7 @@ export default function RegistrationForm({
       sx={{
         p: { xs: 1, sm: 2, md: 2 },
         width: { xs: "100%", sm: "90%", md: "80%", lg: "70%" },
+        bgcolor: "transparent",
       }}
       elevation={0}
     >
@@ -108,6 +109,9 @@ export default function RegistrationForm({
                   <PersonOutline fontSize="small" />
                 </InputAdornment>
               ),
+              style: {
+                fontSize: 13,
+              },
             }}
             fullWidth
           />
@@ -124,6 +128,9 @@ export default function RegistrationForm({
                   <PersonOutline fontSize="small" />
                 </InputAdornment>
               ),
+              style: {
+                fontSize: 13,
+              },
             }}
             fullWidth
           />
@@ -143,6 +150,9 @@ export default function RegistrationForm({
                   <PersonOutline fontSize="small" />
                 </InputAdornment>
               ),
+              style: {
+                fontSize: 13,
+              },
             }}
             fullWidth
           />
@@ -159,9 +169,11 @@ export default function RegistrationForm({
                   <MailOutlineIcon fontSize="small" />
                 </InputAdornment>
               ),
+              style: {
+                fontSize: 13,
+              },
             }}
             fullWidth
-            focused
             placeholder="example@provider.com"
           />
           <TextInputField
@@ -177,31 +189,24 @@ export default function RegistrationForm({
                   <LockOutlinedIcon fontSize="small" />
                 </InputAdornment>
               ),
+              style: {
+                fontSize: 13,
+              },
             }}
             fullWidth
           />
-          <Button
-            appearance={isValid ? "primary" : "default"}
+          <LoadingButton
+            // appearance={isValid ? "primary" : "default"}
+            variant="contained"
+            color="primary"
+            disabled={!isValid}
+            disableElevation
             loading={isSubmitting}
             type="submit"
-
-            // sx={{ textTransform: "capitalize", height: 45, fontSize: 17 }}
+            sx={{ textTransform: "capitalize" }}
           >
             Submit
-          </Button>
-          <>
-            <Divider>or</Divider>
-
-            <Button
-              onClick={handleGoogleAuth}
-              startIcon={<Google fontSize="small" />}
-            >
-              Continue with Google
-            </Button>
-          </>
-          {/* <Link href="#" style={{ marginLeft: "auto", fontSize: 15 }}>
-              forgot your password?
-            </Link> */}
+          </LoadingButton>
         </Stack>
       </form>
     </Paper>

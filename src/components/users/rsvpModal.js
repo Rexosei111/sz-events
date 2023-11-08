@@ -1,15 +1,13 @@
 import React, { useContext, useState } from "react";
-import {
-  Modal,
-  Toggle,
-  ButtonToolbar,
-  Placeholder,
-  IconButton,
-  Button,
-} from "rsuite";
+import { Modal, IconButton } from "rsuite";
 import { TextInputField } from "../shared/inputs";
 import {
   Box,
+  Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
   FormControlLabel,
   InputAdornment,
   Stack,
@@ -42,20 +40,20 @@ const attendeeSchema = yup
 
 export const SuccessModal = ({ open, handleClose, event_name }) => {
   return (
-    <Modal overflow={true} open={open} onClose={handleClose}>
-      <Modal.Body>
+    <Dialog open={open} onClose={handleClose}>
+      <DialogContent>
         <Stack height={200} alignItems={"center"} justifyContent={"center"}>
           <IconButton
             circle
             size="lg"
             icon={<CheckCircle htmlColor="green" fontSize="large" />}
           />
-          <h5 style={{ marginTop: "10px", textAlign: "center" }}>
-            You have successfully registered for {event_name}
-          </h5>
+          <Typography variant="h6" sx={{ mt: 3, textAlign: "center" }}>
+            You have successfully registered for <strong>{event_name}</strong>
+          </Typography>
         </Stack>
-      </Modal.Body>
-    </Modal>
+      </DialogContent>
+    </Dialog>
   );
 };
 
@@ -102,20 +100,24 @@ export default function RSVPModal({
   };
   return (
     <>
-      <Modal overflow={true} open={open} onClose={handleClose}>
-        <Modal.Header>
-          <Modal.Title>RSVP {"🎉"}</Modal.Title>
-          <Typography variant="subtitle2" mt={1} fontSize={13}>
-            Kindly fill out this form
-          </Typography>
-        </Modal.Header>
-        <form
-          method="POST"
-          action="#"
-          id="rsvp-form"
-          onSubmit={handleSubmit(onSubmit)}
-        >
-          <Modal.Body>
+      <Dialog open={open} onClose={handleClose} fullWidth>
+        <DialogTitle>
+          <Stack>
+            <Typography variant="h5" color={"text.primary"}>
+              RSVP {"🎉"}
+            </Typography>
+            <Typography variant="subtitle2" fontSize={13}>
+              Kindly fill out this form
+            </Typography>
+          </Stack>
+        </DialogTitle>
+        <DialogContent>
+          <form
+            method="POST"
+            action="#"
+            id="rsvp-form"
+            onSubmit={handleSubmit(onSubmit)}
+          >
             <Stack flexDirection={"column"} gap={2}>
               <TextInputField
                 {...register("first_name")}
@@ -212,20 +214,31 @@ export default function RSVPModal({
                 placeholder="Location of the attendee"
               />
             </Stack>
-          </Modal.Body>
-          <Modal.Footer>
-            <Button
-              appearance="primary"
-              type="submit"
-              form="rsvp-form"
-              loading={isSubmitting}
-            >
-              Submit
-            </Button>
-            <Button onClick={handleClose}>Cancel</Button>
-          </Modal.Footer>
-        </form>
-      </Modal>
+            <DialogActions>
+              <LoadingButton
+                variant="contained"
+                disableElevation
+                sx={{ textTransform: "capitalize" }}
+                color="primary"
+                type="submit"
+                form="rsvp-form"
+                loading={isSubmitting}
+              >
+                Submit
+              </LoadingButton>
+              <Button
+                variant="contained"
+                disableElevation
+                color="secondary"
+                sx={{ textTransform: "capitalize" }}
+                onClick={handleClose}
+              >
+                Cancel
+              </Button>
+            </DialogActions>
+          </form>
+        </DialogContent>
+      </Dialog>
     </>
   );
 }

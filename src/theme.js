@@ -20,22 +20,26 @@ export const lato = Lato({
 const theme = createTheme({
   palette: {
     mode: "dark",
-    primary: {
-      main: "#479696",
-    },
     secondary: {
-      main: "#FF3524",
+      main: "#1C38D2",
+      light: "#495FDB",
+      dark: "#132793",
+      contrastText: "#FFFFFF",
     },
-    text: {
-      primary: "#B1AAA0",
-      secondary: "#848385",
+    primary: {
+      main: "#86005e",
+      light: "#A7516F",
+      dark: "#8c006000",
+      contrastText: "#FFFFFF",
     },
     background: {
-      default: "#181a1b",
+      default: "#1c1f20",
       paper: "#181a1b",
     },
-
-    divider: "rgba(255, 255, 255, 0.12)",
+    text: {
+      primary: "#dedede",
+      secondary: "#979797",
+    },
   },
   components: {
     MuiButton: {
@@ -47,7 +51,8 @@ const theme = createTheme({
     },
   },
   typography: {
-    fontFamily: lato.style.fontFamily,
+    fontFamily:
+      "Apple-System,Arial,Helvetica,PingFang SC,Hiragino Sans GB,Microsoft YaHei,STXihei,sans-serif",
   },
 });
 

@@ -17,10 +17,15 @@ export default function UserLoginPage() {
       <Head>
         <title>User Login</title>
       </Head>
-      <Stack flexDirection={"row"} width={"100vw"} minHeight={"100vh"}>
+      <Stack
+        flexDirection={"row"}
+        width={"100vw"}
+        minHeight={"100vh"}
+        bgcolor={"background.default"}
+      >
         <Box width={{ xs: "100%", md: "50%" }} minHeight={"100%"} p={2}>
           <Navbar style={{ backgroundColor: "transparent" }}>
-            <Navbar.Brand href="/events">Home</Navbar.Brand>
+            <Navbar.Brand href="/events">SZ events</Navbar.Brand>
           </Navbar>
           <Stack
             alignItems={"center"}

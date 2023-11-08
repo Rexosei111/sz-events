@@ -48,7 +48,7 @@ export function UserEventListingCard({ event }) {
     router.push(`/events/${event.id}`);
   };
   return (
-    <Card elevation={0}>
+    <Card elevation={0} sx={{ bgcolor: "transparent" }}>
       <CardActionArea onClick={handleViewDetails}>
         <CardMedia
           component="img"
@@ -89,7 +89,7 @@ export function FollowingOrganiserCard({ organiser }) {
     console.log(organiser.id);
   };
   return (
-    <Card elevation={0}>
+    <Card elevation={0} sx={{ bgcolor: "transparent" }}>
       <CardActionArea onClick={handleViewDetails}>
         <CardMedia
           component="img"

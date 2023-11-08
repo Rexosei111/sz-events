@@ -19,19 +19,8 @@ export const AntTab = styled((props) => <Tab disableRipple {...props} />)(
     },
     fontWeight: theme.typography.fontWeightRegular,
     marginRight: theme.spacing(1),
-    color: "#848385",
-    fontFamily: [
-      "-apple-system",
-      "BlinkMacSystemFont",
-      '"Segoe UI"',
-      "Roboto",
-      '"Helvetica Neue"',
-      "Arial",
-      "sans-serif",
-      '"Apple Color Emoji"',
-      '"Segoe UI Emoji"',
-      '"Segoe UI Symbol"',
-    ].join(","),
+    color: theme.palette.text.primary,
+
     "&:hover": {
       color: "#40a9ff",
       opacity: 1,
