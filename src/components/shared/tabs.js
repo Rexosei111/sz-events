@@ -4,7 +4,7 @@ import Tab from "@mui/material/Tab";
 import Box from "@mui/material/Box";
 
 export const AntTabs = styled(Tabs)({
-  borderBottom: "1px solid #e8e8e8",
+  borderBottom: "1px solid rgba(255, 255, 255, 0.12)",
   "& .MuiTabs-indicator": {
     backgroundColor: "#1890ff",
   },

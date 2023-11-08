@@ -113,8 +113,15 @@ export default function EventListing() {
       >
         <h3>Events</h3>
 
-        <InputGroup inside style={{ width: sm ? "100%" : 300 }}>
-          <Input placeholder="Search event" onChange={handleQueryChange} />
+        <InputGroup
+          inside
+          style={{ width: sm ? "100%" : 300, backgroundColor: "#121212" }}
+        >
+          <Input
+            placeholder="Search event"
+            onChange={handleQueryChange}
+            style={{ backgroundColor: "#121212" }}
+          />
           <InputGroup.Button>
             <SearchIcon />
           </InputGroup.Button>

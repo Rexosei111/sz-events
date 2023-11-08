@@ -31,17 +31,29 @@ export const CustomNavbar = ({ onSelect, activeKey, ...props }) => {
 
   return (
     <Navbar {...props} style={{ backgroundColor: "transparent" }}>
-      <Navbar.Brand href="/events" onClick={handleNavigation}>
+      <Navbar.Brand
+        href="/events"
+        onClick={handleNavigation}
+        style={{ color: "#ffffff" }}
+      >
         SZ Event
       </Navbar.Brand>
       <Nav onSelect={onSelect} activeKey={activeKey}>
-        <Nav.Item eventKey="2" href="/events" onClick={handleNavigation}>
+        <Nav.Item
+          eventKey="2"
+          href="/events"
+          onClick={handleNavigation}
+          style={{ color: "#ffffff" }}
+        >
           Find events
         </Nav.Item>
         {!matches && (
           <Nav.Item
             eventKey="3"
             href="/users/me/following"
+            style={{
+              color: "#ffffff",
+            }}
             onClick={handleNavigation}
           >
             Following
@@ -63,13 +75,18 @@ export const CustomNavbar = ({ onSelect, activeKey, ...props }) => {
               />
             }
           >
-            <Nav.Item eventKey="4" onClick={handleLogout}>
+            <Nav.Item
+              eventKey="4"
+              onClick={handleLogout}
+              style={{ color: "#ffffff" }}
+            >
               Logout
             </Nav.Item>
             {matches && (
               <Nav.Item
                 eventKey="3"
                 href="/users/me/following"
+                style={{ color: "#ffffff" }}
                 onClick={(event) =>
                   handleNavigation(event, "/users/me/following")
                 }
@@ -85,12 +102,14 @@ export const CustomNavbar = ({ onSelect, activeKey, ...props }) => {
               eventKey="5"
               href="/auth/users"
               onClick={handleNavigation}
+              style={{ color: "#ffffff" }}
             >
               Login
             </Nav.Item>
             <Nav.Item
               eventKey="6"
               href="/auth/register"
+              style={{ color: "#ffffff" }}
               onClick={handleNavigation}
             >
               Sign up

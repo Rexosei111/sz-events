@@ -19,7 +19,7 @@ export const lato = Lato({
 // Create a theme instance.
 const theme = createTheme({
   palette: {
-    mode: "light",
+    mode: "dark",
     primary: {
       main: "#479696",
     },
@@ -27,12 +27,13 @@ const theme = createTheme({
       main: "#FF3524",
     },
     text: {
-      primary: "#575757",
+      primary: "#ffffff",
       secondary: "#848385",
     },
     background: {
-      default: "#ffffff",
+      default: "#121212",
     },
+    divider: "rgba(255, 255, 255, 0.12)",
   },
   components: {
     MuiButton: {
