@@ -170,7 +170,7 @@ export default function NewUser({ open, handleClose }) {
                 style: { fontSize: 13 },
               }}
               fullWidth
-              placeholder="Location of the attendee"
+              placeholder="User's password"
             />
           </Stack>
         </form>
