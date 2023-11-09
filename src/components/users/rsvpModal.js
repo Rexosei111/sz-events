@@ -34,6 +34,7 @@ import {
 import { SnackbarContext } from "@/pages/_app";
 import { LoadingButton } from "@mui/lab";
 import { APIClient } from "@/utils/axios";
+import theme from "@/theme";
 
 const attendeeSchema = yup
   .object({
@@ -262,7 +263,8 @@ export default function RSVPModal({
                 <InputLabel id="occupation-select-label" shrink>
                   Occupation
                 </InputLabel>
-                <Select
+                <TextInputField
+                  select
                   labelId="occupation-id-label"
                   id="occupation-id"
                   fullWidth
@@ -281,7 +283,7 @@ export default function RSVPModal({
                   <MenuItem value={"other"} sx={{ fontSize: 13 }}>
                     Other
                   </MenuItem>
-                </Select>
+                </TextInputField>
               </Box>
               <Box>
                 {occupation === "student" && (
@@ -295,7 +297,8 @@ export default function RSVPModal({
                       <InputLabel id="student-level-select-label" shrink>
                         level
                       </InputLabel>
-                      <Select
+                      <TextInputField
+                        select
                         labelId="level-id-label"
                         id="level-id"
                         fullWidth
@@ -319,7 +322,7 @@ export default function RSVPModal({
                         <MenuItem value={"primary"}>Primary</MenuItem>
                         <MenuItem value={"Secondary"}>Secondary</MenuItem>
                         <MenuItem value={"Tertiary"}>Tertiary</MenuItem>
-                      </Select>
+                      </TextInputField>
                     </Box>
                     <Box sx={{ width: { xs: "100%", md: "80%" } }}>
                       <InputLabel shrink>School</InputLabel>
@@ -400,7 +403,7 @@ export default function RSVPModal({
                 <FormGroup>
                   <Stack
                     flexDirection={"row"}
-                    gap={2}
+                    gap={1}
                     alignItems={"center"}
                     flexWrap={{ xs: "wrap", md: "nowrap" }}
                   >
@@ -419,14 +422,15 @@ export default function RSVPModal({
                       control={<Checkbox />}
                       label="Instagram"
                     />
+                    <FormControlLabel
+                      {...register("by_friend")}
+                      onChange={handlePublicityChange}
+                      control={<Checkbox />}
+                      label="referred by a friend"
+                    />
                   </Stack>
-                  <FormControlLabel
-                    {...register("by_friend")}
-                    onChange={handlePublicityChange}
-                    control={<Checkbox />}
-                    label="referred by a friend"
-                  />
                 </FormGroup>
+
                 {byFriend === true && (
                   <Box>
                     <InputLabel shrink>Name of friend</InputLabel>
@@ -446,6 +450,20 @@ export default function RSVPModal({
             </Stack>
           </DialogContent>
           <DialogActions>
+            <Button
+              variant="outlined"
+              sx={{
+                textTransform: "capitalize",
+                color: theme.palette.common.white,
+                borderColor: "transparent",
+                "&: hover": {
+                  borderColor: theme.palette.common.white,
+                },
+              }}
+              onClick={handleClose}
+            >
+              Cancel
+            </Button>
             <LoadingButton
               variant="contained"
               disableElevation
@@ -457,15 +475,6 @@ export default function RSVPModal({
             >
               Submit
             </LoadingButton>
-            <Button
-              variant="contained"
-              disableElevation
-              color="secondary"
-              sx={{ textTransform: "capitalize" }}
-              onClick={handleClose}
-            >
-              Cancel
-            </Button>
           </DialogActions>
         </form>
       </Dialog>
