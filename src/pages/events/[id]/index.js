@@ -370,13 +370,13 @@ export default function EventDetails() {
   );
 }
 
-export async function getServerSideProps(context) {
-  return {
-    props: {
-      event_mini: {},
-    },
-  };
-}
+// export async function getServerSideProps(context) {
+//   return {
+//     props: {
+//       event_mini: {},
+//     },
+//   };
+// }
 EventDetails.getLayout = function (page) {
   return <LayoutTwo>{page}</LayoutTwo>;
 };
