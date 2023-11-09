@@ -409,24 +409,44 @@ export default function RSVPModal({
                   >
                     <FormControlLabel
                       {...register("via_whatsapp")}
-                      control={<Checkbox />}
+                      control={<Checkbox size="small" />}
+                      slotProps={{
+                        typography: {
+                          fontSize: 13,
+                        },
+                      }}
                       label="Whatsapp"
                     />
                     <FormControlLabel
-                      control={<Checkbox />}
+                      control={<Checkbox size="small" />}
                       label="Member"
                       {...register("by_member")}
+                      slotProps={{
+                        typography: {
+                          fontSize: 13,
+                        },
+                      }}
                     />
                     <FormControlLabel
                       {...register("via_instagram")}
-                      control={<Checkbox />}
+                      control={<Checkbox size="small" />}
                       label="Instagram"
+                      slotProps={{
+                        typography: {
+                          fontSize: 13,
+                        },
+                      }}
                     />
                     <FormControlLabel
                       {...register("by_friend")}
                       onChange={handlePublicityChange}
-                      control={<Checkbox />}
+                      control={<Checkbox size="small" />}
                       label="referred by a friend"
+                      slotProps={{
+                        typography: {
+                          fontSize: 13,
+                        },
+                      }}
                     />
                   </Stack>
                 </FormGroup>
