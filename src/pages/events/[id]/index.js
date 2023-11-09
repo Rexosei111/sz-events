@@ -370,22 +370,13 @@ export default function EventDetails() {
   );
 }
 
-// export async function getServerSideProps(context) {
-//   const { id } = context.query;
-//   let event_mini = {};
-//   try {
-//     const { data } = await APIClient.get(`users/events/${id}/mini`);
-
-//     event_mini = data;
-//   } catch (error) {
-//     console.log(error);
-//   }
-//   return {
-//     props: {
-//       event_mini,
-//     },
-//   };
-// }
+export async function getServerSideProps(context) {
+  return {
+    props: {
+      event_mini: {},
+    },
+  };
+}
 EventDetails.getLayout = function (page) {
   return <LayoutTwo>{page}</LayoutTwo>;
 };
