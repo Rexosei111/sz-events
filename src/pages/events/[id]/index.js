@@ -106,6 +106,22 @@ export default function EventDetails() {
     <>
       <Head>
         <title>{event !== undefined && event.name}</title>
+        <meta property="og:title" content={event !== undefined && event.name} />
+        <meta
+          property="og:description"
+          content={event !== undefined && event?.summary}
+        />
+        <meta
+          property="og:image"
+          content={event !== undefined && event.cover_image}
+        />
+        <meta
+          property="og:url"
+          content={`https://sz-events.vercel.app/events/${
+            event !== undefined && event.id
+          }`}
+        />
+        <meta property="og:type" content="website" />
       </Head>
       <Box
         variant="outlined"
