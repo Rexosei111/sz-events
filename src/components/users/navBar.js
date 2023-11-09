@@ -9,7 +9,11 @@ import { useRouter } from "next/router";
 import { useTheme } from "@emotion/react";
 
 export const CustomNavbar = ({ onSelect, activeKey, ...props }) => {
-  const { data: me, error, isLoading } = useSWR("/users/me", fetcher);
+  const {
+    data: me,
+    error,
+    isLoading,
+  } = useSWR("/users/me", fetcher, { refreshInterval: 1000 * 30 });
   const [token, setToken] = useToken("szevent_token");
   const router = useRouter();
   const handleLogout = () => {

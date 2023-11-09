@@ -37,7 +37,7 @@ import Markdown from "react-markdown";
 import { IconButton, Panel } from "rsuite";
 import useSWR from "swr";
 
-export default function EventDetails() {
+export default function EventDetails({ event_mini }) {
   const [eventImages, setEventImages] = useState([]);
   const [rsvpOpen, setRSVPOpen] = useState(false);
   const [successOpen, setSuccessOpen] = useState(false);
@@ -67,7 +67,11 @@ export default function EventDetails() {
     error,
     isLoading,
     mutate,
-  } = useSWR("users/events/" + router.query.id, fetcher);
+  } = useSWR("users/events/" + router.query.id, fetcher, {
+    revalidateIfStale: false,
+    revalidateOnFocus: false,
+    revalidateOnReconnect: false,
+  });
 
   const {
     data: following,
@@ -76,7 +80,12 @@ export default function EventDetails() {
   } = useSWR(
     () =>
       event?.organiser.id ? "users/me/following/" + event?.organiser.id : null,
-    fetcher
+    fetcher,
+    {
+      revalidateIfStale: false,
+      revalidateOnFocus: false,
+      revalidateOnReconnect: false,
+    }
   );
 
   const handleFollow = async () => {
@@ -105,21 +114,13 @@ export default function EventDetails() {
   return (
     <>
       <Head>
-        <title>{event !== undefined && event.name}</title>
-        <meta property="og:title" content={event !== undefined && event.name} />
-        <meta
-          property="og:description"
-          content={event !== undefined && event?.summary}
-        />
-        <meta
-          property="og:image"
-          content={event !== undefined && event.cover_image}
-        />
+        <title>{event_mini.name}</title>
+        <meta property="og:title" content={event_mini.name} />
+        <meta property="og:description" content={event_mini?.summary} />
+        <meta property="og:image" content={event_mini.cover_image} />
         <meta
           property="og:url"
-          content={`https://sz-events.vercel.app/events/${
-            event !== undefined && event.id
-          }`}
+          content={`https://sz-events.vercel.app/events/${event_mini.id}`}
         />
         <meta property="og:type" content="website" />
       </Head>
@@ -369,6 +370,22 @@ export default function EventDetails() {
   );
 }
 
+export async function getServerSideProps(context) {
+  const { id } = context.query;
+  let event_mini = {};
+  try {
+    const { data } = await APIClient.get(`users/events/${id}/mini`);
+
+    event_mini = data;
+  } catch (error) {
+    console.log(error);
+  }
+  return {
+    props: {
+      event_mini,
+    },
+  };
+}
 EventDetails.getLayout = function (page) {
   return <LayoutTwo>{page}</LayoutTwo>;
 };

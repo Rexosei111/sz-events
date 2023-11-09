@@ -102,6 +102,17 @@ export default function EventListing() {
     <Box sx={{ px: { xs: 2, md: 0 } }}>
       <Head>
         <title>Events</title>
+        <meta property="og:title" content="SZ events" />
+        <meta
+          property="og:description"
+          content="Get all events organised by Spirit zone in one place."
+        />
+        <meta
+          property="og:image"
+          content="https://szevents-bucket.s3.eu-west-3.amazonaws.com/2cf54546-4c27-48d2-a050-21c369e59fb9.png"
+        />
+        <meta property="og:url" content="https://sz-events.vercel.app/events" />
+        <meta property="og:type" content="website" />
       </Head>
 
       <Stack

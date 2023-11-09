@@ -36,7 +36,11 @@ export default function FollowingPage() {
     data: following,
     error,
     isLoading,
-  } = useSWR(`users/me/following?query=${debounceQuery}`, fetcher);
+  } = useSWR(`users/me/following?query=${debounceQuery}`, fetcher, {
+    revalidateIfStale: false,
+    revalidateOnFocus: false,
+    revalidateOnReconnect: false,
+  });
 
   useEffect(() => {
     if (following !== undefined) {

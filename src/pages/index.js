@@ -22,7 +22,7 @@ export default function Home() {
         <meta property="og:title" content="SZ events" />
         <meta
           property="og:description"
-          content="Get all events organised by spirit zone in one place."
+          content="Get all events organised by Spirit zone in one place."
         />
         <meta
           property="og:image"
