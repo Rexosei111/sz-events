@@ -28,7 +28,7 @@ import {
   Stack,
   Typography,
 } from "@mui/material";
-import { isAxiosError } from "axios";
+import axios, { isAxiosError } from "axios";
 import Head from "next/head";
 import Image from "next/image";
 import { useRouter } from "next/router";
@@ -374,7 +374,9 @@ export async function getServerSideProps(context) {
   const { id } = context.query;
   let event_mini = {};
   try {
-    const { data } = await APIClient.get(`users/events/${id}/mini`);
+    const { data } = await axios.get(
+      `${process.env.NEXT_PUBLIC_API_BASE_URL}users/events/${id}/mini`
+    );
 
     event_mini = data;
   } catch (error) {
