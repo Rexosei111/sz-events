@@ -1,15 +1,22 @@
 import React, { useContext, useState } from "react";
 import { Modal, IconButton } from "rsuite";
-import { TextInputField } from "../shared/inputs";
+import { StyledInputBase, TextInputField } from "../shared/inputs";
 import {
   Box,
   Button,
+  Checkbox,
   Dialog,
   DialogActions,
   DialogContent,
   DialogTitle,
+  Divider,
+  FormControl,
   FormControlLabel,
+  FormGroup,
   InputAdornment,
+  InputLabel,
+  MenuItem,
+  Select,
   Stack,
   Typography,
 } from "@mui/material";
@@ -20,6 +27,7 @@ import { isAxiosError } from "axios";
 import {
   CheckCircle,
   EmailOutlined,
+  LocationOnOutlined,
   Person2Outlined,
   PhoneAndroidOutlined,
 } from "@mui/icons-material";
@@ -33,8 +41,17 @@ const attendeeSchema = yup
     last_name: yup.string().required(),
     phone_number: yup.string().required(),
     email: yup.string().email(),
-    location: yup.string(),
-    present: yup.boolean().default(false),
+    location: yup.string().nullable(),
+    occupation: yup.string().nullable(),
+    level: yup.string().nullable(),
+    school: yup.string().nullable(),
+    profession: yup.string().nullable(),
+    other: yup.string().nullable(),
+    via_whatsapp: yup.boolean().nullable(),
+    by_member: yup.boolean().nullable(),
+    via_instagram: yup.boolean().nullable(),
+    by_friend: yup.boolean().nullable(),
+    friend_name: yup.string().nullable(),
   })
   .required();
 
@@ -69,13 +86,39 @@ export default function RSVPModal({
     register,
     handleSubmit,
     reset,
-
+    getValues,
+    setValue,
     formState: { errors, isSubmitting, isSubmitSuccessful, isValid },
   } = useForm({
     resolver: yupResolver(attendeeSchema),
   });
 
+  const [occupation, setOccupation] = useState(null);
+  const [byFriend, setByFriend] = useState(false);
+
+  const handleOccupationChange = (event) => {
+    setOccupation(event.target.value);
+    setValue("occupation", event.target.value);
+  };
+
+  const handlePublicityChange = (event) => {
+    setByFriend(event.target.checked);
+  };
   const onSubmit = async (form_data) => {
+    if (form_data?.occupation && form_data?.occupation === "student") {
+      delete form_data?.proffession;
+      delete form_data?.other;
+    }
+    if (form_data?.occupation && form_data?.occupation === "worker") {
+      delete form_data?.level;
+      delete form_data?.school;
+      delete form_data?.other;
+    }
+    if (form_data?.occupation && form_data?.occupation === "other") {
+      delete form_data?.level;
+      delete form_data?.school;
+      delete form_data?.proffession;
+    }
     try {
       const { data } = await APIClient.post(
         `users/event/${event_id}`,
@@ -100,7 +143,7 @@ export default function RSVPModal({
   };
   return (
     <>
-      <Dialog open={open} onClose={handleClose} fullWidth>
+      <Dialog open={open} onClose={handleClose} fullWidth maxWidth="sm">
         <DialogTitle>
           <Stack>
             <Typography variant="h5" color={"text.primary"}>
@@ -111,13 +154,13 @@ export default function RSVPModal({
             </Typography>
           </Stack>
         </DialogTitle>
-        <DialogContent>
-          <form
-            method="POST"
-            action="#"
-            id="rsvp-form"
-            onSubmit={handleSubmit(onSubmit)}
-          >
+        <form
+          method="POST"
+          action="#"
+          id="rsvp-form"
+          onSubmit={handleSubmit(onSubmit)}
+        >
+          <DialogContent>
             <Stack flexDirection={"column"} gap={2}>
               <TextInputField
                 {...register("first_name")}
@@ -175,7 +218,7 @@ export default function RSVPModal({
                   style: { fontSize: 13 },
                 }}
                 fullWidth
-                placeholder="223 54 3524 258"
+                placeholder="223 00 0000 000"
               />
               <TextInputField
                 {...register("email")}
@@ -205,7 +248,7 @@ export default function RSVPModal({
                 InputProps={{
                   startAdornment: (
                     <InputAdornment position="start">
-                      <Person2Outlined fontSize="small" />
+                      <LocationOnOutlined fontSize="small" />
                     </InputAdornment>
                   ),
                   style: { fontSize: 13 },
@@ -213,31 +256,218 @@ export default function RSVPModal({
                 fullWidth
                 placeholder="Location of the attendee"
               />
+              <Divider variant="middle" />
+              <Box>
+                {/* <FormControl fullWidth> */}
+                <InputLabel id="occupation-select-label" shrink>
+                  Occupation
+                </InputLabel>
+                <Select
+                  labelId="occupation-id-label"
+                  id="occupation-id"
+                  fullWidth
+                  size="small"
+                  {...register("occupation")}
+                  name="occupation"
+                  defaultValue={""}
+                  onChange={handleOccupationChange}
+                >
+                  <MenuItem value={"student"} sx={{ fontSize: 13 }}>
+                    Student
+                  </MenuItem>
+                  <MenuItem value={"worker"} sx={{ fontSize: 13 }}>
+                    Worker
+                  </MenuItem>
+                  <MenuItem value={"other"} sx={{ fontSize: 13 }}>
+                    Other
+                  </MenuItem>
+                </Select>
+              </Box>
+              <Box>
+                {occupation === "student" && (
+                  <Stack
+                    flexDirection={"row"}
+                    gap={2}
+                    alignItems={"center"}
+                    flexWrap={{ xs: "wrap", md: "nowrap" }}
+                  >
+                    <Box sx={{ width: { xs: "100%", md: "20%" } }}>
+                      <InputLabel id="student-level-select-label" shrink>
+                        level
+                      </InputLabel>
+                      <Select
+                        labelId="level-id-label"
+                        id="level-id"
+                        fullWidth
+                        size="small"
+                        name="level"
+                        {...register("level", {
+                          validate: {
+                            require: (value) => {
+                              if (
+                                !value &&
+                                getValues("occupation") === "student"
+                              )
+                                return "This field is required";
+                              return true;
+                            },
+                          },
+                        })}
+                        error={errors.level ? true : false}
+                        defaultValue={"primary"}
+                      >
+                        <MenuItem value={"primary"}>Primary</MenuItem>
+                        <MenuItem value={"Secondary"}>Secondary</MenuItem>
+                        <MenuItem value={"Tertiary"}>Tertiary</MenuItem>
+                      </Select>
+                    </Box>
+                    <Box sx={{ width: { xs: "100%", md: "80%" } }}>
+                      <InputLabel shrink>School</InputLabel>
+                      <TextInputField
+                        fullWidth
+                        size="small"
+                        name="school"
+                        {...register("school", {
+                          validate: {
+                            require: (value) => {
+                              if (
+                                !value &&
+                                getValues("occupation") === "student"
+                              )
+                                return "This field is required";
+                              return true;
+                            },
+                          },
+                        })}
+                        error={errors.school ? true : false}
+                        helperText={
+                          errors.school ? errors.school?.message : null
+                        }
+                      />
+                    </Box>
+                  </Stack>
+                )}
+                {occupation === "worker" && (
+                  <Stack
+                    flexDirection={"row"}
+                    gap={2}
+                    alignItems={"center"}
+                    flexWrap={{ xs: "wrap", md: "nowrap" }}
+                  >
+                    <Box sx={{ width: { xs: "100%" } }}>
+                      <InputLabel shrink>Profession</InputLabel>
+                      <TextInputField
+                        fullWidth
+                        size="small"
+                        name="profession"
+                        {...register("profession")}
+                        error={errors.profession ? true : false}
+                        helperText={
+                          errors.profession ? errors.profession?.message : null
+                        }
+                      />
+                    </Box>
+                  </Stack>
+                )}
+                {occupation === "other" && (
+                  <Stack
+                    flexDirection={"row"}
+                    gap={2}
+                    alignItems={"center"}
+                    flexWrap={{ xs: "wrap", md: "nowrap" }}
+                  >
+                    <Box sx={{ width: { xs: "100%" } }}>
+                      <InputLabel shrink>Tell us</InputLabel>
+                      <TextInputField
+                        fullWidth
+                        size="small"
+                        name="other"
+                        {...register("other")}
+                        error={errors.other ? true : false}
+                        helperText={errors.other ? errors.other?.message : null}
+                      />
+                    </Box>
+                  </Stack>
+                )}
+              </Box>
+              <Box width={"100%"}>
+                <InputLabel shrink>
+                  How did you hear about this program?
+                  <Typography variant="subtitle2" fontSize={13}>
+                    (Select all that apply)
+                  </Typography>
+                </InputLabel>
+                <FormGroup>
+                  <Stack
+                    flexDirection={"row"}
+                    gap={2}
+                    alignItems={"center"}
+                    flexWrap={{ xs: "wrap", md: "nowrap" }}
+                  >
+                    <FormControlLabel
+                      {...register("via_whatsapp")}
+                      control={<Checkbox />}
+                      label="Whatsapp"
+                    />
+                    <FormControlLabel
+                      control={<Checkbox />}
+                      label="Member"
+                      {...register("by_member")}
+                    />
+                    <FormControlLabel
+                      {...register("via_instagram")}
+                      control={<Checkbox />}
+                      label="Instagram"
+                    />
+                  </Stack>
+                  <FormControlLabel
+                    {...register("by_friend")}
+                    onChange={handlePublicityChange}
+                    control={<Checkbox />}
+                    label="referred by a friend"
+                  />
+                </FormGroup>
+                {byFriend === true && (
+                  <Box>
+                    <InputLabel shrink>Name of friend</InputLabel>
+                    <TextInputField
+                      fullWidth
+                      size="small"
+                      name="friend name"
+                      {...register("friend_name")}
+                      error={errors.friend_name ? true : false}
+                      helperText={
+                        errors.friend_name ? errors.friend_name?.message : null
+                      }
+                    />
+                  </Box>
+                )}
+              </Box>
             </Stack>
-            <DialogActions>
-              <LoadingButton
-                variant="contained"
-                disableElevation
-                sx={{ textTransform: "capitalize" }}
-                color="primary"
-                type="submit"
-                form="rsvp-form"
-                loading={isSubmitting}
-              >
-                Submit
-              </LoadingButton>
-              <Button
-                variant="contained"
-                disableElevation
-                color="secondary"
-                sx={{ textTransform: "capitalize" }}
-                onClick={handleClose}
-              >
-                Cancel
-              </Button>
-            </DialogActions>
-          </form>
-        </DialogContent>
+          </DialogContent>
+          <DialogActions>
+            <LoadingButton
+              variant="contained"
+              disableElevation
+              sx={{ textTransform: "capitalize" }}
+              color="primary"
+              type="submit"
+              form="rsvp-form"
+              loading={isSubmitting}
+            >
+              Submit
+            </LoadingButton>
+            <Button
+              variant="contained"
+              disableElevation
+              color="secondary"
+              sx={{ textTransform: "capitalize" }}
+              onClick={handleClose}
+            >
+              Cancel
+            </Button>
+          </DialogActions>
+        </form>
       </Dialog>
     </>
   );

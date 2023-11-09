@@ -1,3 +1,4 @@
+import theme from "@/theme";
 import { DeleteOutline } from "@mui/icons-material";
 import { LoadingButton } from "@mui/lab";
 import {
@@ -5,7 +6,10 @@ import {
   Dialog,
   DialogActions,
   DialogContent,
+  DialogTitle,
+  Divider,
   Typography,
+  colors,
 } from "@mui/material";
 import React, { useState } from "react";
 
@@ -24,9 +28,11 @@ export default function AttendeeDeleteConfirmation({
   };
   return (
     <Dialog open={open} onClose={handleClose}>
+      <DialogTitle textAlign={"center"}>Confirm Delete</DialogTitle>
+      <Divider variant="middle" />
       <DialogContent
         sx={{
-          height: 250,
+          minHeight: 100,
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
@@ -41,9 +47,15 @@ export default function AttendeeDeleteConfirmation({
       </DialogContent>
       <DialogActions>
         <Button
-          variant="text"
-          sx={{ textTransform: "capitalize" }}
-          color="info"
+          variant="outlined"
+          sx={{
+            textTransform: "capitalize",
+            color: colors.common.white,
+            borderColor: "transparent",
+            "&: hover": {
+              borderColor: theme.palette.common.white,
+            },
+          }}
           onClick={handleClose}
           disableElevation
         >
@@ -54,8 +66,10 @@ export default function AttendeeDeleteConfirmation({
           loading={deleting}
           startIcon={<DeleteOutline />}
           onClick={handleAttendeeDelete}
-          sx={{ textTransform: "capitalize" }}
-          color="error"
+          sx={{
+            textTransform: "capitalize",
+          }}
+          color="primary"
           disableElevation
         >
           Delete

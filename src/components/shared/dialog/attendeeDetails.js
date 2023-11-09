@@ -12,9 +12,11 @@ import {
 import React, { useContext, useState } from "react";
 import { TextInputField } from "../inputs";
 import {
+  Check,
   CheckCircleOutline,
   CheckOutlined,
   CloseOutlined,
+  CloseRounded,
   DeleteOutline,
   EmailOutlined,
   LocationOnOutlined,
@@ -25,6 +27,7 @@ import { AntSwitch } from "../switches";
 import { LoadingButton } from "@mui/lab";
 import { APIClient } from "@/utils/axios";
 import { SnackbarContext } from "@/pages/_app";
+import BasicAccordion from "@/components/admin/viewMoreAccordion";
 
 export default function AttendeeDetails({
   open,
@@ -164,11 +167,12 @@ export default function AttendeeDetails({
             }}
             fullWidth
           />
+          <BasicAccordion attendee={attendee} />
           <Box width={"100%"}>
             <LoadingButton
               variant="contained"
               disableElevation
-              startIcon={<CheckCircleOutline />}
+              startIcon={<Check />}
               loading={presentLoading}
               color="success"
               onClick={() => handleMarkAttendance(attendee, true)}

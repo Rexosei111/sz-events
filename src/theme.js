@@ -29,8 +29,12 @@ const theme = createTheme({
     primary: {
       main: "#86005e",
       light: "#A7516F",
-      dark: "#8c006000",
+      dark: "#6e024e",
       contrastText: "#FFFFFF",
+    },
+    success: {
+      main: "#66bb6a",
+      contrastText: "#ffffff",
     },
     background: {
       default: "#1c1f20",
@@ -42,13 +46,22 @@ const theme = createTheme({
     },
   },
   components: {
-    MuiButton: {
+    MuiButtonBase: {
       styleOverrides: {
-        text: {
-          textTransform: "capitalize",
+        root: ({ theme }) => {
+          theme.unstable_sx({
+            textTransform: "capitalize",
+          });
         },
       },
     },
+    // MuiButton: {
+    //   styleOverrides: {
+    //     text: {
+    //       textTransform: "capitalize",
+    //     },
+    //   },
+    // },
   },
   typography: {
     fontFamily:

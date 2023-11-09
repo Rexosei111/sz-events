@@ -346,10 +346,19 @@ export default function Attendance({ event = "", query = "" }) {
                               fontSize: 18,
                               width: 40,
                               height: 40,
-                              bgcolor: item.present === true ? "#14ab14" : null,
+                              bgcolor:
+                                item.present === true
+                                  ? theme.palette.primary.main
+                                  : null,
+                              "&: hover": {
+                                bgcolor:
+                                  item.present === true
+                                    ? theme.palette.primary.dark
+                                    : null,
+                              },
                             }}
                           >
-                            <CheckCircle
+                            <Check
                               htmlColor={
                                 item.present === true
                                   ? "white"
@@ -370,7 +379,15 @@ export default function Attendance({ event = "", query = "" }) {
                               width: 40,
                               height: 40,
                               bgcolor:
-                                item.present === false ? "#dd125b" : null,
+                                item.present === false
+                                  ? theme.palette.primary.main
+                                  : null,
+                              "&: hover": {
+                                bgcolor:
+                                  item.present === false
+                                    ? theme.palette.primary.dark
+                                    : null,
+                              },
                             }}
                           >
                             <CloseOutlined
