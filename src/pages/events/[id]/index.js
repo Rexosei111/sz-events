@@ -275,16 +275,12 @@ export default function EventDetails() {
                 justifyContent: "center",
               }}
             >
-              <IconButton
-                circle
-                icon={
-                  <Avatar
-                    src={event?.organiser?.logo}
-                    alt={event?.organiser?.name}
-                    sx={{ height: "90px", width: "90px" }}
-                  />
-                }
+              <Avatar
+                src={event?.organiser?.logo}
+                alt={event?.organiser?.name}
+                sx={{ height: "90px", width: "90px" }}
               />
+
               <Typography
                 variant="subtitle2"
                 sx={{ mt: 2, fontSize: 16, textAlign: "center" }}
