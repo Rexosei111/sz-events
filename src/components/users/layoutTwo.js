@@ -20,7 +20,7 @@ export default function LayoutTwo({ children }) {
   const theme = useTheme();
   const matches = useMediaQuery(theme.breakpoints.down("sm"));
   return (
-    <>
+    <Box bgcolor={"background.default"}>
       <Head>
         <title></title>
       </Head>
@@ -28,7 +28,7 @@ export default function LayoutTwo({ children }) {
         <Container
           maxWidth={"md"}
           disableGutters={matches ? true : false}
-          sx={{ py: 0 }}
+          sx={{ py: 0, bgcolor: "background.default" }}
         >
           <CustomNavbar activeKey={activeKey} onSelect={setActiveKey} />
           {/* <Stack flexDirection={"row"} justifyContent={"flex-start"}>
@@ -58,6 +58,6 @@ export default function LayoutTwo({ children }) {
         </Container>
         ;
       </UserLayoutContext.Provider>
-    </>
+    </Box>
   );
 }

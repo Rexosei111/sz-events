@@ -40,7 +40,12 @@ export default function Index() {
       <Head>
         <title>Events</title>
       </Head>
-      <Typography variant="h5" fontWeight={500} color={"black"} gutterBottom>
+      <Typography
+        color={"text.primary"}
+        fontWeight={700}
+        variant="h5"
+        gutterBottom
+      >
         Events
       </Typography>
       <Stack

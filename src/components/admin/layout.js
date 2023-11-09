@@ -117,8 +117,8 @@ export default function AdminLayout({ children, title = "Accueil" }) {
             sx={{
               flexGrow: 1,
               ml: desktopDrawerOpen ? 0 : -30,
-              minHeight: "99vh",
-              bgcolor: "#dee1ec85",
+              minHeight: "100vh",
+              bgcolor: "background.default",
               p: 2,
               width: {
                 xs: "100%",

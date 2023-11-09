@@ -6,8 +6,8 @@ import { SnackbarContext } from "@/pages/_app";
 import { APIClient } from "@/utils/axios";
 import { formatDateInCustomFormat } from "@/utils/dateFormat";
 import { fetcher } from "@/utils/swr_fetcher";
-import { useTheme } from "@emotion/react";
 import {
+  AddOutlined,
   CheckCircle,
   DateRange,
   FacebookOutlined,
@@ -19,24 +19,22 @@ import {
 import {
   Avatar,
   Box,
-  Container,
+  Button,
   List,
   ListItem,
   ListItemIcon,
   ListItemText,
   Paper,
-  Popover,
   Stack,
   Typography,
 } from "@mui/material";
 import { isAxiosError } from "axios";
 import Head from "next/head";
 import Image from "next/image";
-import Link from "next/link";
 import { useRouter } from "next/router";
 import React, { useContext, useEffect, useState } from "react";
 import Markdown from "react-markdown";
-import { Button, IconButton, Panel, Whisper } from "rsuite";
+import { IconButton, Panel } from "rsuite";
 import useSWR from "swr";
 
 export default function EventDetails() {
@@ -116,7 +114,6 @@ export default function EventDetails() {
           height: 450,
           position: "relative",
           mb: 2,
-          // borderStyle: "dotted",
         }}
       >
         <Image
@@ -128,28 +125,54 @@ export default function EventDetails() {
       </Box>
       <Box sx={{ px: { xs: 2, md: 0 } }}>
         <Stack flexDirection={"row"} gap={1} alignItems={"center"}>
-          <p style={{ fontSize: 18 }}>
+          <Typography
+            variant="caption"
+            color={"text.secondary"}
+            sx={{ fontSize: 18 }}
+          >
             {formatDateInCustomFormat(event?.start_date)}
-          </p>
+          </Typography>
         </Stack>
 
-        <h1>{event?.name}</h1>
-        <p style={{ marginTop: "20px" }}>{event?.summary}</p>
+        <Typography
+          variant="h1"
+          fontSize={45}
+          fontWeight={700}
+          color={"text.primary"}
+        >
+          {event?.name}
+        </Typography>
+        <Typography
+          variant="subtitle2"
+          lineHeight={1.7}
+          fontSize={15}
+          color={"text.secondary"}
+          sx={{ my: 2 }}
+        >
+          {event?.summary}
+        </Typography>
 
         <Box my={2}>
-          <h4 style={{ marginTop: "20px", marginBottom: "10px" }}>
+          <Typography variant="h5" color={"text.primary"} sx={{ my: 2 }}>
             Date and Time
-          </h4>
-          <Stack flexDirection={"row"} gap={1} alignItems={"center"}>
+          </Typography>
+          <Stack
+            flexDirection={"row"}
+            gap={1}
+            alignItems={"center"}
+            color={"text.secondary"}
+          >
             <DateRange fontSize="small" />
-            <p style={{ fontSize: "15px" }}>
+            <Typography variant="subtitle1" sx={{ fontSize: "15px" }}>
               {new Date(event?.start_date).toUTCString()}
-            </p>
+            </Typography>
           </Stack>
         </Box>
 
-        <Box my={2}>
-          <h4 style={{ marginTop: "20px", marginBottom: "0px" }}>Location</h4>
+        <Box my={2} color={"text.secondary"}>
+          <Typography variant="h5" sx={{ mt: 2 }} color={"text.primary"}>
+            Location
+          </Typography>
           <Stack flexDirection={"row"} gap={1} alignItems={"center"}>
             <List dense>
               <ListItem disableGutters disablePadding>
@@ -158,7 +181,7 @@ export default function EventDetails() {
                     icon={
                       <LocationOn
                         fontSize="small"
-                        htmlColor="rgba(0,0,0,0.5)"
+                        htmlColor="rgba(0,0,0,0.8)"
                       />
                     }
                     active
@@ -166,11 +189,21 @@ export default function EventDetails() {
                   />
                 </ListItemIcon>
                 <ListItemText>
-                  <h6 style={{ fontSize: "15px" }}>
+                  <Typography
+                    variant="body1"
+                    color={"text.primary"}
+                    sx={{ fontSize: "15px" }}
+                  >
                     {event?.address?.split(", ")[0]}
-                  </h6>
+                  </Typography>
                   <Stack flexDirection={"column"} gap={1} my={1}>
-                    <p>{event?.address?.split(",").slice(1).join(", ")}</p>
+                    <Typography
+                      variant="caption"
+                      color={"text.secoondary"}
+                      sx={{ fontSize: "15px" }}
+                    >
+                      {event?.address?.split(",").slice(1).join(", ")}
+                    </Typography>
                   </Stack>
                 </ListItemText>
               </ListItem>
@@ -179,11 +212,20 @@ export default function EventDetails() {
         </Box>
 
         <Box sx={{ my: 2 }}>
-          <h4 style={{ marginBottom: 10 }}>About this event</h4>
+          <Typography
+            variant="h5"
+            fontWeight={700}
+            color={"text.primary"}
+            sx={{ mb: 2 }}
+          >
+            About this event
+          </Typography>
 
-          <Markdown components={{ h1: "h3", h2: "h4", h3: "h5", h4: "h5" }}>
-            {event?.description}
-          </Markdown>
+          <Box fontSize={15} color={"text.secondary"} lineHeight={1.7}>
+            <Markdown components={{ h1: "h3", h2: "h4", h3: "h5", h4: "h5" }}>
+              {event?.description}
+            </Markdown>
+          </Box>
         </Box>
 
         <Stack
@@ -204,17 +246,25 @@ export default function EventDetails() {
           mt={5}
         >
           <Button
-            color="green"
-            appearance="primary"
+            disableElevation
+            color="primary"
+            variant="contained"
             startIcon={<CheckCircle />}
             onClick={handleOpen}
+            sx={{
+              textTransform: "capitalize",
+              color: "text.primary",
+              fontWeight: 600,
+            }}
           >
             Attend
           </Button>
         </Stack>
         {event?.organiser?.name && (
           <Stack flexDirection={"column"} gap={2} my={2}>
-            <h4>About organiser</h4>
+            <Typography variant="h5" fontWeight={700} color={"text.primary"}>
+              About organiser
+            </Typography>
             <Paper
               sx={{
                 p: { xs: 2, md: 3 },
@@ -235,36 +285,50 @@ export default function EventDetails() {
                   />
                 }
               />
-              <p
-                style={{ marginTop: "15px", fontSize: 16, textAlign: "center" }}
+              <Typography
+                variant="subtitle2"
+                sx={{ mt: 2, fontSize: 16, textAlign: "center" }}
               >
                 organised by
-              </p>
-              <h2 style={{ marginTop: "15px", textAlign: "center" }}>
+              </Typography>
+              <Typography
+                variant="h3"
+                fontWeight={700}
+                sx={{ mt: 2, textAlign: "center" }}
+              >
                 {event?.organiser?.name}
-              </h2>
+              </Typography>
               <Box>
-                <h6 style={{ textAlign: "center" }}>
+                <Typography
+                  variant="subtitle2"
+                  sx={{ textAlign: "center" }}
+                  textAlign={"center"}
+                >
                   {event?.organiser?.followers_count}
-                </h6>
-                <Typography variant="subtitl1" style={{ textAlign: "center" }}>
-                  followers
+                </Typography>
+                <Typography variant="subtitle1" style={{ textAlign: "center" }}>
+                  follower(s)
                 </Typography>
               </Box>
               {following !== true && (
                 <Button
                   onClick={handleFollow}
-                  appearance="primary"
-                  style={{
-                    marginTop: "5px",
+                  disableElevation
+                  variant="contained"
+                  color="primary"
+                  endIcon={<AddOutlined />}
+                  sx={{
+                    textTransform: "capitalize",
+                    color: "text.primary",
+                    mt: 2,
                   }}
                 >
                   Follow
                 </Button>
               )}
               <Typography
-                style={{ marginTop: "15px", fontSize: 16, textAlign: "center" }}
-                variant="subtitle2"
+                sx={{ mt: 2, fontSize: 16, textAlign: "center" }}
+                variant="subtitle1"
               >
                 {event?.organiser?.summary}
               </Typography>

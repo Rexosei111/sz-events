@@ -66,11 +66,17 @@ export default function FollowingPage() {
         gap={1}
         flexWrap={{ xs: "wrap", md: "nowrap" }}
         alignItems="center"
-        mb={2}
+        mb={4}
       >
-        <h3>Following</h3>
+        <Typography variant="h4" color={"text.primary"}>
+          Following
+        </Typography>
         <InputGroup inside style={{ width: sm ? "100%" : 300 }}>
-          <Input placeholder="Search organisers" onChange={handleQueryChange} />
+          <Input
+            placeholder="Search organisers"
+            onChange={handleQueryChange}
+            style={{ backgroundColor: "#1c1f20" }}
+          />
           <InputGroup.Button>
             <SearchIcon />
           </InputGroup.Button>

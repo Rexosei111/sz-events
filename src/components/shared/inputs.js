@@ -28,28 +28,16 @@ export const StyledInputBase = styled(InputBase)(({ theme }) => ({
     borderRadius: 4,
     position: "relative",
     backgroundColor: theme.palette.background.paper,
-    boxShadow:
-      "0px 3px 1px -2px rgba(0,0,0,0.2), 0px 2px 2px 0px rgba(0,0,0,0.14), 0px 1px 5px 0px rgba(0,0,0,0.12)",
+    // boxShadow:
+    //   "0px 3px 1px -2px rgba(0,0,0,0.2), 0px 2px 2px 0px rgba(0,0,0,0.14), 0px 1px 5px 0px rgba(0,0,0,0.12)",
 
-    border: "5px",
+    border: `1px solid ${theme.palette.text.secondary}`,
     fontSize: 14,
-    color: "rgba(0,0,0,0.6)",
-    fontWeight: 700,
+    color: theme.palette.text.primary,
+    // fontWeight: 700,
     padding: "10px 26px 10px 12px",
     transition: theme.transitions.create(["border-color", "box-shadow"]),
     // Use the system font instead of the default Roboto font.
-    fontFamily: [
-      "-apple-system",
-      "BlinkMacSystemFont",
-      '"Segoe UI"',
-      "Roboto",
-      '"Helvetica Neue"',
-      "Arial",
-      "sans-serif",
-      '"Apple Color Emoji"',
-      '"Segoe UI Emoji"',
-      '"Segoe UI Symbol"',
-    ].join(","),
   },
 }));
 
@@ -61,28 +49,16 @@ export const BootstrapInput = styled(InputBase)(({ theme }) => ({
     borderRadius: 4,
     position: "relative",
     backgroundColor: theme.palette.background.paper,
-    boxShadow:
-      "0px 3px 1px -2px rgba(0,0,0,0.2), 0px 2px 2px 0px rgba(0,0,0,0.14), 0px 1px 5px 0px rgba(0,0,0,0.12)",
+    // boxShadow:
+    //   "0px 3px 1px -2px rgba(0,0,0,0.2), 0px 2px 2px 0px rgba(0,0,0,0.14), 0px 1px 5px 0px rgba(0,0,0,0.12)",
 
-    border: "5px",
+    border: `1px solid ${theme.palette.text.secondary}`,
     fontSize: 14,
-    color: "rgba(0,0,0,0.6)",
-    fontWeight: 700,
+    color: theme.palette.text.primary,
     padding: "10px 26px 10px 12px",
     transition: theme.transitions.create(["border-color", "box-shadow"]),
     // Use the system font instead of the default Roboto font.
-    fontFamily: [
-      "-apple-system",
-      "BlinkMacSystemFont",
-      '"Segoe UI"',
-      "Roboto",
-      '"Helvetica Neue"',
-      "Arial",
-      "sans-serif",
-      '"Apple Color Emoji"',
-      '"Segoe UI Emoji"',
-      '"Segoe UI Symbol"',
-    ].join(","),
+
     "&:focus": {
       borderRadius: 4,
       // borderColor: "#80bdff",

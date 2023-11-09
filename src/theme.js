@@ -19,19 +19,26 @@ export const lato = Lato({
 // Create a theme instance.
 const theme = createTheme({
   palette: {
-    mode: "light",
-    primary: {
-      main: "#479696",
-    },
+    mode: "dark",
     secondary: {
-      main: "#FF3524",
+      main: "#1C38D2",
+      light: "#495FDB",
+      dark: "#132793",
+      contrastText: "#FFFFFF",
     },
-    text: {
-      primary: "#575757",
-      secondary: "#848385",
+    primary: {
+      main: "#86005e",
+      light: "#A7516F",
+      dark: "#8c006000",
+      contrastText: "#FFFFFF",
     },
     background: {
-      default: "#ffffff",
+      default: "#1c1f20",
+      paper: "#181a1b",
+    },
+    text: {
+      primary: "#dedede",
+      secondary: "#979797",
     },
   },
   components: {
@@ -44,7 +51,8 @@ const theme = createTheme({
     },
   },
   typography: {
-    fontFamily: lato.style.fontFamily,
+    fontFamily:
+      "Apple-System,Arial,Helvetica,PingFang SC,Hiragino Sans GB,Microsoft YaHei,STXihei,sans-serif",
   },
 });
 

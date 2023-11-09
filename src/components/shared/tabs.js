@@ -4,7 +4,7 @@ import Tab from "@mui/material/Tab";
 import Box from "@mui/material/Box";
 
 export const AntTabs = styled(Tabs)({
-  borderBottom: "1px solid #e8e8e8",
+  borderBottom: "1px solid rgba(255, 255, 255, 0.12)",
   "& .MuiTabs-indicator": {
     backgroundColor: "#1890ff",
   },
@@ -19,19 +19,8 @@ export const AntTab = styled((props) => <Tab disableRipple {...props} />)(
     },
     fontWeight: theme.typography.fontWeightRegular,
     marginRight: theme.spacing(1),
-    color: "#848385",
-    fontFamily: [
-      "-apple-system",
-      "BlinkMacSystemFont",
-      '"Segoe UI"',
-      "Roboto",
-      '"Helvetica Neue"',
-      "Arial",
-      "sans-serif",
-      '"Apple Color Emoji"',
-      '"Segoe UI Emoji"',
-      '"Segoe UI Symbol"',
-    ].join(","),
+    color: theme.palette.text.primary,
+
     "&:hover": {
       color: "#40a9ff",
       opacity: 1,

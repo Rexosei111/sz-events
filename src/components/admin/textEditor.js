@@ -13,17 +13,5 @@ export default function RichTextEditor({ setValue, value }) {
   const onChange = useCallback((value) => {
     setValue(value);
   }, []);
-  return (
-    <SimpleMdeReact
-      value={value}
-      onChange={onChange}
-      // options={{
-      //   autosave: {
-      //     enabled: true,
-      //     uniqueId: "description",
-      //     delay,
-      //   },
-      // }}
-    />
-  );
+  return <SimpleMdeReact value={value} onChange={onChange} options={{}} />;
 }

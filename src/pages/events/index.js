@@ -111,10 +111,16 @@ export default function EventListing() {
         flexWrap={{ xs: "wrap", md: "nowrap" }}
         alignItems="center"
       >
-        <h3>Events</h3>
+        <Typography variant="h4" color={"text.primary"}>
+          Events
+        </Typography>
 
         <InputGroup inside style={{ width: sm ? "100%" : 300 }}>
-          <Input placeholder="Search event" onChange={handleQueryChange} />
+          <Input
+            placeholder="Search event"
+            onChange={handleQueryChange}
+            style={{ backgroundColor: "#1c1f20" }}
+          />
           <InputGroup.Button>
             <SearchIcon />
           </InputGroup.Button>
@@ -123,7 +129,7 @@ export default function EventListing() {
       <Box
         sx={{
           maxWidth: { xs: "100%", sm: 480, md: 600 },
-          bgcolor: "background.paper",
+          bgcolor: "background.default",
         }}
         my={2}
       >
@@ -177,22 +183,7 @@ export default function EventListing() {
           />
         </AntTabs>
       </Box>
-      {/* <Box my={2} width={{ xs: "100%", md: "60%" }} sx={{ overflowX: "auto" }}> */}
 
-      {/* <Nav
-        appearance="subtle"
-        justified
-        activeKey={activeTab}
-        onSelect={setActiveTab}
-        style={{ overflowX: "auto", width: "300px" }}
-      >
-        <Nav.Item eventKey="All">All</Nav.Item>
-        <Nav.Item eventKey="Today">Today</Nav.Item>
-        <Nav.Item eventKey="This week">This week</Nav.Item>
-        <Nav.Item eventKey="This weekend">This weekend</Nav.Item>
-        <Nav.Item eventKey="This month">This Month</Nav.Item>
-      </Nav> */}
-      {/* </Box> */}
       {isLoading && <GridLoading />}
       {!isLoading && events?.items && events?.items.length === 0 && (
         <Stack height={100} alignItems={"center"} justifyContent={"center"}>
