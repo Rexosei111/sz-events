@@ -19,6 +19,10 @@ import { useRouter } from "next/router";
 import useSWR from "swr";
 import { fetcher } from "@/utils/swr_fetcher";
 import { mutate } from "swr";
+import {
+  PrimaryLoadingButton,
+  SecondaryLoadingButton,
+} from "@/components/btn/loadingBtn";
 
 const eventEditSchema = yup
   .object({
@@ -68,6 +72,8 @@ export default function EventEditPage() {
   }, [event]);
   const [eventImage, setEventImages] = useState([]);
   const [publish, setPublish] = useState(false);
+  const [drafting, setDrafting] = useState(false);
+  const [publishing, setPublishing] = useState(false);
 
   const handlePublish = (e) => {
     setPublish(true);
@@ -77,6 +83,11 @@ export default function EventEditPage() {
     setPublish(false);
   };
   const onSubmit = async (form_data) => {
+    if (publish === true) {
+      setPublishing(true);
+    } else {
+      setDrafting(true);
+    }
     const final_data = { ...form_data, images: eventImage, published: publish };
     try {
       const { data } = await APIClient.patch(`events/${event.id}`, final_data);
@@ -88,6 +99,9 @@ export default function EventEditPage() {
         setSnackSeverity("error");
         handleSnackbarOpen("Unable to save event");
       }
+    } finally {
+      setPublishing(false);
+      setDrafting(false);
     }
   };
   return (
@@ -148,31 +162,24 @@ export default function EventEditPage() {
           justifyContent={"flex-end"}
           gap={2}
         >
-          <LoadingButton
-            // loading={loading}
+          <SecondaryLoadingButton
+            loading={drafting}
             onClick={handleDraft}
-            size="small"
             variant="outlined"
-            // disabled={saved}
             disableElevation
-            sx={{ textTransform: "capitalize" }}
-            // sx={{ ml: "auto" }}
             type="submit"
           >
             Save as draft
-          </LoadingButton>
-          <LoadingButton
+          </SecondaryLoadingButton>
+          <PrimaryLoadingButton
             onClick={handlePublish}
-            loading={isSubmitting}
-            size="small"
+            loading={publishing}
             variant="contained"
-            // disabled={!isValid}
             disableElevation
-            sx={{ textTransform: "capitalize" }}
             type="submit"
           >
             Publish
-          </LoadingButton>
+          </PrimaryLoadingButton>
         </Stack>
       </form>
     </>

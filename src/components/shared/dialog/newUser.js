@@ -26,6 +26,8 @@ import { LoadingButton } from "@mui/lab";
 import { isAxiosError } from "axios";
 import { AntSwitch } from "../switches";
 import { APIClient } from "@/utils/axios";
+import { SecondaryButton } from "@/components/btn/baseBtn";
+import { PrimaryLoadingButton } from "@/components/btn/loadingBtn";
 
 const newUserSchema = yup
   .object({
@@ -176,26 +178,23 @@ export default function NewUser({ open, handleClose }) {
         </form>
       </DialogContent>
       <DialogActions>
-        <Button
-          variant="text"
-          color="inherit"
-          sx={{ textTransform: "capitalize" }}
+        <SecondaryButton
+          variant="outlined"
           onClick={handleClose}
           disableElevation
         >
           Close
-        </Button>
-        <LoadingButton
+        </SecondaryButton>
+        <PrimaryLoadingButton
           loading={isSubmitting}
           disabled={!isValid}
           variant="contained"
-          sx={{ textTransform: "capitalize" }}
           type="submit"
           form="attendee-form"
           disableElevation
         >
           Submit
-        </LoadingButton>
+        </PrimaryLoadingButton>
       </DialogActions>
     </Dialog>
   );

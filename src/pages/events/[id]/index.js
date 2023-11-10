@@ -10,16 +10,15 @@ import {
   AddOutlined,
   CheckCircle,
   DateRange,
-  FacebookOutlined,
   Instagram,
   LocationOn,
   Telegram,
-  Twitter,
 } from "@mui/icons-material";
 import {
   Avatar,
   Box,
   Button,
+  IconButton,
   List,
   ListItem,
   ListItemIcon,
@@ -31,10 +30,10 @@ import {
 import axios, { isAxiosError } from "axios";
 import Head from "next/head";
 import Image from "next/image";
+import Link from "next/link";
 import { useRouter } from "next/router";
 import React, { useContext, useEffect, useState } from "react";
 import Markdown from "react-markdown";
-import { IconButton, Panel } from "rsuite";
 import useSWR from "swr";
 
 export default function EventDetails() {
@@ -307,22 +306,18 @@ export default function EventDetails() {
               <Typography
                 variant="h3"
                 fontWeight={700}
+                gutterBottom
                 sx={{ mt: 2, textAlign: "center" }}
               >
                 {event?.organiser?.name}
               </Typography>
-              <Box>
-                <Typography
-                  variant="subtitle2"
-                  sx={{ textAlign: "center" }}
-                  textAlign={"center"}
-                >
-                  {event?.organiser?.followers_count}
-                </Typography>
-                <Typography variant="subtitle1" style={{ textAlign: "center" }}>
-                  follower(s)
-                </Typography>
-              </Box>
+              <Typography
+                sx={{ fontSize: 16, textAlign: "center" }}
+                variant="subtitle1"
+              >
+                {event?.organiser?.summary}
+              </Typography>
+
               {following !== true && (
                 <Button
                   onClick={handleFollow}
@@ -339,16 +334,31 @@ export default function EventDetails() {
                   Follow
                 </Button>
               )}
-              <Typography
-                sx={{ mt: 2, fontSize: 16, textAlign: "center" }}
-                variant="subtitle1"
-              >
-                {event?.organiser?.summary}
-              </Typography>
-              <Stack my={2} flexDirection={"row"} gap={2}>
-                <FacebookOutlined />
-                <Instagram />
-                <Telegram />
+
+              <Box mt={1}>
+                <Typography
+                  variant="subtitle1"
+                  style={{ textAlign: "center" }}
+                  component={"span"}
+                >
+                  {event?.organiser?.followers_count} follower(s)
+                </Typography>
+              </Box>
+              <Stack my={2} flexDirection={"row"} gap={1}>
+                <IconButton
+                  LinkComponent={Link}
+                  href="https://instagram.com/spiritzone_?igshid=OGQ5ZDc2ODk2ZA=="
+                  target="_blank"
+                >
+                  <Instagram />
+                </IconButton>
+                <IconButton
+                  LinkComponent={Link}
+                  href="https://t.me/+TaU5tedtojdkMzU8"
+                  target="_blank"
+                >
+                  <Telegram />
+                </IconButton>
               </Stack>
             </Paper>
           </Stack>

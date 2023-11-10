@@ -1,12 +1,25 @@
-import { Navbar, Nav, Avatar, IconButton } from "rsuite";
-import HomeIcon from "@rsuite/icons/legacy/Home";
-import CogIcon from "@rsuite/icons/legacy/Cog";
+import { Navbar, Nav } from "rsuite";
 import useSWR from "swr";
 import { fetcher } from "@/utils/swr_fetcher";
-import { Box, useMediaQuery } from "@mui/material";
+import { Avatar, Box, IconButton, useMediaQuery } from "@mui/material";
 import useToken from "@/hooks/token";
 import { useRouter } from "next/router";
 import { useTheme } from "@emotion/react";
+
+const CustomNavItem = ({ ...props }) => {
+  return (
+    <Nav.Item
+      eventKey="3"
+      href="/users/me/following"
+      style={{
+        color: theme.palette.text.primary,
+      }}
+      onClick={handleNavigation}
+    >
+      Following
+    </Nav.Item>
+  );
+};
 
 export const CustomNavbar = ({ onSelect, activeKey, ...props }) => {
   const {
@@ -34,22 +47,22 @@ export const CustomNavbar = ({ onSelect, activeKey, ...props }) => {
   const matches = useMediaQuery(theme.breakpoints.down("sm"));
 
   return (
-    <Navbar {...props} style={{ backgroundColor: "transparent" }}>
+    <Navbar {...props}>
       <Navbar.Brand
         href="/events"
         onClick={handleNavigation}
-        style={{ color: "#B1AAA0" }}
+        style={{ color: theme.palette.text.primary }}
       >
         SZ Event
       </Navbar.Brand>
       <Nav onSelect={onSelect} activeKey={activeKey}>
-        
         {!matches && (
           <Nav.Item
             eventKey="3"
             href="/users/me/following"
             style={{
-              color: "#B1AAA0",
+              color: theme.palette.text.primary,
+              ":hover": { backgroundColor: "green" },
             }}
             onClick={handleNavigation}
           >
@@ -61,21 +74,23 @@ export const CustomNavbar = ({ onSelect, activeKey, ...props }) => {
         {me !== undefined && (
           <Nav.Menu
             icon={
-              <IconButton
-                size="xs"
-                // color="#000"
-                icon={
-                  <Avatar style={{ background: "#000" }}>
-                    {me?.email.charAt(0).toUpperCase()}
-                  </Avatar>
-                }
-              />
+              <IconButton>
+                <Avatar
+                  variant="rounded"
+                  sx={{
+                    bgcolor: (theme) => theme.palette.common.black,
+                    color: (theme) => theme.palette.common.white,
+                  }}
+                >
+                  {me?.email.charAt(0).toUpperCase()}
+                </Avatar>
+              </IconButton>
             }
           >
             <Nav.Item
               eventKey="4"
               onClick={handleLogout}
-              style={{ color: "#B1AAA0" }}
+              style={{ color: theme.palette.text.primary }}
             >
               Logout
             </Nav.Item>
@@ -83,7 +98,7 @@ export const CustomNavbar = ({ onSelect, activeKey, ...props }) => {
               <Nav.Item
                 eventKey="3"
                 href="/users/me/following"
-                style={{ color: "#B1AAA0" }}
+                style={{ color: theme.palette.text.primary }}
                 onClick={(event) =>
                   handleNavigation(event, "/users/me/following")
                 }
@@ -99,14 +114,14 @@ export const CustomNavbar = ({ onSelect, activeKey, ...props }) => {
               eventKey="5"
               href="/auth/users"
               onClick={handleNavigation}
-              style={{ color: "#B1AAA0" }}
+              style={{ color: theme.palette.text.primary }}
             >
               Login
             </Nav.Item>
             <Nav.Item
               eventKey="6"
               href="/auth/register"
-              style={{ color: "#B1AAA0" }}
+              style={{ color: theme.palette.text.primary }}
               onClick={handleNavigation}
             >
               Sign up

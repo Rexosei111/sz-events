@@ -19,7 +19,8 @@ import { useTheme } from "@emotion/react";
 import useSWR from "swr";
 import { fetcher } from "@/utils/swr_fetcher";
 import { useRouter } from "next/router";
-import Link from "next/link";
+// import Link from "next/link";
+import { NextLinkComposed } from "../shared/Link";
 import { clipText } from "@/utils/clip";
 
 const settings = [
@@ -131,22 +132,10 @@ export default function TopBar() {
             >
               {settings.map((setting) => (
                 <MenuItem
-                  component={Link}
-                  sx={{
-                    textDecoration: "none",
-                  }}
-                  // LinkComponent={Link}
-                  href={setting.url}
                   key={setting.name}
+                  onClick={() => router.push(setting?.url)}
                 >
-                  <Typography
-                    textAlign="center"
-                    sx={{
-                      textDecoration: "none",
-                    }}
-                  >
-                    {setting.name}
-                  </Typography>
+                  {setting.name}
                 </MenuItem>
               ))}
             </Menu>

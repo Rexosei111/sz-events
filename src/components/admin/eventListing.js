@@ -33,8 +33,12 @@ export default function EventListingCard({ event }) {
           <Typography gutterBottom variant="h5" component="div">
             {event?.name}
           </Typography>
-          <Typography variant="body2" color="text.secondary">
-            {event?.summary}
+          <Typography
+            variant="subtitle2"
+            lineHeight={".2rems"}
+            color="text.secondary"
+          >
+            {clipText(event?.summary, 30)}
           </Typography>
         </CardContent>
       </CardActionArea>

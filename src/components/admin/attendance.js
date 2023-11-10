@@ -463,7 +463,6 @@ export default function Attendance({ event = "", query = "" }) {
                 </Grid>
               ))}
             </Grid>
-            {/* )} */}
           </Box>
         ))}
       <AttendeeDetails

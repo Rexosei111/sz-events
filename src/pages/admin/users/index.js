@@ -1,5 +1,6 @@
 import AdminLayout, { LayoutContext } from "@/components/admin/layout";
 import UsersTable from "@/components/admin/usersTable";
+import { PrimaryButton } from "@/components/btn/baseBtn";
 import NewUser from "@/components/shared/dialog/newUser";
 import UpdateUser from "@/components/shared/dialog/updateUser";
 import { StyledInputBase, TextInputField } from "@/components/shared/inputs";
@@ -75,15 +76,14 @@ export default function AdminUsers() {
               bgcolor: (theme) => theme.palette.background.paper,
             }}
           />
-          <Button
+          <PrimaryButton
             disableElevation
             onClick={handleUserOpen}
-            sx={{ textTransform: "capitalize", ml: "auto" }}
+            sx={{ ml: "auto" }}
             variant="contained"
-            color="secondary"
           >
             Add user
-          </Button>
+          </PrimaryButton>
         </Stack>
         {!isLoading && users && users.items.length === 0 && <NoUser />}
         {!isLoading && users && users.items.length > 0 && (

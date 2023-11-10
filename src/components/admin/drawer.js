@@ -12,8 +12,7 @@ import {
 import React from "react";
 import { useContext } from "react";
 import { LayoutContext } from "./layout";
-
-import Link from "next/link";
+import Link from "../shared/Link";
 import { useRouter } from "next/router";
 
 export function ResponsiveDrawer(props) {
@@ -53,7 +52,7 @@ export function ResponsiveDrawer(props) {
                       : null,
                 }}
               >
-                <ListItemButton LinkComponent={Link} href={item.url}>
+                <ListItemButton component={Link} href={item.url}>
                   <ListItemIcon>{item.icon}</ListItemIcon>
                   <ListItemText
                     primary={item.label}

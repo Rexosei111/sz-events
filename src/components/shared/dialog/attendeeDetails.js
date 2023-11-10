@@ -28,6 +28,10 @@ import { LoadingButton } from "@mui/lab";
 import { APIClient } from "@/utils/axios";
 import { SnackbarContext } from "@/pages/_app";
 import BasicAccordion from "@/components/admin/viewMoreAccordion";
+import {
+  PrimaryLoadingButton,
+  SecondaryLoadingButton,
+} from "@/components/btn/loadingBtn";
 
 export default function AttendeeDetails({
   open,
@@ -167,30 +171,31 @@ export default function AttendeeDetails({
             }}
             fullWidth
           />
-          <BasicAccordion attendee={attendee} />
+          {attendee && attendee?.occupation !== null && (
+            <BasicAccordion attendee={attendee} />
+          )}
           <Box width={"100%"}>
-            <LoadingButton
+            <PrimaryLoadingButton
               variant="contained"
               disableElevation
               startIcon={<Check />}
               loading={presentLoading}
-              color="success"
+              // color="success"
               onClick={() => handleMarkAttendance(attendee, true)}
               sx={{ textTransform: "capitalize", ml: "auto", mr: 2 }}
             >
               Present
-            </LoadingButton>
-            <LoadingButton
+            </PrimaryLoadingButton>
+            <SecondaryLoadingButton
               loading={absentLoading}
               disableElevation
               startIcon={<CloseOutlined />}
-              variant="contained"
+              variant="outlined"
               onClick={() => handleMarkAttendance(attendee, false)}
-              color="error"
               sx={{ textTransform: "capitalize" }}
             >
               Absent
-            </LoadingButton>
+            </SecondaryLoadingButton>
           </Box>
         </Stack>
       </DialogContent>

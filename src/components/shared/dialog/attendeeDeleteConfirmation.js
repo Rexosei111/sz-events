@@ -1,3 +1,5 @@
+import { SecondaryButton } from "@/components/btn/baseBtn";
+import { PrimaryLoadingButton } from "@/components/btn/loadingBtn";
 import theme from "@/theme";
 import { DeleteOutline } from "@mui/icons-material";
 import { LoadingButton } from "@mui/lab";
@@ -46,34 +48,23 @@ export default function AttendeeDeleteConfirmation({
         </Typography>
       </DialogContent>
       <DialogActions>
-        <Button
+        <SecondaryButton
           variant="outlined"
-          sx={{
-            textTransform: "capitalize",
-            color: colors.common.white,
-            borderColor: "transparent",
-            "&: hover": {
-              borderColor: theme.palette.common.white,
-            },
-          }}
           onClick={handleClose}
           disableElevation
         >
           Cancel
-        </Button>
-        <LoadingButton
+        </SecondaryButton>
+        <PrimaryLoadingButton
           variant="contained"
           loading={deleting}
           startIcon={<DeleteOutline />}
           onClick={handleAttendeeDelete}
-          sx={{
-            textTransform: "capitalize",
-          }}
           color="primary"
           disableElevation
         >
           Delete
-        </LoadingButton>
+        </PrimaryLoadingButton>
       </DialogActions>
     </Dialog>
   );

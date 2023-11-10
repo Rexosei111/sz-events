@@ -1,4 +1,4 @@
-import { Box, Toolbar, useMediaQuery } from "@mui/material";
+import { Box, Paper, Toolbar, useMediaQuery } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { createContext } from "react";
 // import TopBar from "./TopBar";
@@ -109,15 +109,15 @@ export default function AdminLayout({ children, title = "Accueil" }) {
           setTopBarTitle,
         }}
       >
-        <Box sx={{ display: "flex" }}>
+        <Paper sx={{ display: "flex", minHeight: "100vh", borderRadius: 0 }}>
           <TopBar title={topbarTitle ? topbarTitle : title} />
-          <ResponsiveDrawer sideNavItems={sideNavItems} />
+          <ResponsiveDrawer sideNavItems={sideNavItems} basePath="/admin" />
           <Box
             component="main"
             sx={{
               flexGrow: 1,
               ml: desktopDrawerOpen ? 0 : -30,
-              minHeight: "100vh",
+              minHeight: "9vh",
               bgcolor: "background.default",
               p: 2,
               width: {
@@ -130,7 +130,7 @@ export default function AdminLayout({ children, title = "Accueil" }) {
             <Toolbar />
             {children}
           </Box>
-        </Box>
+        </Paper>
         ;
       </LayoutContext.Provider>
     </>

@@ -6,6 +6,7 @@ import { IconButton } from "rsuite";
 import { ArrowBack } from "@mui/icons-material";
 import { useRouter } from "next/router";
 import { useTheme } from "@emotion/react";
+import UsersAppBar from "./topBar";
 
 export const UserLayoutContext = createContext(null);
 
@@ -30,13 +31,18 @@ export default function LayoutTwo({ children }) {
           disableGutters={matches ? true : false}
           sx={{ py: 0, bgcolor: "background.default" }}
         >
-          <CustomNavbar activeKey={activeKey} onSelect={setActiveKey} />
+          <CustomNavbar
+            appearance="subtle"
+            activeKey={activeKey}
+            onSelect={setActiveKey}
+          />
           {/* <Stack flexDirection={"row"} justifyContent={"flex-start"}>
             <IconButton
               icon={<ArrowBack fontSize="small" />}
               onClick={handePreviousPage}
             />
           </Stack> */}
+          {/* <UsersAppBar /> */}
           <Box sx={{ display: "flex" }}>
             <Box
               component="main"

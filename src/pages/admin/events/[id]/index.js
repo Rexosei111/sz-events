@@ -21,13 +21,15 @@ import {
   LocationCity,
   LocationOn,
 } from "@mui/icons-material";
-import Link from "next/link";
+import Link from "@/components/shared/Link";
 import { ImageCarousel } from "@/components/shared/gallery";
 import Head from "next/head";
 import { APIClient } from "@/utils/axios";
 import { isAxiosError } from "axios";
 import { SnackbarContext } from "@/pages/_app";
 import { LoadingButton } from "@mui/lab";
+import { SecondaryLoadingButton } from "@/components/btn/loadingBtn";
+import { PrimaryButton } from "@/components/btn/baseBtn";
 
 const DetailsLoadingSkeleton = () => {
   return (
@@ -116,16 +118,15 @@ export default function EventDetailsPage() {
         flexWrap={{ xs: "wrap", sm: "nowrap" }}
         mb={2}
       >
-        <LoadingButton
-          sx={{ textTransform: "capitalize" }}
+        <SecondaryLoadingButton
           onClick={handlePublish}
           loading={publishing}
           disableElevation
-          variant="contained"
-          color={event?.published ? "warning" : "info"}
+          variant="outlined"
+          color="primary"
         >
           {event?.published ? "Unpublish" : "Publish"}
-        </LoadingButton>
+        </SecondaryLoadingButton>
       </Stack>
       <Typography
         variant="h4"
@@ -163,7 +164,6 @@ export default function EventDetailsPage() {
           height: 300,
           position: "relative",
           my: 2,
-          // borderStyle: "dotted",
         }}
       >
         <Image
@@ -192,29 +192,23 @@ export default function EventDetailsPage() {
         gap={2}
         mt={5}
       >
-        <LoadingButton
+        <SecondaryLoadingButton
           loading={deleting}
-          // LinkComponent={Link}
-          variant="contained"
-          color="error"
+          variant="outlined"
           onClick={handleDelete}
           startIcon={<Delete fontSize="small" />}
           disableElevation
-          // href={`/admin/events/${event?.id}/edit`}
-          sx={{ textTransform: "none" }}
         >
           Delete
-        </LoadingButton>
-        <Button
-          // component={Link}
-          onClick={() => router.push(`/admin/events/${event?.id}/edit`)}
+        </SecondaryLoadingButton>
+        <PrimaryButton
+          component={Link}
+          href={{ pathname: `/admin/events/${event?.id}/edit` }}
           variant="contained"
           disableElevation
-          // href={`/admin/events/${event?.id}/edit`}
-          sx={{ textTransform: "none" }}
         >
           Edit
-        </Button>
+        </PrimaryButton>
       </Stack>
     </Paper>
   );

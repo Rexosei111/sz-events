@@ -1,12 +1,14 @@
 import EventListingCard from "@/components/admin/eventListing";
 import AdminLayout, { LayoutContext } from "@/components/admin/layout";
+import { PrimaryButton } from "@/components/btn/baseBtn";
 import { StyledInputBase } from "@/components/shared/inputs";
 import GridLoading from "@/components/shared/loading/gridLoading";
 import useDebounce from "@/hooks/debounce";
 import { fetcher } from "@/utils/swr_fetcher";
 import { Button, Grid, Pagination, Stack, Typography } from "@mui/material";
 import Head from "next/head";
-import Link from "next/link";
+// import Link from "next/link";
+import Link from "@/components/shared/Link";
 import React, { useContext, useEffect, useState } from "react";
 import useSWR from "swr";
 
@@ -64,16 +66,15 @@ export default function Index() {
             minWidth: { xs: "100%", sm: 300 },
           }}
         />
-        <Button
-          LinkComponent={Link}
+
+        <PrimaryButton
+          variant="contained"
+          component={Link}
           href="/admin/events/new"
           disableElevation
-          sx={{ textTransform: "capitalize", ml: "auto" }}
-          variant="contained"
-          color="secondary"
         >
           Create Event
-        </Button>
+        </PrimaryButton>
       </Stack>
       {isLoading && <GridLoading />}
       <Grid

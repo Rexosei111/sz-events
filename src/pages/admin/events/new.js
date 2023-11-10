@@ -14,6 +14,10 @@ import { APIClient } from "@/utils/axios";
 import { isAxiosError } from "axios";
 import { SnackbarContext } from "@/pages/_app";
 import { useRouter } from "next/router";
+import {
+  PrimaryLoadingButton,
+  SecondaryLoadingButton,
+} from "@/components/btn/loadingBtn";
 
 const newEventFormSchema = yup
   .object({
@@ -44,7 +48,8 @@ export default function New() {
 
   const [eventImage, setEventImages] = useState([]);
   const [publish, setPublish] = useState(false);
-
+  const [drafting, setDrafting] = useState(false);
+  const [publishing, setPublishing] = useState(false);
   const handlePublish = (e) => {
     setPublish(true);
   };
@@ -53,6 +58,11 @@ export default function New() {
     setPublish(false);
   };
   const onSubmit = async (form_data) => {
+    if (publish === true) {
+      setPublishing(true);
+    } else {
+      setDrafting(true);
+    }
     const final_data = { ...form_data, images: eventImage, published: publish };
     try {
       const { data } = await APIClient.post(`events/`, final_data);
@@ -62,6 +72,9 @@ export default function New() {
         setSnackSeverity("error");
         handleSnackbarOpen("All required fields must be field!");
       }
+    } finally {
+      setPublishing(false);
+      setDrafting(false);
     }
   };
   return (
@@ -119,31 +132,24 @@ export default function New() {
           justifyContent={"flex-end"}
           gap={2}
         >
-          <LoadingButton
-            // loading={loading}
+          <SecondaryLoadingButton
+            loading={drafting}
             onClick={handleDraft}
-            size="small"
             variant="outlined"
-            // disabled={saved}
             disableElevation
-            sx={{ textTransform: "capitalize" }}
-            // sx={{ ml: "auto" }}
             type="submit"
           >
             Save as draft
-          </LoadingButton>
-          <LoadingButton
+          </SecondaryLoadingButton>
+          <PrimaryLoadingButton
             onClick={handlePublish}
-            loading={isSubmitting}
-            size="small"
+            loading={publishing}
             variant="contained"
-            // disabled={!isValid}
             disableElevation
-            sx={{ textTransform: "capitalize" }}
             type="submit"
           >
             Publish
-          </LoadingButton>
+          </PrimaryLoadingButton>
         </Stack>
       </form>
     </>
