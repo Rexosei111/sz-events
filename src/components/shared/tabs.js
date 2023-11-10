@@ -2,11 +2,12 @@ import { styled } from "@mui/material/styles";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import Box from "@mui/material/Box";
+import theme from "@/theme";
 
 export const AntTabs = styled(Tabs)({
   borderBottom: "1px solid rgba(255, 255, 255, 0.12)",
   "& .MuiTabs-indicator": {
-    backgroundColor: "#1890ff",
+    backgroundColor: "#cf0d95",
   },
 });
 
@@ -22,11 +23,11 @@ export const AntTab = styled((props) => <Tab disableRipple {...props} />)(
     color: theme.palette.text.primary,
 
     "&:hover": {
-      color: "#40a9ff",
+      color: theme.palette.primary.main,
       opacity: 1,
     },
     "&.Mui-selected": {
-      color: "#1890ff",
+      color: "#cf0d95",
       fontWeight: theme.typography.fontWeightMedium,
     },
     "&.Mui-focusVisible": {

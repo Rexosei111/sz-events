@@ -28,7 +28,7 @@ import {
   Stack,
   Typography,
 } from "@mui/material";
-import { isAxiosError } from "axios";
+import axios, { isAxiosError } from "axios";
 import Head from "next/head";
 import Image from "next/image";
 import { useRouter } from "next/router";
@@ -370,13 +370,6 @@ export default function EventDetails() {
   );
 }
 
-// export async function getServerSideProps(context) {
-//   return {
-//     props: {
-//       event_mini: {},
-//     },
-//   };
-// }
 EventDetails.getLayout = function (page) {
   return <LayoutTwo>{page}</LayoutTwo>;
 };

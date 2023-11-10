@@ -13,7 +13,6 @@ import {
 } from "@mui/material";
 import Head from "next/head";
 import React from "react";
-import { Cabin } from "next/font/google";
 import { Input, InputGroup, Nav } from "rsuite";
 import useSWR from "swr";
 import SearchIcon from "@rsuite/icons/Search";
@@ -33,18 +32,6 @@ import {
 import { removeNullStrings } from "@/utils/clip";
 import GridLoading from "@/components/shared/loading/gridLoading";
 import { AntTab, AntTabs } from "@/components/shared/tabs";
-
-export const cabin = Cabin({
-  weight: ["400", "600", "700"],
-  subsets: ["latin", "latin-ext"],
-  display: "swap",
-  fallback: ["Helvetica", "Arial", "sans-serif"],
-});
-
-const styles = {
-  width: 300,
-  // marginBottom: 10,
-};
 
 const tabDateRange = {
   All: {},
