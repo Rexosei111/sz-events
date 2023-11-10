@@ -64,7 +64,7 @@ export function UserEventListingCard({ event }) {
         </CardContent>
         <CardActions>
           {event?.organiser?.name !== null && (
-            <Stack flexDirection={"column"} gap={0}>
+            <Stack flexDirection={"flex"} gap={1}>
               <Avatar
                 src={event?.organiser?.logo}
                 alt={event?.organiser?.name}
