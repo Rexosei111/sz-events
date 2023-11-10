@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "rsuite/dist/rsuite.min.css";
 // import "../styles/globals.css";
 import { Button, Uploader } from "rsuite";
@@ -14,6 +14,10 @@ export default function EventMediaForm({ setValue, setImages }) {
   const [coverImage, setCoverImage] = useState();
   const [uploadedFiles, setUploadedFiles] = useState([]);
   const uploader = React.useRef();
+
+  useEffect(() => {
+    setImages(uploadedFiles);
+  }, [uploadedFiles]);
   const handleSetCoverImage = () => {
     setCoverImage(previewFile);
     setValue("cover_image", previewFile.url);
@@ -55,7 +59,7 @@ export default function EventMediaForm({ setValue, setImages }) {
           fileKey: file.fileKey,
         },
       ]);
-      setImages(uploadedFiles);
+      // setImages(uploadedFiles);
       setPreviewFile({
         url: process.env.NEXT_PUBLIC_BUCKET_URL + uploadData.key,
         fileKey: file.fileKey,
