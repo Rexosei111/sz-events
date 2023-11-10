@@ -43,14 +43,7 @@ export const CustomNavbar = ({ onSelect, activeKey, ...props }) => {
         SZ Event
       </Navbar.Brand>
       <Nav onSelect={onSelect} activeKey={activeKey}>
-        <Nav.Item
-          eventKey="2"
-          href="/events"
-          onClick={handleNavigation}
-          style={{ color: "#B1AAA0" }}
-        >
-          Find events
-        </Nav.Item>
+        
         {!matches && (
           <Nav.Item
             eventKey="3"
