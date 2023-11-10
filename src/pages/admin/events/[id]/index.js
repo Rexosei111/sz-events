@@ -166,12 +166,14 @@ export default function EventDetailsPage() {
           my: 2,
         }}
       >
-        <Image
-          src={event?.cover_image}
-          alt="event_image"
-          fill
-          style={{ objectFit: "cover" }}
-        />
+        {event?.cover_image !== null && (
+          <Image
+            src={event?.cover_image}
+            alt="event_image"
+            fill
+            style={{ objectFit: "cover" }}
+          />
+        )}
       </Box>
       <Markdown components={{ h1: "h3" }}>{event?.description}</Markdown>
 
