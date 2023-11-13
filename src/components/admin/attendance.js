@@ -35,6 +35,9 @@ import AttendeeDeleteConfirmation from "../shared/dialog/attendeeDeleteConfirmat
 import { isAxiosError } from "axios";
 import fileDownload from "js-file-download";
 import { downlaodItem } from "@/utils/downlaods";
+import * as XLSX from "xlsx";
+import { saveAs } from "file-saver";
+import { exportToExcel } from "@/utils/excelExport";
 
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",
@@ -144,25 +147,20 @@ export default function Attendance({ event = "", query = "" }) {
     fetcher
   );
 
-  const handleExportToExcel = async () => {
+  const handleDownloadAttendance = async () => {
     setExporting(true);
-    const response = await downlaodItem(
-      `attendance/${event?.id}/download?query=${debouncedQuery}`,
-      {
-        responseType: "blob",
-      }
-    );
-
-    if (response === false) {
-      if (isAxiosError(error)) {
-        setSnackSeverity("error");
-        handleSnackbarOpen("Unable to export attendance to excel!");
-      }
-    } else {
-      const filename = `${event?.name}_attendance.xlsx`;
-      fileDownload(response, filename);
+    try {
+      const { data } = await APIClient.get(
+        `attendance/${event?.id}/download?query=${debouncedQuery}`
+      );
+      const fileName = `${event?.name}_attendance.xlsx`;
+      exportToExcel(data, fileName);
+      // saveAs(blob, `${event?.name}_attendance.xlsx`);
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setExporting(false);
     }
-    setExporting(false);
   };
   const handleOpenAttendeeDetails = (attendee) => {
     setAttendee(attendee);
@@ -282,14 +280,22 @@ export default function Attendance({ event = "", query = "" }) {
           width={"100%"}
           flexDirection={"row"}
           gap={2}
+          flexWrap={{ xs: "wrap", md: "nowrap" }}
           justifyContent={"space-between"}
           mb={2}
         >
-          <Stack gap={2} flexDirection={"row"} alignItems={"center"}>
+          <Stack
+            gap={2}
+            flexDirection={"row"}
+            alignItems={"center"}
+            sx={{ display: { xs: "none", md: "block" } }}
+            order={{ xs: 2, md: 1 }}
+            ml={{ xs: "auto", md: 0 }}
+          >
             {attendance && attendance.total !== 0 && (
               <LoadingButton
                 disableElevation
-                onClick={handleExportToExcel}
+                onClick={handleDownloadAttendance}
                 loading={exporting}
                 sx={{
                   textTransform: "capitalize",
@@ -297,11 +303,17 @@ export default function Attendance({ event = "", query = "" }) {
                 startIcon={<ImportExport />}
                 variant="contained"
               >
-                Export to excel
+                Download attendance
               </LoadingButton>
             )}
           </Stack>
-          <Stack gap={2} flexDirection={"row"} alignItems={"center"}>
+          <Stack
+            gap={2}
+            flexDirection={"row"}
+            order={{ xs: 1, md: 2 }}
+            // ml={"auto"}
+            alignItems={"center"}
+          >
             <Chip label={`Total: ${summary.total}`} />
             <Chip label={`Present: ${summary.present}`} />
             <Chip label={`Absent: ${summary.absent}`} />

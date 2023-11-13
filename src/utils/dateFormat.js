@@ -184,3 +184,27 @@ export function formatDateInCustomFormat(dateString) {
   );
   return formattedDate;
 }
+
+export function formatEventDate(inputDateString) {
+  // Create a new Date object from the input string
+  const inputDate = new Date(inputDateString);
+
+  // Check if the input date is valid
+  if (isNaN(inputDate.getTime())) {
+    return "Invalid Date";
+  }
+
+  // Format the date in the desired format (without seconds)
+  const options = {
+    weekday: "short",
+    day: "2-digit",
+    month: "short",
+    year: "numeric",
+    hour: "2-digit",
+    minute: "2-digit",
+    timeZoneName: "short",
+  };
+  const formattedDate = inputDate.toLocaleString("en-US", options);
+
+  return formattedDate;
+}

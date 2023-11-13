@@ -30,6 +30,7 @@ import { SnackbarContext } from "@/pages/_app";
 import { LoadingButton } from "@mui/lab";
 import { SecondaryLoadingButton } from "@/components/btn/loadingBtn";
 import { PrimaryButton } from "@/components/btn/baseBtn";
+import { formatEventDate } from "@/utils/dateFormat";
 
 const DetailsLoadingSkeleton = () => {
   return (
@@ -133,7 +134,7 @@ export default function EventDetailsPage() {
         fontSize={35}
         fontWeight={700}
         gutterBottom
-        color={(theme) => theme.palette.secondary.main}
+        color={"text.primary"}
         mb={2}
       >
         {event?.name}
@@ -153,7 +154,7 @@ export default function EventDetailsPage() {
         <Stack flexDirection={"row"} gap={1} alignItems={"center"}>
           <DateRange fontSize="small" />
           <Typography variant="subtitle2" fontSize={13} component={"span"}>
-            {new Date(event?.start_date).toUTCString()}
+            {formatEventDate(event?.start_date)}
           </Typography>
         </Stack>
       </Stack>

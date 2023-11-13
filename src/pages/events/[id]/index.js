@@ -1,10 +1,11 @@
+import { PrimaryButton } from "@/components/btn/baseBtn";
 import { ImageCarousel } from "@/components/shared/gallery";
 import EventDetailLoading from "@/components/users/eventDetailsLoading";
 import LayoutTwo from "@/components/users/layoutTwo";
 import RSVPModal, { SuccessModal } from "@/components/users/rsvpModal";
 import { SnackbarContext } from "@/pages/_app";
 import { APIClient } from "@/utils/axios";
-import { formatDateInCustomFormat } from "@/utils/dateFormat";
+import { formatDateInCustomFormat, formatEventDate } from "@/utils/dateFormat";
 import { fetcher } from "@/utils/swr_fetcher";
 import {
   AddOutlined,
@@ -12,6 +13,7 @@ import {
   DateRange,
   Instagram,
   LocationOn,
+  LocationOnOutlined,
   Telegram,
 } from "@mui/icons-material";
 import {
@@ -140,14 +142,30 @@ export default function EventDetails() {
         />
       </Box>
       <Box sx={{ px: { xs: 2, md: 0 } }}>
-        <Stack flexDirection={"row"} gap={1} alignItems={"center"}>
+        <Stack
+          flexDirection={{ xs: "column", md: "row" }}
+          mb={2}
+          gap={1}
+          alignItems={{ xs: "flex-start", md: "center" }}
+          justifyContent={{ xs: "flex-start", md: "space-between" }}
+        >
           <Typography
             variant="caption"
+            component={"div"}
             color={"text.secondary"}
             sx={{ fontSize: 18 }}
           >
             {formatDateInCustomFormat(event?.start_date)}
           </Typography>
+          <PrimaryButton
+            disableElevation
+            // sx={{ ml: "auto" }}
+            variant="contained"
+            startIcon={<CheckCircle />}
+            onClick={handleOpen}
+          >
+            Attend
+          </PrimaryButton>
         </Stack>
 
         <Typography
@@ -180,7 +198,7 @@ export default function EventDetails() {
           >
             <DateRange fontSize="small" />
             <Typography variant="subtitle1" sx={{ fontSize: "15px" }}>
-              {new Date(event?.start_date).toUTCString()}
+              {formatEventDate(event?.start_date)}
             </Typography>
           </Stack>
         </Box>
@@ -193,16 +211,9 @@ export default function EventDetails() {
             <List dense>
               <ListItem disableGutters disablePadding>
                 <ListItemIcon>
-                  <IconButton
-                    icon={
-                      <LocationOn
-                        fontSize="small"
-                        htmlColor="rgba(0,0,0,0.8)"
-                      />
-                    }
-                    active
-                    disabled
-                  />
+                  <IconButton disabled>
+                    <LocationOnOutlined fontSize="medium" htmlColor="white" />
+                  </IconButton>
                 </ListItemIcon>
                 <ListItemText>
                   <Typography
@@ -261,20 +272,14 @@ export default function EventDetails() {
           justifyContent={"flex-start"}
           mt={5}
         >
-          <Button
+          <PrimaryButton
             disableElevation
-            color="primary"
             variant="contained"
             startIcon={<CheckCircle />}
             onClick={handleOpen}
-            sx={{
-              textTransform: "capitalize",
-              color: "text.primary",
-              fontWeight: 600,
-            }}
           >
             Attend
-          </Button>
+          </PrimaryButton>
         </Stack>
         {event?.organiser?.name && (
           <Stack flexDirection={"column"} gap={2} my={2}>
@@ -297,12 +302,6 @@ export default function EventDetails() {
                 sx={{ height: "90px", width: "90px" }}
               />
 
-              <Typography
-                variant="subtitle2"
-                sx={{ mt: 2, fontSize: 16, textAlign: "center" }}
-              >
-                organised by
-              </Typography>
               <Typography
                 variant="h3"
                 fontWeight={700}

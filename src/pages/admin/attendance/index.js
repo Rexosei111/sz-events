@@ -1,12 +1,18 @@
 import Attendance from "@/components/admin/attendance";
+import AttendeeFilter from "@/components/admin/attendeeFilter";
 import AdminLayout, { LayoutContext } from "@/components/admin/layout";
+import { PrimaryButton, SecondaryButton } from "@/components/btn/baseBtn";
+import { SecondaryLoadingButton } from "@/components/btn/loadingBtn";
 import NewAttendee from "@/components/shared/dialog/new_attendee";
 import {
   BootstrapInput,
   StyledInputBase,
   TextInputField,
 } from "@/components/shared/inputs";
+import { APIClient } from "@/utils/axios";
+import { exportToExcel } from "@/utils/excelExport";
 import { fetcher } from "@/utils/swr_fetcher";
+import { Filter1Outlined, FilterListOutlined } from "@mui/icons-material";
 import {
   Box,
   Button,
@@ -31,6 +37,9 @@ export default function Index() {
   const [selectedEvent, setSelectedEvent] = useState("");
   const [newAttendeeOpen, setNewAttendeeOpen] = useState(false);
   const [query, setQuery] = useState("");
+  const [params, setParams] = useState(null);
+  const [filterOpen, setFilterOpen] = useState(false);
+  const [exporting, setExporting] = useState(false);
 
   const handleQueryChange = (event) => {
     setQuery(event.target.value);
@@ -38,8 +47,28 @@ export default function Index() {
   const handleOpen = () => {
     setNewAttendeeOpen(!newAttendeeOpen);
   };
+
+  const handleFilterOpen = () => {
+    setFilterOpen(!filterOpen);
+  };
   const handleEventChange = (event) => {
     setSelectedEvent(event.target.value);
+  };
+
+  const handleDownloadAttendance = async () => {
+    setExporting(true);
+    try {
+      const { data } = await APIClient.get(
+        `attendance/${selectedEvent?.id}/download?query=${query}`
+      );
+      const fileName = `${selectedEvent?.name}_attendance.xlsx`;
+      exportToExcel(data, fileName);
+      // saveAs(blob, `${event?.name}_attendance.xlsx`);
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setExporting(false);
+    }
   };
 
   useEffect(() => {
@@ -68,10 +97,10 @@ export default function Index() {
           flexDirection={"row"}
           // justifyContent={"space-between"}
           flexWrap={{ xs: "wrap", lg: "nowrap" }}
-          alignContent={"center"}
+          alignItems={"flex-start"}
           width={"100%"}
           gap={2}
-          sx={{ mt: 3, mb: 3 }}
+          sx={{ my: 3 }}
         >
           <FormControl
             variant="standard"
@@ -101,26 +130,54 @@ export default function Index() {
           </FormControl>
           {selectedEvent !== "" && (
             <>
-              <StyledInputBase
-                placeholder="Search attendee by name"
-                onChange={handleQueryChange}
+              <Stack
+                flexDirection={"column"}
+                minWidth={{ xs: "100%", sm: 300 }}
+                order={{ xs: 2, sm: 2 }}
+              >
+                <StyledInputBase
+                  placeholder="Search attendee by name"
+                  onChange={handleQueryChange}
+                  fullWidth
+                />
+                {/* <SecondaryButton
+                  variant="text"
+                  onClick={handleFilterOpen}
+                  size="small"
+                  sx={{ mr: "auto" }}
+                  startIcon={<FilterListOutlined fontSize="small" />}
+                >
+                  Filter
+                </SecondaryButton> */}
+              </Stack>
+              <Stack
+                flexDirection={"row"}
+                justifyContent={"flex-end"}
+                gap={2}
                 sx={{
-                  minWidth: { xs: "100%", sm: 300 },
-                  order: { xs: 2, sm: 2 },
-                }}
-              />
-              <Button
-                variant="contained"
-                sx={{
-                  textTransform: "capitalize",
                   ml: "auto",
                   order: { xs: 3, sm: 3 },
                 }}
-                disableElevation
-                onClick={handleOpen}
               >
-                Add Attendee
-              </Button>
+                <SecondaryLoadingButton
+                  sx={{
+                    display: { xs: "block", md: "none" },
+                  }}
+                  onClick={handleDownloadAttendance}
+                  loading={exporting}
+                  variant="outlined"
+                  disableElevation
+                >
+                  Download Attendance
+                </SecondaryLoadingButton>
+                <PrimaryButton
+                  variant="contained"
+                  disableElevation
+                  onClick={handleOpen}
+                >
+                  Add Attendee
+                </PrimaryButton>
+              </Stack>
             </>
           )}
         </Stack>
@@ -144,6 +201,12 @@ export default function Index() {
         open={newAttendeeOpen}
         handleClose={handleOpen}
         event_id={selectedEvent?.id}
+      />
+      <AttendeeFilter
+        open={filterOpen}
+        handleClose={handleFilterOpen}
+        params={params}
+        setParams={setParams}
       />
     </>
   );
