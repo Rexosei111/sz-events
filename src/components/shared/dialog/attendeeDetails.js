@@ -59,11 +59,11 @@ export default function AttendeeDetails({
         `attendance/${event_id}?attendee_id=${attendee.id}&present=${present}`
       );
       mutate();
-      summaryMutate({
-        ...summary,
-        present: present === true ? summary?.present + 1 : summary?.present,
-        absent: present === false ? summary.absent + 1 : summary.absent,
-      });
+      summaryMutate((prevState) => ({
+        ...prevState,
+        present: present === true ? prevState?.present + 1 : prevState?.present,
+        absent: present === false ? prevState.absent + 1 : prevState.absent,
+      }));
       handleClose();
     } catch (error) {
       setSnackSeverity("error");

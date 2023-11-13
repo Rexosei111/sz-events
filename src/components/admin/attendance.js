@@ -13,7 +13,6 @@ import {
   Stack,
   Tooltip,
   Typography,
-  styled,
 } from "@mui/material";
 import React, { useContext, useEffect, useState } from "react";
 import useSWR from "swr";
@@ -23,7 +22,6 @@ import { APIClient } from "@/utils/axios";
 import useDebounce from "@/hooks/debounce";
 import {
   Check,
-  CheckCircle,
   CloseOutlined,
   DeleteOutline,
   ImportExport,
@@ -32,99 +30,14 @@ import { LoadingButton } from "@mui/lab";
 import theme from "@/theme";
 import AttendeeDetails from "../shared/dialog/attendeeDetails";
 import AttendeeDeleteConfirmation from "../shared/dialog/attendeeDeleteConfirmation";
-import { isAxiosError } from "axios";
-import fileDownload from "js-file-download";
-import { downlaodItem } from "@/utils/downlaods";
-import * as XLSX from "xlsx";
-import { saveAs } from "file-saver";
+
 import { exportToExcel } from "@/utils/excelExport";
 import { objectToQueryString } from "@/utils/queryParams";
 
-const Item = styled(Paper)(({ theme }) => ({
-  backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",
-  ...theme.typography.body2,
-  padding: theme.spacing(1),
-  borderRadius: 10,
-  textAlign: "center",
-  minHeight: 200,
-  boxShadow: "0px 3px 17px 0px rgba(0,0,0,0.1)",
-  color: theme.palette.text.secondary,
-}));
-
-function countObjectsWithPresentTrue(arr, value = true) {
+function countObjectsWithPresentTrue(arr = [], value = true) {
   return arr.reduce((count, obj) => count + (obj.present === value ? 1 : 0), 0);
 }
 
-const MarkAttendanceBtn = ({ item, present }) => {
-  const [loading, setLoading] = useState(false);
-  const handleMarkAttendance = async (attendee, present) => {
-    setLoading(false);
-    try {
-      const { data } = await APIClient.patch(
-        `attendance/${event.id}?attendee_id=${attendee.id}&present=${present}`
-      );
-      mutate();
-      summaryMutate({
-        ...summary,
-        present: present === true ? summary?.present + 1 : summary?.present,
-        absent: present === false ? summary.absent + 1 : summary.absent,
-      });
-    } catch (error) {
-      setSnackSeverity("error");
-      handleSnackbarOpen(
-        `Unable to take attendance for ${attendee.first_name}`
-      );
-    } finally {
-      setLoading(false);
-    }
-  };
-  if (present === false) {
-    return (
-      <Tooltip title={"Mark as absent"}>
-        <LoadingButton
-          loading={loading}
-          // label={"P"}
-          disableElevation
-          startIcon={
-            <CloseOutlined
-              htmlColor={item.present === false ? "white" : "black"}
-            />
-          }
-          onClick={() => handleMarkAttendance(item, present)}
-          variant="contained"
-          color={item.present === false ? "error" : "warning"}
-          sx={{
-            textTransform: "capitalize",
-            // bgcolor: item.present === true ? "#05df05" : "#57575729",
-          }}
-        >
-          {"Absent"}
-        </LoadingButton>
-      </Tooltip>
-    );
-  }
-  return (
-    <Tooltip title={"Mark as present"}>
-      <LoadingButton
-        loading={loading}
-        // label={"P"}
-        disableElevation
-        startIcon={
-          <CheckCircle htmlColor={item.present === true ? "white" : "black"} />
-        }
-        onClick={() => handleMarkAttendance(item, present)}
-        variant="contained"
-        color={item.present === true ? "success" : "warning"}
-        sx={{
-          textTransform: "capitalize",
-          // bgcolor: item.present === true ? "#05df05" : "#57575729",
-        }}
-      >
-        {"Present"}
-      </LoadingButton>
-    </Tooltip>
-  );
-};
 export default function Attendance({ event = "", query = "", params = {} }) {
   const debouncedQuery = useDebounce(query, 500);
   const [groupedItems, setGroupedItems] = useState({});
@@ -135,6 +48,11 @@ export default function Attendance({ event = "", query = "", params = {} }) {
   const [openAttendeeDeleteConfirmation, setOpenAttendeeDeleteConfirmation] =
     useState(false);
   const [attendee, setAttendee] = useState(null);
+  const [attendanceSummary, setAttendanceSummary] = useState({
+    total: 0,
+    present: 0,
+    absent: 0,
+  });
   const { handleOpen: handleSnackbarOpen, setSnackSeverity } =
     useContext(SnackbarContext);
 
@@ -153,6 +71,16 @@ export default function Attendance({ event = "", query = "", params = {} }) {
     fetcher
   );
 
+  useEffect(() => {
+    if (attendance !== undefined) {
+      setAttendanceSummary((prevState) => ({
+        ...prevState,
+        total: attendance.total,
+        present: countObjectsWithPresentTrue(attendance.items, true),
+        absent: countObjectsWithPresentTrue(attendance.items, false),
+      }));
+    }
+  }, [attendance]);
   const handleDownloadAttendance = async () => {
     setExporting(true);
     try {
@@ -163,7 +91,6 @@ export default function Attendance({ event = "", query = "", params = {} }) {
       );
       const fileName = `${event?.name}_attendance.xlsx`;
       exportToExcel(data, fileName);
-      // saveAs(blob, `${event?.name}_attendance.xlsx`);
     } catch (error) {
       console.log(error);
     } finally {
@@ -179,12 +106,12 @@ export default function Attendance({ event = "", query = "", params = {} }) {
     setOpenAttendeeDeleteConfirmation(!openAttendeeDeleteConfirmation);
   };
 
-  const {
-    data: summary,
-    error: summaryError,
-    isLoading: summaryLoading,
-    mutate: summaryMutate,
-  } = useSWR(() => `attendance/${event?.id}/summary`, fetcher);
+  // const {
+  //   data: summary,
+  //   error: summaryError,
+  //   isLoading: summaryLoading,
+  //   mutate: summaryMutate,
+  // } = useSWR(() => `attendance/${event?.id}/summary`, fetcher);
 
   useEffect(() => {
     if (attendance !== undefined) {
@@ -245,11 +172,11 @@ export default function Attendance({ event = "", query = "", params = {} }) {
         `attendance/${event.id}?attendee_id=${attendee.id}&present=${present}`
       );
       mutate();
-      summaryMutate({
-        ...summary,
-        present: present === true ? summary?.present + 1 : summary?.present,
-        absent: present === false ? summary.absent + 1 : summary.absent,
-      });
+      setAttendanceSummary((prevState) => ({
+        ...prevState,
+        present: present === true ? prevState?.present + 1 : prevState?.present,
+        absent: present === false ? prevState.absent + 1 : prevState.absent,
+      }));
     } catch (error) {
       setSnackSeverity("error");
       handleSnackbarOpen(
@@ -264,14 +191,16 @@ export default function Attendance({ event = "", query = "", params = {} }) {
         `attendance/${event.id}?attendee_id=${attendee.id}`
       );
       mutate();
-      summaryMutate({
-        ...summary,
-        total: summary.total - 1,
+      setAttendanceSummary((prevState) => ({
+        ...prevState,
+        total: prevState.total - 1,
         present:
-          attendee.present === true ? summary?.present - 1 : summary?.present,
+          attendee.present === true
+            ? prevState?.present - 1
+            : prevState?.present,
         absent:
-          attendee.present === false ? summary.absent - 1 : summary.absent,
-      });
+          attendee.present === false ? prevState.absent - 1 : prevState.absent,
+      }));
       setOpenAttendeeDetails(false);
     } catch (error) {
       setSnackSeverity("error");
@@ -283,7 +212,7 @@ export default function Attendance({ event = "", query = "", params = {} }) {
       sx={{ width: "100%", minHeight: 300, bgcolor: "transparent" }}
       elevation={0}
     >
-      {summary && (
+      {attendanceSummary && (
         <Stack
           width={"100%"}
           flexDirection={"row"}
@@ -322,9 +251,9 @@ export default function Attendance({ event = "", query = "", params = {} }) {
             // ml={"auto"}
             alignItems={"center"}
           >
-            <Chip label={`Total: ${summary.total}`} />
-            <Chip label={`Present: ${summary.present}`} />
-            <Chip label={`Absent: ${summary.absent}`} />
+            <Chip label={`Total: ${attendanceSummary.total}`} />
+            <Chip label={`Present: ${attendanceSummary.present}`} />
+            <Chip label={`Absent: ${attendanceSummary.absent}`} />
           </Stack>
         </Stack>
       )}
@@ -490,9 +419,9 @@ export default function Attendance({ event = "", query = "", params = {} }) {
         handleClose={handleOpenAttendeeDetails}
         attendee={attendee}
         mutate={mutate}
-        summaryMutate={summaryMutate}
+        summaryMutate={setAttendanceSummary}
         event_id={event?.id}
-        summary={summary}
+        summary={attendanceSummary}
         handleMarkAttendance={handleMarkAttendance}
         handleDeleteConfirmation={handleOpenAttendeeDeleteConfirmation}
         deleteAttendee={deleteAttendee}
