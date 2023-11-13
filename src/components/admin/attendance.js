@@ -38,6 +38,7 @@ import { downlaodItem } from "@/utils/downlaods";
 import * as XLSX from "xlsx";
 import { saveAs } from "file-saver";
 import { exportToExcel } from "@/utils/excelExport";
+import { objectToQueryString } from "@/utils/queryParams";
 
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",
@@ -124,7 +125,7 @@ const MarkAttendanceBtn = ({ item, present }) => {
     </Tooltip>
   );
 };
-export default function Attendance({ event = "", query = "" }) {
+export default function Attendance({ event = "", query = "", params = {} }) {
   const debouncedQuery = useDebounce(query, 500);
   const [groupedItems, setGroupedItems] = useState({});
   const [totalPageCount, setTotalPageCount] = useState(1);
@@ -143,7 +144,12 @@ export default function Attendance({ event = "", query = "" }) {
     isLoading,
     mutate,
   } = useSWR(
-    () => `attendance/${event?.id}?query=${debouncedQuery}&page=${pageNumber}`,
+    () =>
+      `attendance/${
+        event?.id
+      }?query=${debouncedQuery}&page=${pageNumber}&${objectToQueryString(
+        params
+      )}`,
     fetcher
   );
 
@@ -151,7 +157,9 @@ export default function Attendance({ event = "", query = "" }) {
     setExporting(true);
     try {
       const { data } = await APIClient.get(
-        `attendance/${event?.id}/download?query=${debouncedQuery}`
+        `attendance/${
+          event?.id
+        }/download?query=${debouncedQuery}&${objectToQueryString(params)}`
       );
       const fileName = `${event?.name}_attendance.xlsx`;
       exportToExcel(data, fileName);

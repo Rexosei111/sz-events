@@ -10,15 +10,11 @@ import {
   FormGroup,
   FormHelperText,
   FormLabel,
-  InputLabel,
-  MenuItem,
   Radio,
   RadioGroup,
   Stack,
 } from "@mui/material";
 import React, { useEffect, useState } from "react";
-import { TextInputField } from "../shared/inputs";
-import MultipleSelectPublicity from "../shared/select";
 import { PrimaryButton, SecondaryButton } from "../btn/baseBtn";
 
 export default function AttendeeFilter({
@@ -28,14 +24,14 @@ export default function AttendeeFilter({
   setParams,
 }) {
   const [occupations, setOccupations] = useState([]);
-  const [invitaions, setInvitations] = useState([]);
+  const [invitations, setInvitations] = useState([]);
   const [present, setPresent] = useState(null);
 
   useEffect(() => {
     console.log(params);
     if (params !== null) {
       setOccupations(params?.occupations === null ? [] : params?.occupations);
-      setInvitations(params?.invitaions === null ? [] : params?.invitaions);
+      setInvitations(params?.invitations === null ? [] : params?.invitations);
       setPresent(params?.present);
     }
   }, [params]);
@@ -53,7 +49,7 @@ export default function AttendeeFilter({
     }
   };
 
-  const handleInvitaionsChange = (event) => {
+  const handleInvitationsChange = (event) => {
     if (event.target.checked === true) {
       setInvitations((prevState) => [...prevState, event.target.value]);
     } else {
@@ -64,12 +60,13 @@ export default function AttendeeFilter({
   };
 
   const handleClearFilters = () => {
-    setParams({ occupations: [], invitaions: [], present: null });
-    // setOccupations([]);
-    // setInvitations([]);
-    // setPresent(null);
+    setParams({ occupations: [], invitations: [], present: null });
   };
-  console.log(occupations);
+  const handleApplyFilters = () => {
+    setParams({ occupations, invitations, present: present });
+    handleClose();
+  };
+
   return (
     <Dialog open={open} onClose={handleClose} fullWidth>
       <DialogTitle>Filter attendees</DialogTitle>
@@ -156,8 +153,9 @@ export default function AttendeeFilter({
                 <FormControlLabel
                   control={
                     <Checkbox
+                      checked={invitations.includes("via_whatsapp")}
                       size="small"
-                      onChange={handleInvitaionsChange}
+                      onChange={handleInvitationsChange}
                       name={"via_whatsapp"}
                       value={"via_whatsapp"}
                     />
@@ -172,8 +170,9 @@ export default function AttendeeFilter({
                 <FormControlLabel
                   control={
                     <Checkbox
+                      checked={invitations.includes("via_instagram")}
                       size="small"
-                      onChange={handleInvitaionsChange}
+                      onChange={handleInvitationsChange}
                       name="via_instagram"
                       value={"via_instagram"}
                     />
@@ -188,8 +187,9 @@ export default function AttendeeFilter({
                 <FormControlLabel
                   control={
                     <Checkbox
+                      checked={invitations.includes("by_member")}
                       size="small"
-                      onChange={handleInvitaionsChange}
+                      onChange={handleInvitationsChange}
                       name="by_member"
                       value={"by_member"}
                     />
@@ -204,8 +204,9 @@ export default function AttendeeFilter({
                 <FormControlLabel
                   control={
                     <Checkbox
+                      checked={invitations.includes("by_friend")}
                       size="small"
-                      onChange={handleInvitaionsChange}
+                      onChange={handleInvitationsChange}
                       name="by_friend"
                       value={"by_friend"}
                     />
@@ -265,7 +266,11 @@ export default function AttendeeFilter({
         >
           Clear filters
         </SecondaryButton>
-        <PrimaryButton variant="contained" disableElevation>
+        <PrimaryButton
+          variant="contained"
+          disableElevation
+          onClick={handleApplyFilters}
+        >
           Apply
         </PrimaryButton>
       </DialogActions>

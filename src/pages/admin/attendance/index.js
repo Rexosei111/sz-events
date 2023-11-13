@@ -11,6 +11,7 @@ import {
 } from "@/components/shared/inputs";
 import { APIClient } from "@/utils/axios";
 import { exportToExcel } from "@/utils/excelExport";
+import { objectToQueryString } from "@/utils/queryParams";
 import { fetcher } from "@/utils/swr_fetcher";
 import { Filter1Outlined, FilterListOutlined } from "@mui/icons-material";
 import {
@@ -37,7 +38,11 @@ export default function Index() {
   const [selectedEvent, setSelectedEvent] = useState("");
   const [newAttendeeOpen, setNewAttendeeOpen] = useState(false);
   const [query, setQuery] = useState("");
-  const [params, setParams] = useState(null);
+  const [params, setParams] = useState({
+    occupations: [],
+    invitations: [],
+    present: null,
+  });
   const [filterOpen, setFilterOpen] = useState(false);
   const [exporting, setExporting] = useState(false);
 
@@ -59,11 +64,12 @@ export default function Index() {
     setExporting(true);
     try {
       const { data } = await APIClient.get(
-        `attendance/${selectedEvent?.id}/download?query=${query}`
+        `attendance/${
+          selectedEvent?.id
+        }/download?query=${query}&${objectToQueryString(params)}`
       );
       const fileName = `${selectedEvent?.name}_attendance.xlsx`;
       exportToExcel(data, fileName);
-      // saveAs(blob, `${event?.name}_attendance.xlsx`);
     } catch (error) {
       console.log(error);
     } finally {
@@ -140,7 +146,7 @@ export default function Index() {
                   onChange={handleQueryChange}
                   fullWidth
                 />
-                {/* <SecondaryButton
+                <SecondaryButton
                   variant="text"
                   onClick={handleFilterOpen}
                   size="small"
@@ -148,7 +154,7 @@ export default function Index() {
                   startIcon={<FilterListOutlined fontSize="small" />}
                 >
                   Filter
-                </SecondaryButton> */}
+                </SecondaryButton>
               </Stack>
               <Stack
                 flexDirection={"row"}
@@ -182,19 +188,14 @@ export default function Index() {
           )}
         </Stack>
         {selectedEvent === "" && (
-          <Stack
-            height={300}
-            alignItems={"center"}
-            // color={"text.primary"}
-            justifyContent={"center"}
-          >
+          <Stack height={300} alignItems={"center"} justifyContent={"center"}>
             <Typography variant="subtitle1" fontSize={20}>
               Select an event
             </Typography>
           </Stack>
         )}
         {selectedEvent !== "" && (
-          <Attendance event={selectedEvent} query={query} />
+          <Attendance event={selectedEvent} query={query} params={params} />
         )}
       </Box>
       <NewAttendee

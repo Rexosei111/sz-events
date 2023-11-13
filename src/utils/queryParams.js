@@ -15,3 +15,23 @@ export function generateQueryParams(obj) {
 
   return queryParams.join("&");
 }
+
+export function objectToQueryString(obj) {
+  const params = new URLSearchParams();
+
+  for (const key in obj) {
+    const value = obj[key];
+
+    if (value !== null && !(Array.isArray(value) && value.length === 0)) {
+      if (Array.isArray(value)) {
+        value.forEach((item) => {
+          params.append(key, item);
+        });
+      } else {
+        params.append(key, value);
+      }
+    }
+  }
+
+  return params.toString();
+}
