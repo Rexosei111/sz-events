@@ -37,6 +37,7 @@ import { useRouter } from "next/router";
 import React, { useContext, useEffect, useState } from "react";
 import Markdown from "react-markdown";
 import useSWR from "swr";
+import TicTokIcon from "../../../../public/icons8-tiktok.svg";
 
 export default function EventDetails() {
   const [eventImages, setEventImages] = useState([]);
@@ -142,8 +143,9 @@ export default function EventDetails() {
         variant="outlined"
         sx={{
           width: "100%",
-          height: 450,
+          height: { xs: 450, md: 555 },
           position: "relative",
+
           mb: 2,
         }}
       >
@@ -151,7 +153,9 @@ export default function EventDetails() {
           src={event?.cover_image}
           alt="event_image"
           fill
-          style={{ objectFit: "fill" }}
+          // width={0}
+          // unoptimized={true}
+          style={{ objectFit: "cover" }}
         />
       </Box>
       <Box sx={{ px: { xs: 2, md: 0 } }}>
@@ -358,18 +362,27 @@ export default function EventDetails() {
               </Box>
               <Stack my={2} flexDirection={"row"} gap={1}>
                 <IconButton
+                  sx={{ width: 45, height: 45 }}
                   LinkComponent={Link}
                   href="https://instagram.com/spiritzone_?igshid=OGQ5ZDc2ODk2ZA=="
                   target="_blank"
                 >
-                  <Instagram />
+                  <Instagram sx={{ width: 20, height: 20 }} />
                 </IconButton>
                 <IconButton
+                  sx={{ width: 45, height: 45 }}
                   LinkComponent={Link}
                   href="https://t.me/+TaU5tedtojdkMzU8"
                   target="_blank"
                 >
-                  <Telegram />
+                  <Telegram sx={{ width: 20, height: 20 }} />
+                </IconButton>
+                <IconButton
+                  LinkComponent={Link}
+                  href="https://www.tiktok.com/@spiritzone1?_t=8hLuzSBp18w&_r=1"
+                  target="_blank"
+                >
+                  <Image src={TicTokIcon} width={30} height={30} />
                 </IconButton>
               </Stack>
             </Paper>

@@ -170,7 +170,7 @@ export default function EventDetailsPage() {
         variant="outlined"
         sx={{
           width: "100%",
-          height: 450,
+          height: { xs: 450, md: 555 },
           position: "relative",
           my: 2,
         }}
@@ -179,11 +179,10 @@ export default function EventDetailsPage() {
           <Image
             src={event?.cover_image}
             alt="event_image"
-            // width={"100%"}
-            width={0}
-            height={0}
-            sizes="100vw"
-            style={{ width: "100%", height: "100%" }}
+            fill
+            // width={0}
+            // unoptimized={true}
+            style={{ objectFit: "cover" }}
           />
         )}
       </Box>
