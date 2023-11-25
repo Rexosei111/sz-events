@@ -12,7 +12,7 @@ const handleDragStart = (e) => e.preventDefault();
 //   <img src="path-to-img" onDragStart={handleDragStart} role="presentation" />,
 // ];
 
-const ImageRender = ({ height = 300, image_url }) => {
+export const ImageRender = ({ height = 300, image_url }) => {
   return (
     <Box
       sx={{

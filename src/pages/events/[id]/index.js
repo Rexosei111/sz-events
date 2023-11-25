@@ -138,7 +138,7 @@ export default function EventDetails() {
           src={event?.cover_image}
           alt="event_image"
           fill
-          style={{ objectFit: "cover" }}
+          style={{ objectFit: "fill" }}
         />
       </Box>
       <Box sx={{ px: { xs: 2, md: 0 } }}>

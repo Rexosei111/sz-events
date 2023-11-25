@@ -22,7 +22,7 @@ import {
   LocationOn,
 } from "@mui/icons-material";
 import Link from "@/components/shared/Link";
-import { ImageCarousel } from "@/components/shared/gallery";
+import { ImageCarousel, ImageRender } from "@/components/shared/gallery";
 import Head from "next/head";
 import { APIClient } from "@/utils/axios";
 import { isAxiosError } from "axios";
@@ -158,11 +158,19 @@ export default function EventDetailsPage() {
           </Typography>
         </Stack>
       </Stack>
+      {/* <Box height={450} width={"100%"} my={2}>
+        <img
+          src={event?.cover_image}
+          alt="event_image"
+          // fill
+          style={{ objectFit: "fill", height: "100%", width: "100%" }}
+        />
+      </Box> */}
       <Box
         variant="outlined"
         sx={{
           width: "100%",
-          height: 300,
+          height: 450,
           position: "relative",
           my: 2,
         }}
@@ -171,6 +179,7 @@ export default function EventDetailsPage() {
           <Image
             src={event?.cover_image}
             alt="event_image"
+            // width={"100%"}
             fill
             style={{ objectFit: "cover" }}
           />
