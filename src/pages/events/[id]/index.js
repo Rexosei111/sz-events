@@ -116,7 +116,7 @@ export default function EventDetails() {
   return (
     <>
       <Head>
-        <title>{"GOOD SHEPHERD CONFERENCE: SEED OF REVOLUTION"}</title>
+        <title>GOOD SHEPHERD CONFERENCE: SEED OF REVOLUTION</title>
         <meta
           property="og:title"
           content={"GOOD SHEPHERD CONFERENCE: SEED OF REVOLUTION"}
