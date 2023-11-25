@@ -129,7 +129,7 @@ export default function EventDetails() {
         <meta
           property="og:image"
           content={
-            "https://sz-event-bucket.s3.eu-west-3.amazonaws.com/cover+image.png"
+            "https://sz-event-bucket.s3.eu-west-3.amazonaws.com/14cdcc91-1127-4921-8f98-8a73d4ccae58.png"
           }
         />
         <meta
