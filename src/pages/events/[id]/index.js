@@ -135,7 +135,7 @@ export default function EventDetails() {
         />
         <meta
           property="og:url"
-          content={`https://sz-events.vercel.app/events/49a55f33-e2d1-4efd-bb6e-dee5fb7f4e4a`}
+          content={`https://sz-events.vercel.app/events/48b70766-a800-42a7-b33d-98b06ecd539b`}
         />
         <meta property="og:type" content="website" />
       </Head>
