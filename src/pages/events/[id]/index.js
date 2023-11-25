@@ -116,12 +116,25 @@ export default function EventDetails() {
     <>
       <Head>
         <title>{event?.name}</title>
-        <meta property="og:title" content={event?.name} />
-        <meta property="og:description" content={event?.summary} />
-        <meta property="og:image" content={event?.cover_image} />
+        <meta
+          property="og:title"
+          content={"GOOD SHEPHERD CONFERENCE: SEED OF REVOLUTION"}
+        />
+        <meta
+          property="og:description"
+          content={
+            "Good Shepherd Conference is an atmosphere of dynamic spiritual travail that is birthing forth a mass evolution all over the Earth according to the vision of the Lord Jesus Christ. It is a mega event in the timeline of the body of Christ subscribed to the mandate of perfecting the saints."
+          }
+        />
+        <meta
+          property="og:image"
+          content={
+            "https://sz-event-bucket.s3.eu-west-3.amazonaws.com/cover+image.png"
+          }
+        />
         <meta
           property="og:url"
-          content={`https://sz-events.vercel.app/events/${event?.id}`}
+          content={`https://sz-events.vercel.app/events/49a55f33-e2d1-4efd-bb6e-dee5fb7f4e4a`}
         />
         <meta property="og:type" content="website" />
       </Head>
