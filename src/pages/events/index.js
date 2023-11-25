@@ -96,7 +96,7 @@ export default function EventListing() {
         />
         <meta
           property="og:image"
-          content="https://szevents-bucket.s3.eu-west-3.amazonaws.com/2cf54546-4c27-48d2-a050-21c369e59fb9.png"
+          content="https://sz-event-bucket.s3.eu-west-3.amazonaws.com/c1a43871-efb7-4c7e-a320-62ef66f9759e.png"
         />
         <meta property="og:url" content="https://sz-events.vercel.app/events" />
         <meta property="og:type" content="website" />
