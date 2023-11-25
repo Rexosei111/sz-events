@@ -180,8 +180,10 @@ export default function EventDetailsPage() {
             src={event?.cover_image}
             alt="event_image"
             // width={"100%"}
-            fill
-            style={{ objectFit: "cover" }}
+            width={0}
+            height={0}
+            sizes="100vw"
+            style={{ width: "100%", height: "100%" }}
           />
         )}
       </Box>
