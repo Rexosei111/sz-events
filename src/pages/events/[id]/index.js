@@ -38,6 +38,7 @@ import React, { useContext, useEffect, useState } from "react";
 import Markdown from "react-markdown";
 import useSWR from "swr";
 import TicTokIcon from "../../../../public/icons8-tiktok.svg";
+import { NextSeo } from "next-seo";
 
 export default function EventDetails({ eventSummary }) {
   const [eventImages, setEventImages] = useState([]);
@@ -115,7 +116,24 @@ export default function EventDetails({ eventSummary }) {
   // }
   return (
     <>
-      <Head>
+      <NextSeo
+        title={eventSummary?.name}
+        description={eventSummary.summary}
+        openGraph={{
+          url: `https://sz-events-git-seo-link-preview-rexosei111.vercel.app/events/${eventSummary?.id}`,
+          type: "website",
+          images: [
+            {
+              url: "https://sz-event-bucket.s3.eu-west-3.amazonaws.com/cover+image.png",
+              width: 800,
+              height: 600,
+              alt: "Event cover image",
+            },
+          ],
+          siteName: "sz-events",
+        }}
+      />
+      {/* <Head>
         <title>{eventSummary.name}</title>
         <meta property="og:title" content={eventSummary?.name} />
         <meta property="og:description" content={eventSummary?.summary} />
@@ -128,7 +146,7 @@ export default function EventDetails({ eventSummary }) {
           content={`https://sz-events.vercel.app/events/${eventSummary?.id}`}
         />
         <meta property="og:type" content="website" />
-      </Head>
+      </Head> */}
       <Box
         variant="outlined"
         sx={{
