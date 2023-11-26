@@ -26,7 +26,7 @@ export default function Home() {
         />
         <meta
           property="og:image"
-          content="https://sz-event-bucket.s3.eu-west-3.amazonaws.com/file.png"
+          content="https://sz-event-bucket.s3.eu-west-3.amazonaws.com/af37b38a-061e-4393-a026-4f1e500556b4.png"
         />
         <meta property="og:url" content="https://sz-events.vercel.app/events" />
         <meta property="og:type" content="website" />
