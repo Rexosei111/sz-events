@@ -119,7 +119,10 @@ export default function EventDetails({ eventSummary }) {
         <title>{eventSummary.name}</title>
         <meta property="og:title" content={eventSummary?.name} />
         <meta property="og:description" content={eventSummary?.summary} />
-        <meta property="og:image" content={eventSummary?.cover_image} />
+        <meta
+          property="og:image"
+          content="https://sz-event-bucket.s3.eu-west-3.amazonaws.com/cover+image.png"
+        />
         <meta
           property="og:url"
           content={`https://sz-events.vercel.app/events/${eventSummary?.id}`}
