@@ -124,7 +124,7 @@ export default function EventDetails({ eventSummary }) {
           type: "website",
           images: [
             {
-              url: "https://sz-event-bucket.s3.eu-west-3.amazonaws.com/cover+image.png",
+              url: "https://sz-event-bucket.s3.eu-west-3.amazonaws.com/file.png",
               width: 800,
               height: 600,
               alt: "Event cover image",
