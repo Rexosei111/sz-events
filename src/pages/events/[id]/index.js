@@ -405,6 +405,10 @@ export default function EventDetails() {
   );
 }
 
+export async function getServerSideProps() {
+  return { props: {} };
+}
+
 EventDetails.getLayout = function (page) {
   return <LayoutTwo>{page}</LayoutTwo>;
 };
