@@ -60,9 +60,10 @@ export function UserEventListingCard({ event }) {
           component="img"
           sx={{ height: 170 }}
           alt={event?.name}
-          image={
-            "https://sz-event-bucket.s3.eu-west-3.amazonaws.com/cover+image.png"
-          }
+          // image={
+          //   "https://sz-event-bucket.s3.eu-west-3.amazonaws.com/cover+image.png"
+          // }
+          image={event?.cover_image}
         />
         <CardContent>
           <h4>{event?.name}</h4>
