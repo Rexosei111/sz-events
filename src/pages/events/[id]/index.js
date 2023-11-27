@@ -120,7 +120,7 @@ export default function EventDetails({ eventSummary }) {
         title={eventSummary?.name}
         description={eventSummary.summary}
         openGraph={{
-          url: `https://sz-events-git-seo-link-preview-rexosei111.vercel.app/events/${eventSummary?.id}`,
+          url: `https://sz-events.vercel.app/events/${eventSummary?.id}`,
           type: "website",
           images: [
             {
