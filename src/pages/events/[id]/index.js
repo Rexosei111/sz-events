@@ -200,204 +200,215 @@ export default function EventDetails({ eventSummary }) {
         >
           {eventSummary?.name}
         </Typography>
+        <Typography
+          variant="subtitle2"
+          lineHeight={1.7}
+          fontSize={15}
+          color={"text.secondary"}
+          sx={{ my: 2 }}
+        >
+          {eventSummary?.summary}
+        </Typography>
         {isLoading && <EventDetailLoading />}
-        <>
-          <Typography
-            variant="subtitle2"
-            lineHeight={1.7}
-            fontSize={15}
-            color={"text.secondary"}
-            sx={{ my: 2 }}
-          >
-            {event?.summary}
-          </Typography>
 
-          <Box my={2}>
-            <Typography variant="h5" color={"text.primary"} sx={{ my: 2 }}>
-              Date and Time
-            </Typography>
-            <Stack
-              flexDirection={"row"}
-              gap={1}
-              alignItems={"center"}
-              color={"text.secondary"}
-            >
-              <DateRange fontSize="small" />
-              <Typography variant="subtitle1" sx={{ fontSize: "15px" }}>
-                {formatEventDate(event?.start_date)}
+        {!isLoading && typeof event !== undefined && (
+          <>
+            <Box my={2}>
+              <Typography variant="h5" color={"text.primary"} sx={{ my: 2 }}>
+                Date and Time
               </Typography>
-            </Stack>
-          </Box>
+              <Stack
+                flexDirection={"row"}
+                gap={1}
+                alignItems={"center"}
+                color={"text.secondary"}
+              >
+                <DateRange fontSize="small" />
+                <Typography variant="subtitle1" sx={{ fontSize: "15px" }}>
+                  {formatEventDate(event?.start_date)}
+                </Typography>
+              </Stack>
+            </Box>
 
-          <Box my={2} color={"text.secondary"}>
-            <Typography variant="h5" sx={{ mt: 2 }} color={"text.primary"}>
-              Location
-            </Typography>
-            <Stack flexDirection={"row"} gap={1} alignItems={"center"}>
-              <List dense>
-                <ListItem disableGutters disablePadding>
-                  <ListItemIcon>
-                    <IconButton disabled>
-                      <LocationOnOutlined fontSize="medium" htmlColor="white" />
-                    </IconButton>
-                  </ListItemIcon>
-                  <ListItemText>
-                    <Typography
-                      variant="body1"
-                      color={"text.primary"}
-                      sx={{ fontSize: "15px" }}
-                    >
-                      {event?.address?.split(", ")[0]}
-                    </Typography>
-                    <Stack flexDirection={"column"} gap={1} my={1}>
+            <Box my={2} color={"text.secondary"}>
+              <Typography variant="h5" sx={{ mt: 2 }} color={"text.primary"}>
+                Location
+              </Typography>
+              <Stack flexDirection={"row"} gap={1} alignItems={"center"}>
+                <List dense>
+                  <ListItem disableGutters disablePadding>
+                    <ListItemIcon>
+                      <IconButton disabled>
+                        <LocationOnOutlined
+                          fontSize="medium"
+                          htmlColor="white"
+                        />
+                      </IconButton>
+                    </ListItemIcon>
+                    <ListItemText>
                       <Typography
-                        variant="caption"
-                        color={"text.secoondary"}
+                        variant="body1"
+                        color={"text.primary"}
                         sx={{ fontSize: "15px" }}
                       >
-                        {event?.address?.split(",").slice(1).join(", ")}
+                        {event?.address?.split(", ")[0]}
                       </Typography>
-                    </Stack>
-                  </ListItemText>
-                </ListItem>
-              </List>
-            </Stack>
-          </Box>
-
-          <Box sx={{ my: 2 }}>
-            <Typography
-              variant="h5"
-              fontWeight={700}
-              color={"text.primary"}
-              sx={{ mb: 2 }}
-            >
-              About this event
-            </Typography>
-
-            <Box fontSize={15} color={"text.secondary"} lineHeight={1.7}>
-              <Markdown components={{ h1: "h3", h2: "h4", h3: "h5", h4: "h5" }}>
-                {event?.description}
-              </Markdown>
+                      <Stack flexDirection={"column"} gap={1} my={1}>
+                        <Typography
+                          variant="caption"
+                          color={"text.secoondary"}
+                          sx={{ fontSize: "15px" }}
+                        >
+                          {event?.address?.split(",").slice(1).join(", ")}
+                        </Typography>
+                      </Stack>
+                    </ListItemText>
+                  </ListItem>
+                </List>
+              </Stack>
             </Box>
-          </Box>
 
-          <Stack
-            my={10}
-            width={"100%"}
-            maxHeight={300}
-            flexDirection={"row"}
-            alignItems={"center"}
-            justifyContent={"center"}
-            position={"relative"}
-          >
-            <ImageCarousel images={eventImages} />
-          </Stack>
-          <Stack
-            width={"100%"}
-            flexDirection={"row"}
-            justifyContent={"flex-start"}
-            mt={5}
-          >
-            <PrimaryButton
-              disableElevation
-              variant="contained"
-              startIcon={<CheckCircle />}
-              onClick={handleOpen}
-            >
-              Attend
-            </PrimaryButton>
-          </Stack>
-          {event?.organiser?.name && (
-            <Stack flexDirection={"column"} gap={2} my={2}>
-              <Typography variant="h5" fontWeight={700} color={"text.primary"}>
-                About organiser
-              </Typography>
-              <Paper
-                sx={{
-                  p: { xs: 2, md: 3 },
-                  minHeight: 400,
-                  display: "flex",
-                  flexDirection: "column",
-                  alignItems: "center",
-                  justifyContent: "center",
-                }}
+            <Box sx={{ my: 2 }}>
+              <Typography
+                variant="h5"
+                fontWeight={700}
+                color={"text.primary"}
+                sx={{ mb: 2 }}
               >
-                <Avatar
-                  src={event?.organiser?.logo}
-                  alt={event?.organiser?.name}
-                  sx={{ height: "90px", width: "90px" }}
-                />
+                About this event
+              </Typography>
 
-                <Typography
-                  variant="h3"
-                  fontWeight={700}
-                  gutterBottom
-                  sx={{ mt: 2, textAlign: "center" }}
+              <Box fontSize={15} color={"text.secondary"} lineHeight={1.7}>
+                <Markdown
+                  components={{ h1: "h3", h2: "h4", h3: "h5", h4: "h5" }}
                 >
-                  {event?.organiser?.name}
-                </Typography>
-                <Typography
-                  sx={{ fontSize: 16, textAlign: "center" }}
-                  variant="subtitle1"
-                >
-                  {event?.organiser?.summary}
-                </Typography>
+                  {event?.description}
+                </Markdown>
+              </Box>
+            </Box>
 
-                {following !== true && (
-                  <Button
-                    onClick={handleFollow}
-                    disableElevation
-                    variant="contained"
-                    color="primary"
-                    endIcon={<AddOutlined />}
-                    sx={{
-                      textTransform: "capitalize",
-                      color: "text.primary",
-                      mt: 2,
-                    }}
-                  >
-                    Follow
-                  </Button>
-                )}
-
-                <Box mt={1}>
-                  <Typography
-                    variant="subtitle1"
-                    style={{ textAlign: "center" }}
-                    component={"span"}
-                  >
-                    {event?.organiser?.followers_count} follower(s)
-                  </Typography>
-                </Box>
-                <Stack my={2} flexDirection={"row"} gap={1}>
-                  <IconButton
-                    sx={{ width: 45, height: 45 }}
-                    LinkComponent={Link}
-                    href="https://instagram.com/spiritzone_?igshid=OGQ5ZDc2ODk2ZA=="
-                    target="_blank"
-                  >
-                    <Instagram sx={{ width: 20, height: 20 }} />
-                  </IconButton>
-                  <IconButton
-                    sx={{ width: 45, height: 45 }}
-                    LinkComponent={Link}
-                    href="https://t.me/+TaU5tedtojdkMzU8"
-                    target="_blank"
-                  >
-                    <Telegram sx={{ width: 20, height: 20 }} />
-                  </IconButton>
-                  <IconButton
-                    LinkComponent={Link}
-                    href="https://www.tiktok.com/@spiritzone1?_t=8hLuzSBp18w&_r=1"
-                    target="_blank"
-                  >
-                    <Image src={TicTokIcon} width={30} height={30} />
-                  </IconButton>
-                </Stack>
-              </Paper>
+            <Stack
+              my={10}
+              width={"100%"}
+              maxHeight={300}
+              flexDirection={"row"}
+              alignItems={"center"}
+              justifyContent={"center"}
+              position={"relative"}
+            >
+              <ImageCarousel images={eventImages} />
             </Stack>
-          )}
-        </>
+            <Stack
+              width={"100%"}
+              flexDirection={"row"}
+              justifyContent={"flex-start"}
+              mt={5}
+            >
+              <PrimaryButton
+                disableElevation
+                variant="contained"
+                startIcon={<CheckCircle />}
+                onClick={handleOpen}
+              >
+                Attend
+              </PrimaryButton>
+            </Stack>
+            {event?.organiser?.name && (
+              <Stack flexDirection={"column"} gap={2} my={2}>
+                <Typography
+                  variant="h5"
+                  fontWeight={700}
+                  color={"text.primary"}
+                >
+                  About organiser
+                </Typography>
+                <Paper
+                  sx={{
+                    p: { xs: 2, md: 3 },
+                    minHeight: 400,
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "center",
+                    justifyContent: "center",
+                  }}
+                >
+                  <Avatar
+                    src={event?.organiser?.logo}
+                    alt={event?.organiser?.name}
+                    sx={{ height: "90px", width: "90px" }}
+                  />
+
+                  <Typography
+                    variant="h3"
+                    fontWeight={700}
+                    gutterBottom
+                    sx={{ mt: 2, textAlign: "center" }}
+                  >
+                    {event?.organiser?.name}
+                  </Typography>
+                  <Typography
+                    sx={{ fontSize: 16, textAlign: "center" }}
+                    variant="subtitle1"
+                  >
+                    {event?.organiser?.summary}
+                  </Typography>
+
+                  {following !== true && (
+                    <Button
+                      onClick={handleFollow}
+                      disableElevation
+                      variant="contained"
+                      color="primary"
+                      endIcon={<AddOutlined />}
+                      sx={{
+                        textTransform: "capitalize",
+                        color: "text.primary",
+                        mt: 2,
+                      }}
+                    >
+                      Follow
+                    </Button>
+                  )}
+
+                  <Box mt={1}>
+                    <Typography
+                      variant="subtitle1"
+                      style={{ textAlign: "center" }}
+                      component={"span"}
+                    >
+                      {event?.organiser?.followers_count} follower(s)
+                    </Typography>
+                  </Box>
+                  <Stack my={2} flexDirection={"row"} gap={1}>
+                    <IconButton
+                      sx={{ width: 45, height: 45 }}
+                      LinkComponent={Link}
+                      href="https://instagram.com/spiritzone_?igshid=OGQ5ZDc2ODk2ZA=="
+                      target="_blank"
+                    >
+                      <Instagram sx={{ width: 20, height: 20 }} />
+                    </IconButton>
+                    <IconButton
+                      sx={{ width: 45, height: 45 }}
+                      LinkComponent={Link}
+                      href="https://t.me/+TaU5tedtojdkMzU8"
+                      target="_blank"
+                    >
+                      <Telegram sx={{ width: 20, height: 20 }} />
+                    </IconButton>
+                    <IconButton
+                      LinkComponent={Link}
+                      href="https://www.tiktok.com/@spiritzone1?_t=8hLuzSBp18w&_r=1"
+                      target="_blank"
+                    >
+                      <Image src={TicTokIcon} width={30} height={30} />
+                    </IconButton>
+                  </Stack>
+                </Paper>
+              </Stack>
+            )}
+          </>
+        )}
       </Box>
 
       <RSVPModal
@@ -414,6 +425,7 @@ export default function EventDetails({ eventSummary }) {
     </>
   );
 }
+
 export const getStaticPaths = async () => {
   const { data } = await APIClient.get(`users/events/mini`);
   const paths = data?.items.map((event) => {
