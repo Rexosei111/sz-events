@@ -50,6 +50,7 @@ export default function EventMediaForm({ setValue, setImages }) {
       await axios.put(uploadData.url, file.blobFile, {
         headers: {
           "Content-Type": file.type,
+          "Content-Length": file.size,
         },
       });
       setUploadedFiles((prevState) => [

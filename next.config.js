@@ -1,11 +1,11 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  reactStrictMode: true,
+  reactStrictMode: false,
   images: {
     remotePatterns: [
       {
         protocol: "https",
-        hostname: "szevents-bucket.s3.eu-west-3.amazonaws.com",
+        hostname: "szevent-bucket.s3.eu-north-1.amazonaws.com",
         port: "",
         pathname: "/**",
       },

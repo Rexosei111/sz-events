@@ -27,9 +27,7 @@ export default function EventListingCard({ event }) {
           component="img"
           sx={{ height: 170 }}
           alt={event?.name}
-          image={
-            "https://sz-event-bucket.s3.eu-west-3.amazonaws.com/cover+image.png"
-          }
+          image={event.cover_image}
         />
         <CardContent>
           <Typography gutterBottom variant="h5" component="div">
