@@ -7,8 +7,12 @@ import usePlacesAutocomplete, {
   getLatLng,
 } from "use-places-autocomplete";
 import { LoadingButton } from "@mui/lab";
+import {Box, InputLabel, InputAdornment} from "@mui/material"
+import { TextInputField } from "../shared/inputs";
+import TitleIcon from "@mui/icons-material/Title";
 
-export default function EventLocationForm({ setValue, edit = false, event }) {
+
+export default function EventLocationForm({ register, edit = false, event, errors }) {
   const [lat, setLat] = useState(5.6468427);
   const [lng, setLng] = useState(-0.1867952);
   const [saved, setSaved] = useState(true);
@@ -16,37 +20,37 @@ export default function EventLocationForm({ setValue, edit = false, event }) {
   const [description, setDescription] = useState(null);
   const [error, setError] = useState(false);
 
-  useEffect(() => {
-    if (edit === true && event !== undefined) {
-      setDescription(event?.address);
-      setLat(+event?.latitude);
-      setLng(+event?.longitude);
-    }
-  }, [event]);
+  // useEffect(() => {
+  //   if (edit === true && event !== undefined) {
+  //     setDescription(event?.address);
+  //     setLat(+event?.latitude);
+  //     setLng(+event?.longitude);
+  //   }
+  // }, [event]);
 
-  const mapCenter = useMemo(() => ({ lat: lat, lng: lng }), [lat, lng]);
+  // const mapCenter = useMemo(() => ({ lat: lat, lng: lng }), [lat, lng]);
 
-  const mapOptions = useMemo(
-    () => ({
-      disableDefaultUI: true,
-      clickableIcons: true,
-      scrollwheel: false,
-    }),
-    []
-  );
+  // const mapOptions = useMemo(
+  //   () => ({
+  //     disableDefaultUI: true,
+  //     clickableIcons: true,
+  //     scrollwheel: false,
+  //   }),
+  //   []
+  // );
 
-  const { isLoaded } = useLoadScript({
-    googleMapsApiKey: process.env.NEXT_PUBLIC_GOOGLE_MAPS_KEY,
-    libraries,
-  });
-  if (!isLoaded) {
-    return (
-      <Stack flexDirection={"column"} gap={1} width={"100%"}>
-        <Skeleton variant="rectangular" width={"70%"} height={20} />
-        <Skeleton variant="rectangular" width={"100%"} height={200} />
-      </Stack>
-    );
-  }
+  // const { isLoaded } = useLoadScript({
+  //   googleMapsApiKey: process.env.NEXT_PUBLIC_GOOGLE_MAPS_KEY,
+  //   libraries,
+  // });
+  // if (!isLoaded) {
+  //   return (
+  //     <Stack flexDirection={"column"} gap={1} width={"100%"}>
+  //       <Skeleton variant="rectangular" width={"70%"} height={20} />
+  //       <Skeleton variant="rectangular" width={"100%"} height={200} />
+  //     </Stack>
+  //   );
+  // }
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -57,7 +61,7 @@ export default function EventLocationForm({ setValue, edit = false, event }) {
 
   return (
     <Stack flexDirection={"column"} gap={1} id="location-form">
-      <LocationSearchInput
+      {/* <LocationSearchInput
         error={error}
         onAddressSelect={(address) => {
           setDescription(address?.description);
@@ -84,7 +88,29 @@ export default function EventLocationForm({ setValue, edit = false, event }) {
           position={mapCenter}
           onLoad={() => console.log("Marker Loaded")}
         />
-      </GoogleMap>
+      </GoogleMap> */}
+      <Box width={{ xs: "100%", md: "60%" }}>
+          <InputLabel shrink htmlFor="address">
+            Event Location
+          </InputLabel>
+          <TextInputField
+            fullWidth
+            id="address"
+            {...register("address")}
+            variant="outlined"
+            type={"text"}
+            error={errors.address ? true : false}
+            helperText={errors.address ? errors.address?.message : null}
+            InputProps={{
+              startAdornment: (
+                <InputAdornment position="start">
+                  <TitleIcon fontSize="small" />
+                </InputAdornment>
+              ),
+            }}
+            placeholder="Title"
+          />
+        </Box>
     </Stack>
   );
 }

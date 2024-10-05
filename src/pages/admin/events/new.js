@@ -120,7 +120,7 @@ export default function New() {
           }
           sectionForm={
             <EventLocationForm
-              setValue={setValue}
+              // setValue={setValue}
               errors={errors}
               getValues={getValues}
               register={register}

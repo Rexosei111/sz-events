@@ -61,6 +61,7 @@ export default function EventBasicForm({
   };
 
   const handleTimeChange = (timeObj) => {
+    console.log(timeObj)
     if (timeObj === null) {
       setDateTime((prevState) => ({
         ...prevState,
@@ -245,6 +246,7 @@ export function EventEditBasicForm({
   };
 
   const handleTimeChange = (timeObj) => {
+    console.log(timeObj)
     if (timeObj === null) {
       setDateTime((prevState) => ({
         ...prevState,
