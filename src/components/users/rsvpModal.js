@@ -453,7 +453,7 @@ export default function RSVPModal({
                       {...register("by_friend")}
                       onChange={handlePublicityChange}
                       control={<Checkbox size="small" />}
-                      label="referred by a friend"
+                      label="Invited by someone"
                       slotProps={{
                         typography: {
                           fontSize: 16,
@@ -465,7 +465,8 @@ export default function RSVPModal({
 
                 {byFriend === true && (
                   <Box>
-                    <InputLabel shrink>Name of friend</InputLabel>
+                    <InputLabel shrink>Name of person who invited you
+                    </InputLabel>
                     <TextInputField
                       fullWidth
                       size="small"
