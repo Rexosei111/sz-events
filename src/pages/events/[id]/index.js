@@ -241,7 +241,7 @@ export default function EventDetails({ eventSummary }) {
                       <IconButton disabled>
                         <LocationOnOutlined
                           fontSize="medium"
-                          htmlColor="white"
+                          htmlColor="black"
                         />
                       </IconButton>
                     </ListItemIcon>
@@ -363,7 +363,7 @@ export default function EventDetails({ eventSummary }) {
                       endIcon={<AddOutlined />}
                       sx={{
                         textTransform: "capitalize",
-                        color: "text.primary",
+                        color: "white",
                         mt: 2,
                       }}
                     >
