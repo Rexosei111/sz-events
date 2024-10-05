@@ -158,7 +158,7 @@ export default function RSVPModal({
             <Typography variant="h5" color={"text.primary"}>
               {eventName}
             </Typography>
-            <Typography variant="subtitle2" fontSize={13}>
+            <Typography variant="subtitle2" fontSize={16}>
               Kindly complete this form to register for this event.
             </Typography>
           </Stack>
@@ -189,7 +189,7 @@ export default function RSVPModal({
                       <Person2Outlined fontSize="small" />
                     </InputAdornment>
                   ),
-                  style: { fontSize: 13 },
+                  style: { fontSize: 16 },
                 }}
                 fullWidth
                 placeholder="Enter first name here"
@@ -207,7 +207,7 @@ export default function RSVPModal({
                       <Person2Outlined fontSize="small" />
                     </InputAdornment>
                   ),
-                  style: { fontSize: 13 },
+                  style: { fontSize: 16 },
                 }}
                 fullWidth
                 placeholder="Enter last name here"
@@ -228,7 +228,7 @@ export default function RSVPModal({
                       <PhoneAndroidOutlined fontSize="small" />
                     </InputAdornment>
                   ),
-                  style: { fontSize: 13 },
+                  style: { fontSize: 16 },
                 }}
                 fullWidth
                 placeholder="223 00 0000 000"
@@ -246,7 +246,7 @@ export default function RSVPModal({
                       <EmailOutlined fontSize="small" />
                     </InputAdornment>
                   ),
-                  style: { fontSize: 13 },
+                  style: { fontSize: 16 },
                 }}
                 fullWidth
                 placeholder="user@example.com"
@@ -264,7 +264,7 @@ export default function RSVPModal({
                       <LocationOnOutlined fontSize="small" />
                     </InputAdornment>
                   ),
-                  style: { fontSize: 13 },
+                  style: { fontSize: 16 },
                 }}
                 fullWidth
                 placeholder="Location of the attendee"
@@ -286,13 +286,13 @@ export default function RSVPModal({
                   defaultValue={""}
                   onChange={handleOccupationChange}
                 >
-                  <MenuItem value={"student"} sx={{ fontSize: 13 }}>
+                  <MenuItem value={"student"} sx={{ fontSize: 16 }}>
                     Student
                   </MenuItem>
-                  <MenuItem value={"worker"} sx={{ fontSize: 13 }}>
+                  <MenuItem value={"worker"} sx={{ fontSize: 16 }}>
                     Worker
                   </MenuItem>
-                  <MenuItem value={"other"} sx={{ fontSize: 13 }}>
+                  <MenuItem value={"other"} sx={{ fontSize: 16 }}>
                     Other
                   </MenuItem>
                 </TextInputField>
@@ -408,7 +408,7 @@ export default function RSVPModal({
               <Box width={"100%"}>
                 <InputLabel shrink>
                   How did you hear about this program?
-                  <Typography variant="subtitle2" fontSize={13}>
+                  <Typography variant="subtitle2" fontSize={16}>
                     (Select all that apply)
                   </Typography>
                 </InputLabel>
@@ -424,7 +424,7 @@ export default function RSVPModal({
                       control={<Checkbox size="small" />}
                       slotProps={{
                         typography: {
-                          fontSize: 13,
+                          fontSize: 16,
                         },
                       }}
                       label="Whatsapp"
@@ -435,7 +435,7 @@ export default function RSVPModal({
                       {...register("by_member")}
                       slotProps={{
                         typography: {
-                          fontSize: 13,
+                          fontSize: 16,
                         },
                       }}
                     />
@@ -445,7 +445,7 @@ export default function RSVPModal({
                       label="Instagram"
                       slotProps={{
                         typography: {
-                          fontSize: 13,
+                          fontSize: 16,
                         },
                       }}
                     />
@@ -456,7 +456,7 @@ export default function RSVPModal({
                       label="referred by a friend"
                       slotProps={{
                         typography: {
-                          fontSize: 13,
+                          fontSize: 16,
                         },
                       }}
                     />

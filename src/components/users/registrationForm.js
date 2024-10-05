@@ -110,7 +110,7 @@ export default function RegistrationForm({
                 </InputAdornment>
               ),
               style: {
-                fontSize: 13,
+                fontSize: 16,
               },
             }}
             fullWidth
@@ -129,7 +129,7 @@ export default function RegistrationForm({
                 </InputAdornment>
               ),
               style: {
-                fontSize: 13,
+                fontSize: 16,
               },
             }}
             fullWidth
@@ -151,7 +151,7 @@ export default function RegistrationForm({
                 </InputAdornment>
               ),
               style: {
-                fontSize: 13,
+                fontSize: 16,
               },
             }}
             fullWidth
@@ -170,7 +170,7 @@ export default function RegistrationForm({
                 </InputAdornment>
               ),
               style: {
-                fontSize: 13,
+                fontSize: 16,
               },
             }}
             fullWidth
@@ -190,7 +190,7 @@ export default function RegistrationForm({
                 </InputAdornment>
               ),
               style: {
-                fontSize: 13,
+                fontSize: 16,
               },
             }}
             fullWidth

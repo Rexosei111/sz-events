@@ -137,7 +137,7 @@ export default function LoginForm({
                 </InputAdornment>
               ),
               style: {
-                fontSize: 13,
+                fontSize: 16,
               },
             }}
             fullWidth
@@ -157,7 +157,7 @@ export default function LoginForm({
                 </InputAdornment>
               ),
               style: {
-                fontSize: 13,
+                fontSize: 16,
               },
             }}
             fullWidth
