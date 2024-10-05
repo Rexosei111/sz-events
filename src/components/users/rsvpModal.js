@@ -1,5 +1,4 @@
 import React, { useContext, useState } from "react";
-import { Modal, IconButton } from "rsuite";
 import { StyledInputBase, TextInputField } from "../shared/inputs";
 import {
   Box,
@@ -13,6 +12,7 @@ import {
   FormControl,
   FormControlLabel,
   FormGroup,
+  IconButton,
   InputAdornment,
   InputLabel,
   MenuItem,
@@ -25,6 +25,7 @@ import * as yup from "yup";
 import { isAxiosError } from "axios";
 import {
   CheckCircle,
+  Close,
   EmailOutlined,
   LocationOnOutlined,
   Person2Outlined,
@@ -80,6 +81,7 @@ export default function RSVPModal({
   handleClose,
   handleSuccessOpen,
   event_id,
+  eventName,
 }) {
   const { handleOpen: handleSnackbarOpen, setSnackSeverity } =
     useContext(SnackbarContext);
@@ -145,15 +147,24 @@ export default function RSVPModal({
   return (
     <>
       <Dialog open={open} onClose={handleClose} fullWidth maxWidth="sm">
-        <DialogTitle>
+        <DialogTitle
+          sx={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
+          }}
+        >
           <Stack>
             <Typography variant="h5" color={"text.primary"}>
-              RSVP {"🎉"}
+              {eventName}
             </Typography>
             <Typography variant="subtitle2" fontSize={13}>
-              Kindly fill out this form
+              Kindly complete this form to register for this event.
             </Typography>
           </Stack>
+          <IconButton onClick={handleClose}>
+            <Close />
+          </IconButton>
         </DialogTitle>
         <form
           method="POST"
@@ -475,11 +486,11 @@ export default function RSVPModal({
               variant="outlined"
               sx={{
                 textTransform: "capitalize",
-                color: theme.palette.common.white,
-                borderColor: "transparent",
-                "&: hover": {
-                  borderColor: theme.palette.common.white,
-                },
+                color: theme.palette.secondary.dark,
+                borderColor: theme.palette.secondary.main,
+                // "&: hover": {
+                //   borderColor: theme.palette.common.,
+                // },
               }}
               onClick={handleClose}
             >
@@ -488,7 +499,12 @@ export default function RSVPModal({
             <LoadingButton
               variant="contained"
               disableElevation
-              sx={{ textTransform: "capitalize" }}
+              sx={{
+                textTransform: "capitalize",
+                "&:hover": {
+                  bgcolor: (theme) => theme.palette.primary.main,
+                },
+              }}
               color="primary"
               type="submit"
               form="rsvp-form"

@@ -183,7 +183,14 @@ export default function EventDetails({ eventSummary }) {
           </Typography>
           <PrimaryButton
             disableElevation
-            sx={{ height: 70, width: 180, fontSize: 23 }}
+            sx={{
+              height: 70,
+              width: 180,
+              fontSize: 23,
+              "&:hover": {
+                bgcolor: (theme) => theme.palette.primary.main,
+              },
+            }}
             variant="contained"
             startIcon={<CheckCircle />}
             onClick={handleOpen}
@@ -307,7 +314,14 @@ export default function EventDetails({ eventSummary }) {
               <PrimaryButton
                 disableElevation
                 variant="contained"
-                sx={{ height: 70, width: 180, fontSize: 23 }}
+                sx={{
+                  height: 70,
+                  width: 180,
+                  fontSize: 23,
+                  "&:hover": {
+                    bgcolor: (theme) => theme.palette.primary.main,
+                  },
+                }}
                 startIcon={<CheckCircle />}
                 onClick={handleOpen}
               >
@@ -417,6 +431,7 @@ export default function EventDetails({ eventSummary }) {
         handleClose={handleOpen}
         handleSuccessOpen={handleSuccessOpen}
         event_id={event?.id}
+        eventName={event?.name}
       />
       <SuccessModal
         open={successOpen}

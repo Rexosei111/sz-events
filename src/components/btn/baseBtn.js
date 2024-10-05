@@ -5,23 +5,23 @@ import theme from "@/theme";
 export const PrimaryButton = styled(Button)({
   textTransform: "capitalize",
   "&:hover": {
-    color: theme.palette.text.primary,
+    color: "white",
     textDecoration: "none",
   },
   "&:active": {
     textDecoration: "none",
-    color: theme.palette.text.primary,
+    color: "white",
   },
   "&:focus": {
     textDecoration: "none",
-    color: theme.palette.text.primary,
+    color: "white",
   },
 });
 
 export const SecondaryButton = styled(Button)({
   textTransform: "capitalize",
   color: theme.palette.text.primary,
-  backgroundColor: "transparent",
+  bgColor: theme.palette.secondary.main,
   borderColor: "transparent",
   "&:hover": {
     borderColor: theme.palette.text.primary,
