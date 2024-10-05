@@ -35,11 +35,10 @@ import { SnackbarContext } from "@/pages/_app";
 import { LoadingButton } from "@mui/lab";
 import { APIClient } from "@/utils/axios";
 import theme from "@/theme";
-import { MuiPhone } from "../shared/phoneInput";
 
 const attendeeSchema = yup
   .object({
-    first_name: yup.string().required(),
+    first_name: yup.string().required("This field is required"),
     last_name: yup.string().required(),
     phone_number: yup.string().required(),
     email: yup.string().email(),
@@ -179,6 +178,7 @@ export default function RSVPModal({
                 variant="outlined"
                 type={"text"}
                 label="First name"
+                required
                 error={errors.first_name ? true : false}
                 helperText={
                   errors.first_name ? errors.first_name?.message : null
