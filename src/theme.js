@@ -12,31 +12,56 @@ export const roboto = Roboto({
 // Create a theme instance.
 const theme = createTheme({
   palette: {
-    mode: "dark",
+    // mode: "dark",
+    // secondary: {
+    //   main: "#1C38D2",
+    //   light: "#495FDB",
+    //   dark: "#132793",
+    //   contrastText: "#FFFFFF",
+    // },
+    // primary: {
+    //   main: "#86005e",
+    //   light: "#A7516F",
+    //   dark: "#6e024e",
+    //   contrastText: "#FFFFFF",
+    // },
+
+    // success: {
+    //   main: "#66bb6a",
+    //   contrastText: "#ffffff",
+    // },
+    // background: {
+    //   default: "#1c1f20",
+    //   paper: "#181a1b",
+    // },
+    // text: {
+    //   primary: "#dedede",
+    //   secondary: "#979797",
+    // },
+    mode: "light",
     secondary: {
-      main: "#1C38D2",
-      light: "#495FDB",
-      dark: "#132793",
+      main: "#1C38D2", // Keeping this consistent for brand identity
+      light: "#6A7FDB", // Slightly lighter tone for light mode
+      dark: "#12257E", // A darker, muted version of secondary for contrast
       contrastText: "#FFFFFF",
     },
     primary: {
-      main: "#86005e",
-      light: "#A7516F",
-      dark: "#6e024e",
+      main: "#86005e", // Keeping main consistent
+      light: "#C56E96", // Lighter version for better contrast in light mode
+      dark: "#6e024e", // Keeping the dark version similar
       contrastText: "#FFFFFF",
     },
-
     success: {
-      main: "#66bb6a",
+      main: "#43A047", // A slightly darker green for light mode
       contrastText: "#ffffff",
     },
     background: {
-      default: "#1c1f20",
-      paper: "#181a1b",
+      default: "#f5f5f5", // Light gray for a clean look
+      paper: "#ffffff", // White for paper elements
     },
     text: {
-      primary: "#dedede",
-      secondary: "#979797",
+      primary: "#212121", // Darker text for light mode
+      secondary: "#616161", // Lighter gray for secondary text
     },
   },
   components: {
