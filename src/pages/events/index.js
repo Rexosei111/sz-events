@@ -117,7 +117,7 @@ export default function EventListing() {
           <Input
             placeholder="Search event"
             onChange={handleQueryChange}
-            style={{ backgroundColor: "#1c1f20" }}
+            style={{ backgroundColor: "transparent" }}
           />
           <InputGroup.Button>
             <SearchIcon />

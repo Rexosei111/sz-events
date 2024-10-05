@@ -26,6 +26,7 @@ const newEventFormSchema = yup
     description: yup.string().nullable(),
     start_date: yup.string().nullable(),
     cover_image: yup.string().nullable(),
+    social_preview_image: yup.string().nullable(),
     address: yup.string().nullable(),
     latitude: yup.string().nullable(),
     longitude: yup.string().nullable(),

@@ -124,7 +124,7 @@ export default function EventDetails({ eventSummary }) {
           type: "website",
           images: [
             {
-              url: eventSummary.cover_image,
+              url: eventSummary.social_preview_image,
 
               alt: "Event cover image",
             },
@@ -162,7 +162,7 @@ export default function EventDetails({ eventSummary }) {
           fill
           // width={0}
           // unoptimized={true}
-          style={{ objectFit: "cover" }}
+          style={{ objectFit: "contain" }}
         />
       </Box>
       <Box sx={{ px: { xs: 2, md: 0 } }}>

@@ -12,6 +12,7 @@ export default function EventMediaForm({ setValue, setImages }) {
   const [fileList, setFileList] = React.useState([]);
   const [previewFile, setPreviewFile] = useState(null);
   const [coverImage, setCoverImage] = useState();
+  const [socialPreviewImage, setSocialPreviewImage] = useState();
   const [uploadedFiles, setUploadedFiles] = useState([]);
   const uploader = React.useRef();
 
@@ -21,6 +22,10 @@ export default function EventMediaForm({ setValue, setImages }) {
   const handleSetCoverImage = () => {
     setCoverImage(previewFile);
     setValue("cover_image", previewFile.url);
+  };
+  const handleSocialPreviewImage = () => {
+    setSocialPreviewImage(previewFile);
+    setValue("social_preview_image", previewFile.url);
   };
   const onPreview = (file) => {
     const image = uploadedFiles.find((item) => item.fileKey === file.fileKey);
@@ -101,20 +106,39 @@ export default function EventMediaForm({ setValue, setImages }) {
               fill
               style={{ objectFit: "cover" }}
             />
-            {previewFile.fileKey !== coverImage?.fileKey && (
-              <MUIButton
-                onClick={handleSetCoverImage}
-                variant="contained"
+            <Box
+              sx={{
+                position: "absolute",
+                right: 20,
+                bottom: 10,
+                width: "100%",
+                textTransform: "capitalize",
+              }}
+            >
+              <Box
                 sx={{
-                  position: "absolute",
-                  right: 20,
-                  bottom: 10,
-                  textTransform: "capitalize",
+                  display: "flex",
+                  flexDirection: "row",
+                  alignItems: "center",
+                  justifyContent: "flex-end",
+                  gap: 2,
                 }}
               >
-                Set as cover image
-              </MUIButton>
-            )}
+                {previewFile.fileKey !== socialPreviewImage?.fileKey && (
+                  <MUIButton
+                    onClick={handleSocialPreviewImage}
+                    variant="contained"
+                  >
+                    Set as social preview image
+                  </MUIButton>
+                )}
+                {previewFile.fileKey !== coverImage?.fileKey && (
+                  <MUIButton onClick={handleSetCoverImage} variant="contained">
+                    Set as cover image
+                  </MUIButton>
+                )}
+              </Box>
+            </Box>
           </>
         )}
       </Paper>
