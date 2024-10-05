@@ -16,7 +16,6 @@ import {
   InputAdornment,
   InputLabel,
   MenuItem,
-  Select,
   Stack,
   Typography,
 } from "@mui/material";
@@ -35,6 +34,7 @@ import { SnackbarContext } from "@/pages/_app";
 import { LoadingButton } from "@mui/lab";
 import { APIClient } from "@/utils/axios";
 import theme from "@/theme";
+import { MuiPhone } from "../shared/phoneInput";
 
 const attendeeSchema = yup
   .object({
@@ -201,6 +201,7 @@ export default function RSVPModal({
                 fullWidth
                 placeholder="Enter last name here"
               />
+              {/* <MuiPhone {...register("phone_number")} /> */}
               <TextInputField
                 {...register("phone_number")}
                 variant="outlined"
@@ -319,7 +320,7 @@ export default function RSVPModal({
                         error={errors.level ? true : false}
                         defaultValue={"primary"}
                       >
-                        <MenuItem value={"primary"}>Primary</MenuItem>
+                        <MenuItem value={"primary"}>Basic</MenuItem>
                         <MenuItem value={"Secondary"}>Secondary</MenuItem>
                         <MenuItem value={"Tertiary"}>Tertiary</MenuItem>
                       </TextInputField>

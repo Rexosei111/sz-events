@@ -183,7 +183,7 @@ export default function EventDetails({ eventSummary }) {
           </Typography>
           <PrimaryButton
             disableElevation
-            // sx={{ ml: "auto" }}
+            sx={{ height: 70, width: 180, fontSize: 23 }}
             variant="contained"
             startIcon={<CheckCircle />}
             onClick={handleOpen}
@@ -307,6 +307,7 @@ export default function EventDetails({ eventSummary }) {
               <PrimaryButton
                 disableElevation
                 variant="contained"
+                sx={{ height: 70, width: 180, fontSize: 23 }}
                 startIcon={<CheckCircle />}
                 onClick={handleOpen}
               >
