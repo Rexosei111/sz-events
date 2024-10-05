@@ -98,7 +98,7 @@ export const CustomNavbar = ({ onSelect, activeKey, ...props }) => {
               <Nav.Item
                 eventKey="3"
                 href="/users/me/following"
-                style={{ color: theme.palette.text.primary }}
+                style={{ color: theme.palette.text.primary, fontWeight: 700 }}
                 onClick={(event) =>
                   handleNavigation(event, "/users/me/following")
                 }
