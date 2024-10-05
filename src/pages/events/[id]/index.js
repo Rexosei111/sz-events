@@ -71,9 +71,9 @@ export default function EventDetails({ eventSummary }) {
     isLoading,
     mutate,
   } = useSWR("users/events/" + router.query.id, fetcher, {
-    revalidateIfStale: false,
-    revalidateOnFocus: false,
-    revalidateOnReconnect: false,
+    revalidateIfStale: true,
+    revalidateOnFocus: true,
+    revalidateOnReconnect: true,
   });
 
   const {
