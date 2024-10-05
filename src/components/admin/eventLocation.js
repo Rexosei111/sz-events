@@ -9,7 +9,7 @@ import usePlacesAutocomplete, {
 import { LoadingButton } from "@mui/lab";
 import {Box, InputLabel, InputAdornment} from "@mui/material"
 import { TextInputField } from "../shared/inputs";
-import TitleIcon from "@mui/icons-material/Title";
+import {LocationOnOutlined} from "@mui/icons-material";
 
 
 export default function EventLocationForm({ register, edit = false, event, errors }) {
@@ -104,7 +104,7 @@ export default function EventLocationForm({ register, edit = false, event, error
             InputProps={{
               startAdornment: (
                 <InputAdornment position="start">
-                  <TitleIcon fontSize="small" />
+                  <LocationOnOutlined fontSize="small" />
                 </InputAdornment>
               ),
             }}
