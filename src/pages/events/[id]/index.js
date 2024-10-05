@@ -171,16 +171,16 @@ export default function EventDetails({ eventSummary }) {
           mb={2}
           gap={1}
           alignItems={{ xs: "flex-start", md: "center" }}
-          justifyContent={{ xs: "flex-start", md: "space-between" }}
+          justifyContent={{ xs: "flex-start", md: "flex-end" }}
         >
-          <Typography
+          {/* <Typography
             variant="caption"
             component={"div"}
             color={"text.secondary"}
             sx={{ fontSize: 18 }}
           >
-            {formatDateInCustomFormat(eventSummary?.start_date)}
-          </Typography>
+            {formatDateInCustomFormat(event?.createdAt?.toString())}
+          </Typography> */}
           <PrimaryButton
             disableElevation
             sx={{
@@ -195,7 +195,7 @@ export default function EventDetails({ eventSummary }) {
             startIcon={<CheckCircle />}
             onClick={handleOpen}
           >
-            Attend
+            Register
           </PrimaryButton>
         </Stack>
 
@@ -230,7 +230,7 @@ export default function EventDetails({ eventSummary }) {
                 alignItems={"center"}
                 color={"text.secondary"}
               >
-                <DateRange fontSize="small" />
+                <DateRange fontSize="small" htmlColor="black" />
                 <Typography variant="subtitle1" sx={{ fontSize: "15px" }}>
                   {formatEventDate(event?.start_date)}
                 </Typography>
@@ -245,14 +245,14 @@ export default function EventDetails({ eventSummary }) {
                 <List dense>
                   <ListItem disableGutters disablePadding>
                     <ListItemIcon>
-                      <IconButton disabled>
+                      <IconButton disabled sx={{ p: 0 }}>
                         <LocationOnOutlined
                           fontSize="medium"
                           htmlColor="black"
                         />
                       </IconButton>
                     </ListItemIcon>
-                    <ListItemText>
+                    <ListItemText sx={{ ml: -3 }}>
                       <Typography
                         variant="body1"
                         color={"text.primary"}
@@ -325,7 +325,7 @@ export default function EventDetails({ eventSummary }) {
                 startIcon={<CheckCircle />}
                 onClick={handleOpen}
               >
-                Attend
+                Register
               </PrimaryButton>
             </Stack>
             {event?.organiser?.name && (

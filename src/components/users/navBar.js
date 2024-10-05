@@ -51,7 +51,7 @@ export const CustomNavbar = ({ onSelect, activeKey, ...props }) => {
       <Navbar.Brand
         href="/events"
         onClick={handleNavigation}
-        style={{ color: theme.palette.text.primary }}
+        style={{ color: theme.palette.text.primary, fontWeight: 700 }}
       >
         SZ Event
       </Navbar.Brand>
@@ -114,14 +114,14 @@ export const CustomNavbar = ({ onSelect, activeKey, ...props }) => {
               eventKey="5"
               href="/auth/users"
               onClick={handleNavigation}
-              style={{ color: theme.palette.text.primary }}
+              style={{ color: theme.palette.text.primary, fontWeight: 700 }}
             >
               Login
             </Nav.Item>
             <Nav.Item
               eventKey="6"
               href="/auth/register"
-              style={{ color: theme.palette.text.primary }}
+              style={{ color: theme.palette.text.primary, fontWeight: 700 }}
               onClick={handleNavigation}
             >
               Sign up

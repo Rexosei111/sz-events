@@ -109,7 +109,15 @@ export default function AdminLayout({ children, title = "Accueil" }) {
           setTopBarTitle,
         }}
       >
-        <Paper sx={{ display: "flex", minHeight: "100vh", borderRadius: 0 }}>
+        <Paper
+          elevation={0}
+          sx={{
+            display: "flex",
+            minHeight: "100vh",
+            borderRadius: 0,
+            bgcolor: "background.default",
+          }}
+        >
           <TopBar title={topbarTitle ? topbarTitle : title} />
           <ResponsiveDrawer sideNavItems={sideNavItems} basePath="/admin" />
           <Box
@@ -118,7 +126,7 @@ export default function AdminLayout({ children, title = "Accueil" }) {
               flexGrow: 1,
               ml: desktopDrawerOpen ? 0 : -30,
               minHeight: "9vh",
-              bgcolor: "background.default",
+              // bgcolor: "background.default",
               p: 2,
               width: {
                 xs: "100%",

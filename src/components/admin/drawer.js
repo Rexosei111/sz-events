@@ -29,7 +29,7 @@ export function ResponsiveDrawer(props) {
 
   const Mydrawer = () => {
     return (
-      <Box height={"89%"}>
+      <Box height={"89%"} bgcolor={(theme) => theme.palette.background.paper}>
         <Toolbar />
         <Stack
           flexDirection={"column"}

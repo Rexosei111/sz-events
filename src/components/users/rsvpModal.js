@@ -486,7 +486,7 @@ export default function RSVPModal({
               variant="outlined"
               sx={{
                 textTransform: "capitalize",
-                color: theme.palette.secondary.dark,
+                color: theme.palette.primary.main,
                 borderColor: theme.palette.secondary.main,
                 // "&: hover": {
                 //   borderColor: theme.palette.common.,
