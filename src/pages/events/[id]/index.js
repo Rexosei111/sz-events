@@ -221,7 +221,12 @@ export default function EventDetails({ eventSummary }) {
         {!isLoading && typeof event !== undefined && (
           <>
             <Box my={2}>
-              <Typography variant="h5" color={"text.primary"} sx={{ my: 2 }}>
+              <Typography
+                variant="h5"
+                color={"text.primary"}
+                fontWeight={700}
+                sx={{ my: 2 }}
+              >
                 Date and Time
               </Typography>
               <Stack
@@ -238,7 +243,12 @@ export default function EventDetails({ eventSummary }) {
             </Box>
 
             <Box my={2} color={"text.secondary"}>
-              <Typography variant="h5" sx={{ mt: 2 }} color={"text.primary"}>
+              <Typography
+                variant="h5"
+                sx={{ mt: 2 }}
+                color={"text.primary"}
+                fontWeight={700}
+              >
                 Location
               </Typography>
               <Stack flexDirection={"row"} gap={1} alignItems={"center"}>
