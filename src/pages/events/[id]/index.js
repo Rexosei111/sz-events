@@ -394,7 +394,7 @@ export default function EventDetails({ eventSummary }) {
                       {event?.organiser?.followers_count} follower(s)
                     </Typography>
                   </Box>
-                  <Stack my={2} flexDirection={"row"} gap={1}>
+                  {/* <Stack my={2} flexDirection={"row"} gap={1}>
                     <IconButton
                       sx={{ width: 45, height: 45 }}
                       LinkComponent={Link}
@@ -418,7 +418,7 @@ export default function EventDetails({ eventSummary }) {
                     >
                       <Image src={TicTokIcon} width={30} height={30} />
                     </IconButton>
-                  </Stack>
+                  </Stack> */}
                 </Paper>
               </Stack>
             )}
