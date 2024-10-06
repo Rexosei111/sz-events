@@ -194,7 +194,10 @@ export function formatEventDate(inputDateString) {
     return "Invalid Date";
   }
 
-  // Format the date in the desired format (without seconds)
+  // Get the user's current time zone
+  const userTimeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+
+  // Format the date in the user's time zone and desired format (without seconds)
   const options = {
     weekday: "short",
     day: "2-digit",
@@ -202,6 +205,7 @@ export function formatEventDate(inputDateString) {
     year: "numeric",
     hour: "2-digit",
     minute: "2-digit",
+    timeZone: userTimeZone,
     timeZoneName: "short",
   };
   const formattedDate = inputDate.toLocaleString("en-US", options);
