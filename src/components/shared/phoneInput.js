@@ -28,6 +28,7 @@ export default function PhoneInput({ register, errors, setValue }) {
       placeholder="00 0000 000"
       defaultCountry="GH"
       forceCallingCode
+      required
       // InputProps={{
       //   startAdornment: (
       //     <InputAdornment position="start">

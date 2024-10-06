@@ -42,7 +42,7 @@ const attendeeSchema = yup
     first_name: yup.string().required("This field is required"),
     last_name: yup.string().required(),
     phone_number: yup.string().required(),
-    email: yup.string().email(),
+    email: yup.string().email().default("..."),
     location: yup.string().nullable(),
     occupation: yup.string().nullable(),
     level: yup.string().nullable(),
@@ -155,7 +155,7 @@ export default function RSVPModal({
           }}
         >
           <Stack>
-            <Typography variant="h5" color={"text.primary"}>
+            <Typography variant="h5" color={"text.primary"} fontWeight={600}>
               {eventName}
             </Typography>
             <Typography variant="subtitle2" fontSize={16}>
@@ -200,6 +200,7 @@ export default function RSVPModal({
                 variant="outlined"
                 type={"text"}
                 label="Last name"
+                required
                 error={errors.last_name ? true : false}
                 helperText={errors.last_name ? errors.last_name?.message : null}
                 InputProps={{
