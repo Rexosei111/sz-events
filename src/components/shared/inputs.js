@@ -1,6 +1,27 @@
 import { TextField, styled } from "@mui/material";
 import InputBase from "@mui/material/InputBase";
+import { MuiTelInput } from "mui-tel-input";
 
+export const PhoneInputField = styled(MuiTelInput)({
+  "& label.Mui-focused": {
+    color: "#362B6A",
+  },
+  "& .MuiInput-underline:after": {
+    borderBottomColor: "#D8D5E5",
+  },
+  "& .MuiOutlinedInput-root": {
+    "& fieldset": {},
+    "&:hover fieldset": {
+      borderColor: "#D8D5E5",
+
+      borderWidth: 1,
+    },
+    "&.Mui-focused fieldset": {
+      borderColor: "#D8D5E5",
+      borderWidth: 1,
+    },
+  },
+});
 export const TextInputField = styled(TextField)({
   "& label.Mui-focused": {
     color: "#362B6A",

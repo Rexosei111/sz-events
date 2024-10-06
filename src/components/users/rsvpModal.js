@@ -35,6 +35,7 @@ import { SnackbarContext } from "@/pages/_app";
 import { LoadingButton } from "@mui/lab";
 import { APIClient } from "@/utils/axios";
 import theme from "@/theme";
+import PhoneInput from "../shared/phoneInput";
 
 const attendeeSchema = yup
   .object({
@@ -212,8 +213,12 @@ export default function RSVPModal({
                 fullWidth
                 placeholder="Enter last name here"
               />
-              {/* <MuiPhone {...register("phone_number")} /> */}
-              <TextInputField
+              <PhoneInput
+                register={register}
+                errors={errors}
+                setValue={setValue}
+              />
+              {/* <TextInputField
                 {...register("phone_number")}
                 variant="outlined"
                 type={"text"}
@@ -232,7 +237,7 @@ export default function RSVPModal({
                 }}
                 fullWidth
                 placeholder="223 00 0000 000"
-              />
+              /> */}
               <TextInputField
                 {...register("email")}
                 variant="outlined"
@@ -465,7 +470,8 @@ export default function RSVPModal({
 
                 {byFriend === true && (
                   <Box>
-                    <InputLabel shrink>Name of person who invited you
+                    <InputLabel shrink>
+                      Name of person who invited you
                     </InputLabel>
                     <TextInputField
                       fullWidth
