@@ -237,7 +237,7 @@ export default function EventDetails({ eventSummary }) {
               >
                 <DateRange fontSize="small" htmlColor="black" />
                 <Typography variant="subtitle1" sx={{ fontSize: "15px" }}>
-                  {formatEventDate(event?.start_date)}
+                  {formatEventDate(event?.start_date)} GMT
                 </Typography>
               </Stack>
             </Box>

@@ -205,8 +205,8 @@ export function formatEventDate(inputDateString) {
     year: "numeric",
     hour: "2-digit",
     minute: "2-digit",
-    timeZone: userTimeZone,
-    timeZoneName: "short",
+    // timeZone: userTimeZone,
+    // timeZoneName: "short",
   };
   const formattedDate = inputDate.toLocaleString("en-US", options);
 
