@@ -19,7 +19,7 @@ import {
   Stack,
   Typography,
 } from "@mui/material";
-import { useForm } from "react-hook-form";
+import { useForm, useWatch } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { isAxiosError } from "axios";
@@ -62,11 +62,9 @@ export const SuccessModal = ({ open, handleClose, event_name }) => {
     <Dialog open={open} onClose={handleClose}>
       <DialogContent>
         <Stack height={200} alignItems={"center"} justifyContent={"center"}>
-          <IconButton
-            circle
-            size="lg"
-            icon={<CheckCircle htmlColor="green" fontSize="large" />}
-          />
+          <IconButton circle size="lg">
+            <CheckCircle htmlColor="green" fontSize="large" />
+          </IconButton>
           <Typography variant="h6" sx={{ mt: 3, textAlign: "center" }}>
             You have successfully registered for <strong>{event_name}</strong>
           </Typography>
@@ -91,13 +89,15 @@ export default function RSVPModal({
     reset,
     getValues,
     setValue,
+    watch,
     formState: { errors, isSubmitting, isSubmitSuccessful, isValid },
   } = useForm({
     resolver: yupResolver(attendeeSchema),
   });
 
-  const [occupation, setOccupation] = useState(null);
+  const [occupation, setOccupation] = useState("Select an occupation");
   const [byFriend, setByFriend] = useState(false);
+  const selectedOccupation = watch("occupation");
 
   const handleOccupationChange = (event) => {
     setOccupation(event.target.value);
@@ -288,9 +288,17 @@ export default function RSVPModal({
                   size="small"
                   {...register("occupation")}
                   name="occupation"
-                  defaultValue={""}
+                  // defaultValue={""
+                  value={occupation}
                   onChange={handleOccupationChange}
                 >
+                  <MenuItem
+                    value={"Select an occupation"}
+                    disabled
+                    sx={{ fontSize: 16 }}
+                  >
+                    Select an occupation
+                  </MenuItem>
                   <MenuItem value={"student"} sx={{ fontSize: 16 }}>
                     Student
                   </MenuItem>
