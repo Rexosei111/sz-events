@@ -124,7 +124,7 @@ export default function EventDetails({ eventSummary }) {
           type: "website",
           images: [
             {
-              url: eventSummary.cover_image,
+              url: eventSummary.social_preview_image,
 
               alt: "Event cover image",
             },
