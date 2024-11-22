@@ -106,13 +106,6 @@ export default function Attendance({ event = "", query = "", params = {} }) {
     setOpenAttendeeDeleteConfirmation(!openAttendeeDeleteConfirmation);
   };
 
-  // const {
-  //   data: summary,
-  //   error: summaryError,
-  //   isLoading: summaryLoading,
-  //   mutate: summaryMutate,
-  // } = useSWR(() => `attendance/${event?.id}/summary`, fetcher);
-
   useEffect(() => {
     if (attendance !== undefined) {
       setTotalPageCount(Math.ceil(attendance.total / 50));
@@ -330,7 +323,7 @@ export default function Attendance({ event = "", query = "", params = {} }) {
                         px={2}
                         justifyContent={"space-between"}
                       >
-                        <Tooltip title={"Mark as present"}>
+                        <Tooltip title={"Present"}>
                           <IconButton
                             // label={"P"}
 
@@ -363,7 +356,7 @@ export default function Attendance({ event = "", query = "", params = {} }) {
                         {/* <MarkAttendanceBtn item={item} present={true} />
                       <MarkAttendanceBtn item={item} present={false} /> */}
 
-                        <Tooltip title={"Mark as absent"}>
+                        <Tooltip title={"Absent"}>
                           <IconButton
                             onClick={() => handleMarkAttendance(item, false)}
                             size="small"
@@ -392,7 +385,7 @@ export default function Attendance({ event = "", query = "", params = {} }) {
                             />
                           </IconButton>
                         </Tooltip>
-                        <Tooltip title={"Delete this attendee"}>
+                        <Tooltip title={"Delete"}>
                           <IconButton
                             onClick={() =>
                               handleOpenAttendeeDeleteConfirmation(item)

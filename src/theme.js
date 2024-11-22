@@ -46,9 +46,9 @@ const theme = createTheme({
       contrastText: "#FFFFFF",
     },
     primary: {
-      main: "#B4311E", // Keeping main consistent
-      light: "#C56E96", // Lighter version for better contrast in light mode
-      dark: "#6e024e", // Keeping the dark version similar
+      main: "#316397", // Keeping main consistent
+      light: "#316397", // Lighter version for better contrast in light mode
+      dark: "#26527f", // Keeping the dark version similar
       contrastText: "#FFFFFF",
     },
     success: {
@@ -60,7 +60,7 @@ const theme = createTheme({
       paper: "#ffffff", // White for paper elements
     },
     text: {
-      primary: "#212121", // Darker text for light mode
+      primary: "#316397", // Darker text for light mode
       secondary: "#616161", // Lighter gray for secondary text
     },
   },

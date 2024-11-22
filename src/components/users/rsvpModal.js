@@ -219,26 +219,6 @@ export default function RSVPModal({
                 errors={errors}
                 setValue={setValue}
               />
-              {/* <TextInputField
-                {...register("phone_number")}
-                variant="outlined"
-                type={"text"}
-                label="Phone Number"
-                error={errors.phone_number ? true : false}
-                helperText={
-                  errors.phone_number ? errors.phone_number?.message : null
-                }
-                InputProps={{
-                  startAdornment: (
-                    <InputAdornment position="start">
-                      <PhoneAndroidOutlined fontSize="small" />
-                    </InputAdornment>
-                  ),
-                  style: { fontSize: 16 },
-                }}
-                fullWidth
-                placeholder="223 00 0000 000"
-              /> */}
               <TextInputField
                 {...register("email")}
                 variant="outlined"

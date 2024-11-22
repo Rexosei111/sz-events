@@ -53,7 +53,7 @@ export const CustomNavbar = ({ onSelect, activeKey, ...props }) => {
         onClick={handleNavigation}
         style={{ color: theme.palette.text.primary, fontWeight: 700 }}
       >
-        Zone 1 Events
+        Spiritzone
       </Navbar.Brand>
       <Nav onSelect={onSelect} activeKey={activeKey}>
         {!matches && (

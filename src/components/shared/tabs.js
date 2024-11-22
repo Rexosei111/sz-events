@@ -7,7 +7,7 @@ import theme from "@/theme";
 export const AntTabs = styled(Tabs)({
   borderBottom: "1px solid rgba(255, 255, 255, 0.12)",
   "& .MuiTabs-indicator": {
-    backgroundColor: "#cf0d95",
+    backgroundColor: theme.palette.primary.main,
   },
 });
 
@@ -27,7 +27,7 @@ export const AntTab = styled((props) => <Tab disableRipple {...props} />)(
       opacity: 1,
     },
     "&.Mui-selected": {
-      color: "#cf0d95",
+      color: theme.palette.primary.main,
       fontWeight: theme.typography.fontWeightMedium,
     },
     "&.Mui-focusVisible": {

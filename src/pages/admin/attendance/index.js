@@ -113,26 +113,29 @@ export default function Index() {
             fullWidth
             sx={{ maxWidth: { xs: "100%", sm: 300 }, order: 1 }}
           >
-            <Select
-              fullWidth
+            <TextInputField
+              select
               id="event-selection"
-              labelId="event-selection-label"
-              displayEmpty
               label="Select an event"
+              fullWidth
+              size="small"
+              name="occupation"
               value={selectedEvent}
               onChange={handleEventChange}
-              input={
-                <BootstrapInput
-                  placeholder="Select an event"
-                  label="Select an event"
-                />
-              }
+              sx={{ bgcolor: "white" }}
             >
+              <MenuItem
+                value={"Select an Event"}
+                disabled
+                sx={{ fontSize: 16 }}
+              >
+                Select an occupation
+              </MenuItem>
               {events?.items &&
                 events?.items.map((event, index) => (
                   <MenuItem value={event}>{event.name}</MenuItem>
                 ))}
-            </Select>
+            </TextInputField>
           </FormControl>
           {selectedEvent !== "" && (
             <>

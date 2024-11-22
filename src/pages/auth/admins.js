@@ -2,7 +2,7 @@ import LoginForm from "@/components/shared/loginForm";
 import { Box, Stack, Typography } from "@mui/material";
 import Image from "next/image";
 import React from "react";
-import loginSVG from "../../../public/file.png";
+import loginSVG from "../../../public/gsc.jpg";
 import Head from "next/head";
 import { Navbar } from "rsuite";
 
