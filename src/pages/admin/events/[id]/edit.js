@@ -32,8 +32,8 @@ const eventEditSchema = yup
     start_date: yup.string(),
     cover_image: yup.string(),
     address: yup.string(),
-    latitude: yup.string(),
-    longitude: yup.string(),
+    latitude: yup.string().nullable(),
+    longitude: yup.string().nullable(),
     // name: yup.string().required(),
   })
   .required();
@@ -82,6 +82,10 @@ export default function EventEditPage() {
   const handleDraft = (e) => {
     setPublish(false);
   };
+
+  const onInValid = async (data) => {
+    console.log(data);
+  };
   const onSubmit = async (form_data) => {
     if (publish === true) {
       setPublishing(true);
@@ -109,7 +113,11 @@ export default function EventEditPage() {
       <Head>
         <title>Update Event</title>
       </Head>
-      <form method="POST" action="#" onSubmit={handleSubmit(onSubmit)}>
+      <form
+        method="POST"
+        action="#"
+        onSubmit={handleSubmit(onSubmit, onInValid)}
+      >
         <EventFormWrapper
           title={"Basic details"}
           subtitle={"This section contains the basic details about the event"}

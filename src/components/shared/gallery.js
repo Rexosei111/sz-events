@@ -61,7 +61,7 @@ export const ImageCarousel = ({ images = [] }) => {
       // width={"100%"}
     >
       {images.map((url, index) => (
-        <ImageRender image_url={url} />
+        <ImageRender image_url={url} key={index} />
         // <Image
         //   src={url}
         //   alt="event_image"
