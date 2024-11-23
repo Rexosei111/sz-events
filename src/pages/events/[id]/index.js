@@ -149,7 +149,7 @@ export default function EventDetails({ eventSummary }) {
         variant="outlined"
         sx={{
           width: "100%",
-          height: { xs: "100vh", md: 555 }, // Full viewport height on smaller screens
+          height: { xs: "100svh", md: 555 }, // Full viewport height on smaller screens
           position: "relative",
           bgcolor: "primary.main",
           mb: 2,
