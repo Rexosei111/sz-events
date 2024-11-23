@@ -175,7 +175,7 @@ export default function EventDetails({ eventSummary }) {
             pointerEvents: "none",
           }}
         />
-        <PrimaryButton
+        {/* <PrimaryButton
           disableElevation
           sx={{
             height: 90,
@@ -207,7 +207,7 @@ export default function EventDetails({ eventSummary }) {
           onClick={handleOpen}
         >
           Register
-        </PrimaryButton>
+        </PrimaryButton> */}
       </Box>
 
       <Box sx={{ px: { xs: 2, md: 0 } }}>
@@ -226,7 +226,7 @@ export default function EventDetails({ eventSummary }) {
           >
             {formatDateInCustomFormat(event?.createdAt?.toString())}
           </Typography> */}
-          {/* <PrimaryButton
+          <PrimaryButton
             disableElevation
             sx={{
               height: 70,
@@ -241,7 +241,7 @@ export default function EventDetails({ eventSummary }) {
             onClick={handleOpen}
           >
             Register
-          </PrimaryButton> */}
+          </PrimaryButton>
         </Stack>
 
         <Typography
