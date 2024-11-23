@@ -12,7 +12,7 @@ import {
   CheckCircle,
   DateRange,
   Instagram,
-  LocationOn,
+  KeyboardDoubleArrowDown,
   LocationOnOutlined,
   Telegram,
 } from "@mui/icons-material";
@@ -30,14 +30,12 @@ import {
   Typography,
 } from "@mui/material";
 import axios, { isAxiosError } from "axios";
-import Head from "next/head";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import React, { useContext, useEffect, useState } from "react";
 import Markdown from "react-markdown";
 import useSWR from "swr";
-import TicTokIcon from "../../../../public/icons8-tiktok.svg";
 import { NextSeo } from "next-seo";
 import DetailsLayout from "@/components/users/detailsLayout";
 
@@ -158,12 +156,15 @@ export default function EventDetails({ eventSummary }) {
           overflow: "hidden", // Ensures the pseudo-element doesn't extend beyond the Box
         }}
       >
+        {/* Background Image */}
         <Image
           src={eventSummary?.cover_image}
           alt="event_image"
           fill
           style={{ objectFit: "fill" }}
         />
+
+        {/* Gradient Overlay */}
         <Box
           sx={{
             position: "absolute",
@@ -171,43 +172,41 @@ export default function EventDetails({ eventSummary }) {
             left: 0,
             width: "100%",
             height: "100%",
-            background: `linear-gradient(to bottom, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0.7) 100%)`, // Gradient overlay
+            background: `linear-gradient(
+        to bottom,
+        rgba(0, 0, 0, 0.0) 0%,  /* Dark at the top */
+        rgba(0, 0, 0, 0) 30%,    /* Transparent in the middle */
+        rgba(0, 0, 0, 0) 70%,    /* Transparent in the middle */
+        rgba(0, 0, 0, 0.7) 100%  /* Dark at the bottom */
+      )`,
             pointerEvents: "none",
           }}
         />
-        {/* <PrimaryButton
-          disableElevation
+
+        {/* Scroll Indicator */}
+        <Box
           sx={{
-            height: 90,
-            width: 350,
-            borderRadius: 5,
-            fontSize: 30,
-            position: "absolute", // Position relative to the parent Box
-            bottom: "8%", // 20% above the bottom
-            left: "50%", // Center horizontally
-            transform: "translateX(-50%)", // Offset to truly center
-            animation: "pulsate 1.5s infinite", // Pulsating animation
-            "&:hover": {
-              bgcolor: (theme) => theme.palette.primary.main,
-            },
-            "@keyframes pulsate": {
-              "0%": {
-                transform: "translateX(-50%) scale(1)", // Normal size
+            position: "absolute",
+            bottom: "30px", // Position slightly above the bottom
+            right: "20px", // Position slightly from the right edge
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            animation: "bounce 2s infinite", // Add bounce animation
+            color: "white", // Icon color
+            fontSize: "24px", // Icon size
+            "@keyframes bounce": {
+              "0%, 100%": {
+                transform: "translateY(0)", // Default position
               },
               "50%": {
-                transform: "translateX(-50%) scale(1.1)", // Slightly larger
-              },
-              "100%": {
-                transform: "translateX(-50%) scale(1)", // Back to normal
+                transform: "translateY(-10px)", // Move up slightly
               },
             },
           }}
-          variant="contained"
-          startIcon={<CheckCircle sx={{ width: 38, height: 38 }} />}
-          onClick={handleOpen}
         >
-          Register
-        </PrimaryButton> */}
+          <KeyboardDoubleArrowDown sx={{ width: 40, height: 40 }} />
+        </Box>
       </Box>
 
       <Box sx={{ px: { xs: 2, md: 0 } }}>
