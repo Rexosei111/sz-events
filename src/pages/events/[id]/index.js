@@ -39,6 +39,7 @@ import Markdown from "react-markdown";
 import useSWR from "swr";
 import TicTokIcon from "../../../../public/icons8-tiktok.svg";
 import { NextSeo } from "next-seo";
+import DetailsLayout from "@/components/users/detailsLayout";
 
 export default function EventDetails({ eventSummary }) {
   const [eventImages, setEventImages] = useState([]);
@@ -150,21 +151,65 @@ export default function EventDetails({ eventSummary }) {
         variant="outlined"
         sx={{
           width: "100%",
-          height: { xs: 450, md: 555 },
+          height: { xs: "100vh", md: 555 }, // Full viewport height on smaller screens
           position: "relative",
-
+          bgcolor: "primary.main",
           mb: 2,
+          overflow: "hidden", // Ensures the pseudo-element doesn't extend beyond the Box
         }}
       >
         <Image
           src={eventSummary?.cover_image}
           alt="event_image"
           fill
-          // width={0}
-          // unoptimized={true}
-          style={{ objectFit: "contain" }}
+          style={{ objectFit: "fill" }}
         />
+        <Box
+          sx={{
+            position: "absolute",
+            top: 0,
+            left: 0,
+            width: "100%",
+            height: "100%",
+            background: `linear-gradient(to bottom, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0.7) 100%)`, // Gradient overlay
+            pointerEvents: "none",
+          }}
+        />
+        <PrimaryButton
+          disableElevation
+          sx={{
+            height: 90,
+            width: 350,
+            borderRadius: 5,
+            fontSize: 30,
+            position: "absolute", // Position relative to the parent Box
+            bottom: "8%", // 20% above the bottom
+            left: "50%", // Center horizontally
+            transform: "translateX(-50%)", // Offset to truly center
+            animation: "pulsate 1.5s infinite", // Pulsating animation
+            "&:hover": {
+              bgcolor: (theme) => theme.palette.primary.main,
+            },
+            "@keyframes pulsate": {
+              "0%": {
+                transform: "translateX(-50%) scale(1)", // Normal size
+              },
+              "50%": {
+                transform: "translateX(-50%) scale(1.1)", // Slightly larger
+              },
+              "100%": {
+                transform: "translateX(-50%) scale(1)", // Back to normal
+              },
+            },
+          }}
+          variant="contained"
+          startIcon={<CheckCircle sx={{ width: 38, height: 38 }} />}
+          onClick={handleOpen}
+        >
+          Register
+        </PrimaryButton>
       </Box>
+
       <Box sx={{ px: { xs: 2, md: 0 } }}>
         <Stack
           flexDirection={{ xs: "column", md: "row" }}
@@ -181,7 +226,7 @@ export default function EventDetails({ eventSummary }) {
           >
             {formatDateInCustomFormat(event?.createdAt?.toString())}
           </Typography> */}
-          <PrimaryButton
+          {/* <PrimaryButton
             disableElevation
             sx={{
               height: 70,
@@ -196,12 +241,12 @@ export default function EventDetails({ eventSummary }) {
             onClick={handleOpen}
           >
             Register
-          </PrimaryButton>
+          </PrimaryButton> */}
         </Stack>
 
         <Typography
           variant="h1"
-          fontSize={45}
+          fontSize={40}
           fontWeight={700}
           color={"text.primary"}
         >
@@ -472,5 +517,5 @@ export const getStaticProps = async ({ params }) => {
 };
 
 EventDetails.getLayout = function (page) {
-  return <LayoutTwo>{page}</LayoutTwo>;
+  return <DetailsLayout>{page}</DetailsLayout>;
 };

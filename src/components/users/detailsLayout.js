@@ -7,7 +7,7 @@ import { useTheme } from "@emotion/react";
 
 export const UserLayoutContext = createContext(null);
 
-export default function LayoutTwo({ children }) {
+export default function DetailsLayout({ children }) {
   const [activeKey, setActiveKey] = React.useState(null);
   const router = useRouter();
 
@@ -28,11 +28,11 @@ export default function LayoutTwo({ children }) {
           disableGutters={matches ? true : false}
           sx={{ py: 0, bgcolor: "background.default" }}
         >
-          <CustomNavbar
+          {/* <CustomNavbar
             appearance="subtle"
             activeKey={activeKey}
             onSelect={setActiveKey}
-          />
+          /> */}
           {/* <Stack flexDirection={"row"} justifyContent={"flex-start"}>
             <IconButton
               icon={<ArrowBack fontSize="small" />}
