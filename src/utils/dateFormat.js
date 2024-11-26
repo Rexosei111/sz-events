@@ -212,3 +212,27 @@ export function formatEventDate(inputDateString) {
 
   return formattedDate;
 }
+
+export function formatDate(date) {
+  if (!date) return null;
+  const newDate = new Date(date);
+  const pad = (num) => String(num).padStart(2, "0");
+
+  const year = newDate.getFullYear();
+  const month = pad(newDate.getMonth() + 1); // Months are zero-based
+  const day = pad(newDate.getDate());
+
+  return `${year}-${month}-${day}`;
+}
+
+export function formatTime(date) {
+  if (!date) return null;
+  const newDate = new Date(date);
+
+  const pad = (num) => String(num).padStart(2, "0");
+
+  const hours = pad(newDate.getHours());
+  const minutes = pad(newDate.getMinutes());
+
+  return `${hours}:${minutes}`;
+}

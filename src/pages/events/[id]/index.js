@@ -5,10 +5,16 @@ import LayoutTwo from "@/components/users/layoutTwo";
 import RSVPModal, { SuccessModal } from "@/components/users/rsvpModal";
 import { SnackbarContext } from "@/pages/_app";
 import { APIClient } from "@/utils/axios";
-import { formatDateInCustomFormat, formatEventDate } from "@/utils/dateFormat";
+import {
+  formatDate,
+  formatDateInCustomFormat,
+  formatEventDate,
+  formatTime,
+} from "@/utils/dateFormat";
 import { fetcher } from "@/utils/swr_fetcher";
 import {
   AddOutlined,
+  CalendarMonthOutlined,
   CheckCircle,
   DateRange,
   Instagram,
@@ -38,6 +44,7 @@ import Markdown from "react-markdown";
 import useSWR from "swr";
 import { NextSeo } from "next-seo";
 import DetailsLayout from "@/components/users/detailsLayout";
+import { atcb_action } from "add-to-calendar-button-react";
 
 export default function EventDetails({ eventSummary }) {
   const [eventImages, setEventImages] = useState([]);
@@ -123,7 +130,7 @@ export default function EventDetails({ eventSummary }) {
           type: "website",
           images: [
             {
-              url: eventSummary.social_preview_image,
+              url: eventSummary.cover_image,
 
               alt: "Event cover image",
             },
@@ -149,7 +156,7 @@ export default function EventDetails({ eventSummary }) {
         variant="outlined"
         sx={{
           width: "100%",
-          height: { xs: "100svh", md: 555 }, // Full viewport height on smaller screens
+          height: { xs: 550, md: 555 }, // Full viewport height on smaller screens
           position: "relative",
           bgcolor: "primary.main",
           mb: 2,
@@ -161,7 +168,7 @@ export default function EventDetails({ eventSummary }) {
           src={eventSummary?.cover_image}
           alt="event_image"
           fill
-          style={{ objectFit: "fill" }}
+          style={{ objectFit: "contain" }}
         />
 
         {/* Gradient Overlay */}
@@ -361,8 +368,13 @@ export default function EventDetails({ eventSummary }) {
             </Stack>
             <Stack
               width={"100%"}
+              // flexDirection={{ xs: "column", md: "row" }}
+              // justifyContent={{ xs: "center", md: "flex-start" }}
+              // alignItems={{ xs: "center", md: "center" }}
               flexDirection={"row"}
               justifyContent={"flex-start"}
+              alignItems={"center"}
+              gap={3}
               mt={5}
             >
               <PrimaryButton
@@ -380,6 +392,24 @@ export default function EventDetails({ eventSummary }) {
                 onClick={handleOpen}
               >
                 Register
+              </PrimaryButton>
+              <PrimaryButton
+                variant="outlined"
+                startIcon={<CalendarMonthOutlined />}
+                onClick={() =>
+                  atcb_action({
+                    proKey: process.env.NEXT_PUBLIC_ADD_TO_CALENDER_KEY,
+                  })
+                }
+                sx={{
+                  height: 70,
+                  fontSize: 17,
+                  "&:hover": {
+                    bgcolor: (theme) => theme.palette.primary.dark,
+                  },
+                }}
+              >
+                Add to Calender
               </PrimaryButton>
             </Stack>
             {event?.organiser?.name && (

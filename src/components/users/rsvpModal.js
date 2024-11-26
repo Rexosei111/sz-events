@@ -24,6 +24,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { isAxiosError } from "axios";
 import {
+  CalendarMonthOutlined,
   CheckCircle,
   Close,
   EmailOutlined,
@@ -36,6 +37,8 @@ import { LoadingButton } from "@mui/lab";
 import { APIClient } from "@/utils/axios";
 import theme from "@/theme";
 import PhoneInput from "../shared/phoneInput";
+import { atcb_action } from "add-to-calendar-button-react";
+import { PrimaryButton } from "../btn/baseBtn";
 
 const attendeeSchema = yup
   .object({
@@ -60,14 +63,33 @@ const attendeeSchema = yup
 export const SuccessModal = ({ open, handleClose, event_name }) => {
   return (
     <Dialog open={open} onClose={handleClose}>
-      <DialogContent>
-        <Stack height={200} alignItems={"center"} justifyContent={"center"}>
+      <DialogContent sx={{ py: 5 }}>
+        <Stack alignItems={"center"} justifyContent={"center"} gap={3}>
           <IconButton circle size="lg">
             <CheckCircle htmlColor="green" fontSize="large" />
           </IconButton>
           <Typography variant="h6" sx={{ mt: 3, textAlign: "center" }}>
             You have successfully registered for <strong>{event_name}</strong>
           </Typography>
+
+          <PrimaryButton
+            variant="contained"
+            startIcon={<CalendarMonthOutlined />}
+            onClick={() =>
+              atcb_action({
+                proKey: process.env.NEXT_PUBLIC_ADD_TO_CALENDER_KEY,
+              })
+            }
+            sx={{
+              height: 70,
+              fontSize: 20,
+              "&:hover": {
+                bgcolor: (theme) => theme.palette.primary.dark,
+              },
+            }}
+          >
+            Add to Calender
+          </PrimaryButton>
         </Stack>
       </DialogContent>
     </Dialog>
@@ -483,7 +505,7 @@ export default function RSVPModal({
               sx={{
                 textTransform: "capitalize",
                 color: theme.palette.primary.main,
-                borderColor: theme.palette.secondary.main,
+                borderColor: theme.palette.primary.main,
                 // "&: hover": {
                 //   borderColor: theme.palette.common.,
                 // },
