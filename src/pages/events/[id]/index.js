@@ -368,12 +368,12 @@ export default function EventDetails({ eventSummary }) {
             </Stack>
             <Stack
               width={"100%"}
-              // flexDirection={{ xs: "column", md: "row" }}
-              // justifyContent={{ xs: "center", md: "flex-start" }}
-              // alignItems={{ xs: "center", md: "center" }}
-              flexDirection={"row"}
-              justifyContent={"flex-start"}
-              alignItems={"center"}
+              flexDirection={{ xs: "column", md: "row" }}
+              justifyContent={{ xs: "center", md: "flex-start" }}
+              alignItems={{ xs: "center", md: "center" }}
+              // flexDirection={"row"}
+              // justifyContent={"flex-start"}
+              // alignItems={"center"}
               gap={3}
               mt={5}
             >
