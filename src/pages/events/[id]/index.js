@@ -158,7 +158,7 @@ export default function EventDetails({ eventSummary }) {
           width: "100%",
           height: { xs: 550, md: 555 }, // Full viewport height on smaller screens
           position: "relative",
-          bgcolor: "primary.main",
+          // bgcolor: "primary.main",
           mb: 2,
           overflow: "hidden", // Ensures the pseudo-element doesn't extend beyond the Box
         }}
@@ -168,7 +168,7 @@ export default function EventDetails({ eventSummary }) {
           src={eventSummary?.cover_image}
           alt="event_image"
           fill
-          style={{ objectFit: "contain" }}
+          style={{ objectFit: "cover" }}
         />
 
         {/* Gradient Overlay */}
@@ -355,7 +355,7 @@ export default function EventDetails({ eventSummary }) {
               </Box>
             </Box>
 
-            <Stack
+            {/* <Stack
               my={10}
               width={"100%"}
               maxHeight={300}
@@ -364,8 +364,24 @@ export default function EventDetails({ eventSummary }) {
               justifyContent={"center"}
               position={"relative"}
             >
-              <ImageCarousel images={eventImages} />
-            </Stack>
+              <ImageCarousel images={eventImages.slice(0, -1)} />
+            </Stack> */}
+            <Box
+              sx={{
+                my: { xs: 5, md: 10 },
+                width: "100%",
+                position: "relative",
+                height: 300,
+              }}
+            >
+              <Image
+                src={eventImages[0]}
+                alt="Event image"
+                layout="fill" // Make the image fill its parent
+                objectFit="contain" // Adjust the image to cover the container
+              />
+            </Box>
+
             <Stack
               width={"100%"}
               flexDirection={{ xs: "column", md: "row" }}

@@ -71,7 +71,17 @@ export default function AdminLayout({ children, title = "Accueil" }) {
       ),
       url: "/admin/users",
     },
-    ,
+
+    {
+      label: "SMS",
+      icon: (
+        <GroupsOutlinedIcon
+          fontSize="small"
+          htmlColor={router.pathname.startsWith("/admin/sms") ? "white" : null}
+        />
+      ),
+      url: "/admin/sms",
+    },
   ];
 
   const theme = useTheme();

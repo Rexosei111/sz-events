@@ -5,6 +5,7 @@ import { Avatar, Box, IconButton, useMediaQuery } from "@mui/material";
 import useToken from "@/hooks/token";
 import { useRouter } from "next/router";
 import { useTheme } from "@emotion/react";
+import Image from "next/image";
 
 const CustomNavItem = ({ ...props }) => {
   return (
@@ -39,7 +40,7 @@ export const CustomNavbar = ({ onSelect, activeKey, ...props }) => {
     if (url !== null) {
       router.push(url);
     } else {
-      router.push(event.target?.href);
+      router.push(event.target?.href ?? "/events");
     }
   };
 
@@ -53,7 +54,7 @@ export const CustomNavbar = ({ onSelect, activeKey, ...props }) => {
         onClick={handleNavigation}
         style={{ color: theme.palette.text.primary, fontWeight: 700 }}
       >
-        Spirit zone
+        <Image src={"/logo.png"} width={30} height={30} alt="Logo" />
       </Navbar.Brand>
       <Nav onSelect={onSelect} activeKey={activeKey}>
         {!matches && (
