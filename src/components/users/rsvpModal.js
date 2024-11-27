@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { StyledInputBase, TextInputField } from "../shared/inputs";
 import {
   Box,
@@ -12,10 +12,13 @@ import {
   FormControl,
   FormControlLabel,
   FormGroup,
+  FormLabel,
   IconButton,
   InputAdornment,
   InputLabel,
   MenuItem,
+  Radio,
+  RadioGroup,
   Stack,
   Typography,
 } from "@mui/material";
@@ -57,6 +60,7 @@ const attendeeSchema = yup
     via_instagram: yup.boolean().nullable(),
     by_friend: yup.boolean().nullable(),
     friend_name: yup.string().nullable(),
+    first_time: yup.boolean().nullable().default(true),
   })
   .required();
 
@@ -121,6 +125,10 @@ export default function RSVPModal({
   const [byFriend, setByFriend] = useState(false);
   const selectedOccupation = watch("occupation");
 
+  const handleFirstTimeClick = (e) => {
+    setValue("first_time", e.target.checked);
+  };
+
   const handleOccupationChange = (event) => {
     setOccupation(event.target.value);
     setValue("occupation", event.target.value);
@@ -129,7 +137,12 @@ export default function RSVPModal({
   const handlePublicityChange = (event) => {
     setByFriend(event.target.checked);
   };
+
+  const onError = async (form_data) => {
+    console.log(form_data);
+  };
   const onSubmit = async (form_data) => {
+    console.log(form_data);
     if (form_data?.occupation && form_data?.occupation === "student") {
       delete form_data?.proffession;
       delete form_data?.other;
@@ -192,7 +205,7 @@ export default function RSVPModal({
           method="POST"
           action="#"
           id="rsvp-form"
-          onSubmit={handleSubmit(onSubmit)}
+          onSubmit={handleSubmit(onSubmit, onError)}
         >
           <DialogContent>
             <Stack flexDirection={"column"} gap={2}>
@@ -420,6 +433,41 @@ export default function RSVPModal({
                     </Box>
                   </Stack>
                 )}
+              </Box>
+              <Box width={"100%"}>
+                <FormControl sx={{ width: "100%", p: 0, color: "black" }}>
+                  <InputLabel
+                    id="demo-radio-buttons-group-label"
+                    sx={{ fontSize: 16, px: 0, m: 0, color: "black" }}
+                    shrink
+                  >
+                    Is this your first time at Good Shepherd Conference?
+                  </InputLabel>
+                  <RadioGroup
+                    row
+                    aria-labelledby="demo-radio-buttons-group-label"
+                    // value={firstTime}
+                    defaultValue={"yes"}
+                    name="radio-buttons-group"
+                    sx={{ mt: 1 }}
+                    {...register("first_time", {
+                      onChange: handleFirstTimeClick,
+                    })}
+                  >
+                    <FormControlLabel
+                      value={"yes"}
+                      control={<Radio />}
+                      label="Yes"
+                      onClick={handleFirstTimeClick}
+                    />
+                    <FormControlLabel
+                      value={"no"}
+                      control={<Radio />}
+                      label="No"
+                      onClick={handleFirstTimeClick}
+                    />
+                  </RadioGroup>
+                </FormControl>
               </Box>
               <Box width={"100%"}>
                 <InputLabel shrink>
