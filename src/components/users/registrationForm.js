@@ -1,31 +1,36 @@
-import { Chip, Paper, Stack, TextField, Typography } from "@mui/material";
-import React, { useContext, useEffect } from "react";
+import { Paper, Stack, InputAdornment } from "@mui/material";
+import React, { useContext } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import MailOutlineIcon from "@mui/icons-material/MailOutline";
-import InputAdornment from "@mui/material/InputAdornment";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import LoadingButton from "@mui/lab/LoadingButton";
-import LoginIcon from "@mui/icons-material/Login";
 import { useRouter } from "next/router";
 import { isAxiosError } from "axios";
 import { APIClient } from "@/utils/axios";
-import useToken from "@/hooks/token";
-// import { TextInputField } from "./inputs";
-import { Google, PersonOutline } from "@mui/icons-material";
 import { SnackbarContext } from "@/pages/_app";
 import { TextInputField } from "../shared/inputs";
-import { Button, Divider } from "rsuite";
+import { PersonOutline } from "@mui/icons-material";
 import Link from "next/link";
 
 const loginSchema = yup
   .object({
-    email: yup.string().email().required(),
-    password: yup.string().required(),
-    first_name: yup.string().required(),
-    last_name: yup.string().required(),
-    phone_number: yup.string().required(),
+    email: yup
+      .string()
+      .email("Enter a valid email")
+      .required("Email is required"),
+    password: yup
+      .string()
+      .min(6, "Password must be at least 6 characters")
+      .required("Password is required"),
+    confirm_password: yup
+      .string()
+      .required("Confirm password is required")
+      .oneOf([yup.ref("password"), null], "Passwords must match"),
+    first_name: yup.string().required("First name is required"),
+    last_name: yup.string().required("Last name is required"),
+    phone_number: yup.string().required("Phone number is required"),
   })
   .required();
 
@@ -36,27 +41,15 @@ export default function RegistrationForm({
   const {
     register,
     handleSubmit,
-    formState: { errors, isSubmitting, isSubmitSuccessful, isValid },
+    formState: { errors, isSubmitting, isValid, touchedFields },
+    watch,
   } = useForm({
     resolver: yupResolver(loginSchema),
   });
+
   const router = useRouter();
   const { handleOpen: handleSnackbarOpen, setSnackSeverity } =
     useContext(SnackbarContext);
-
-  const handleGoogleAuth = async () => {
-    try {
-      const { data } = await APIClient.get("users/auth/google/authorize");
-      console.log(data);
-      const newWindow = window.open(
-        data.authorization_url,
-        "Auth",
-        "width=500,height=500"
-      );
-    } catch (err) {
-      console.log("Google auth failed");
-    }
-  };
 
   const onSubmit = async (form_data) => {
     try {
@@ -65,15 +58,18 @@ export default function RegistrationForm({
     } catch (error) {
       if (isAxiosError(error)) {
         setSnackSeverity("error");
-        handleSnackbarOpen("Registration was unsuccesfful!");
+        handleSnackbarOpen("Registration was unsuccessful!");
       }
     }
   };
+
+  // Watch the password field to validate confirm_password in real-time
+  const password = watch("password");
+
   return (
     <Paper
       sx={{
         p: { xs: 1, sm: 2, md: 2 },
-        width: { xs: "100%", sm: "90%", md: "80%", lg: "70%" },
         bgcolor: "transparent",
       }}
       elevation={0}
@@ -90,7 +86,7 @@ export default function RegistrationForm({
           href="/auth/users"
           style={{ textAlign: "center", cursor: "pointer" }}
         >
-          Login to your account
+          Log in to your account
         </Link>
       </Stack>
       <p style={{ marginBottom: "30px" }}>Create new account</p>
@@ -99,79 +95,64 @@ export default function RegistrationForm({
           <TextInputField
             {...register("first_name")}
             variant="outlined"
-            type={"text"}
+            type="text"
             label="First name"
-            error={errors.first_name ? true : false}
-            helperText={errors.first_name ? errors.first_name?.message : null}
+            error={!!errors.first_name}
+            helperText={errors.first_name?.message}
             InputProps={{
               startAdornment: (
                 <InputAdornment position="start">
                   <PersonOutline fontSize="small" />
                 </InputAdornment>
               ),
-              style: {
-                fontSize: 16,
-              },
             }}
             fullWidth
           />
           <TextInputField
             {...register("last_name")}
             variant="outlined"
-            type={"text"}
+            type="text"
             label="Last name"
-            error={errors.last_name ? true : false}
-            helperText={errors.last_name ? errors.last_name?.message : null}
+            error={!!errors.last_name}
+            helperText={errors.last_name?.message}
             InputProps={{
               startAdornment: (
                 <InputAdornment position="start">
                   <PersonOutline fontSize="small" />
                 </InputAdornment>
               ),
-              style: {
-                fontSize: 16,
-              },
             }}
             fullWidth
           />
-
           <TextInputField
             {...register("phone_number")}
             variant="outlined"
-            type={"text"}
+            type="text"
             label="Phone number"
-            error={errors.phone_number ? true : false}
-            helperText={
-              errors.phone_number ? errors.phone_number?.message : null
-            }
+            error={!!errors.phone_number}
+            helperText={errors.phone_number?.message}
             InputProps={{
               startAdornment: (
                 <InputAdornment position="start">
                   <PersonOutline fontSize="small" />
                 </InputAdornment>
               ),
-              style: {
-                fontSize: 16,
-              },
             }}
             fullWidth
           />
           <TextInputField
             {...register("email")}
             variant="outlined"
-            type={"email"}
+            type="email"
             label="Email"
-            error={errors.email ? true : false}
-            helperText={errors.email ? errors.email?.message : null}
+            error={!!errors.email}
+            helperText={errors.email?.message}
             InputProps={{
               startAdornment: (
                 <InputAdornment position="start">
                   <MailOutlineIcon fontSize="small" />
                 </InputAdornment>
               ),
-              style: {
-                fontSize: 16,
-              },
             }}
             fullWidth
             placeholder="example@provider.com"
@@ -179,24 +160,47 @@ export default function RegistrationForm({
           <TextInputField
             {...register("password")}
             variant="outlined"
-            type={"password"}
+            type="password"
             label="Password"
-            error={errors.password ? true : false}
-            helperText={errors.password ? errors.password?.message : null}
+            error={!!errors.password}
+            helperText={errors.password?.message}
             InputProps={{
               startAdornment: (
                 <InputAdornment position="start">
                   <LockOutlinedIcon fontSize="small" />
                 </InputAdornment>
               ),
-              style: {
-                fontSize: 16,
-              },
             }}
             fullWidth
           />
+          <TextInputField
+            {...register("confirm_password")}
+            variant="outlined"
+            type="password"
+            label="Confirm Password"
+            error={
+              !!errors.confirm_password ||
+              (!!touchedFields.confirm_password &&
+                watch("confirm_password") !== password)
+            }
+            helperText={
+              !!touchedFields.confirm_password &&
+              (errors.confirm_password?.message ||
+                (watch("confirm_password") !== password
+                  ? "Passwords must match"
+                  : ""))
+            }
+            InputProps={{
+              startAdornment: (
+                <InputAdornment position="start">
+                  <LockOutlinedIcon fontSize="small" />
+                </InputAdornment>
+              ),
+            }}
+            fullWidth
+          />
+
           <LoadingButton
-            // appearance={isValid ? "primary" : "default"}
             variant="contained"
             color="primary"
             disabled={!isValid}

@@ -93,7 +93,7 @@ export const CustomNavbar = ({ onSelect, activeKey, ...props }) => {
               onClick={handleLogout}
               style={{ color: theme.palette.text.primary }}
             >
-              Logout
+              Log out
             </Nav.Item>
             {matches && (
               <Nav.Item
@@ -117,7 +117,7 @@ export const CustomNavbar = ({ onSelect, activeKey, ...props }) => {
               onClick={handleNavigation}
               style={{ color: theme.palette.text.primary, fontWeight: 700 }}
             >
-              Login
+              Log in
             </Nav.Item>
             <Nav.Item
               eventKey="6"

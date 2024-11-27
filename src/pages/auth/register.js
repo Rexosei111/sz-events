@@ -6,56 +6,57 @@ import loginSVG from "../../../public/file.png";
 import Head from "next/head";
 import { Animation, Navbar } from "rsuite";
 import RegistrationForm from "@/components/users/registrationForm";
+import { useRouter } from "next/router";
+import theme from "@/theme";
 
 export default function UserLoginPage() {
   const [showLogin, setShowLogin] = useState(false);
-
+  const router = useRouter();
   const handleLoginShow = () => {
     setShowLogin(!showLogin);
+  };
+
+  const handleNavigation = (event, url = null) => {
+    event.preventDefault();
+    if (url !== null) {
+      router.push(url);
+    } else {
+      router.push(event.target?.href ?? "/events");
+    }
   };
   return (
     <>
       <Head>
         <title>User registration</title>
       </Head>
-      <Stack
-        flexDirection={"row"}
-        width={"100vw"}
-        minHeight={"100vh"}
-        bgcolor={"background.default"}
-      >
-        <Box width={{ xs: "100%", md: "50%" }} minHeight={"100%"} p={2}>
+      <Stack flexDirection={"row"} bgcolor={"background.default"}>
+        <Box width={{ xs: "100%" }} minHeight={"100%"} p={2}>
           <Navbar style={{ backgroundColor: "transparent" }}>
-            <Navbar.Brand href="/events">SZ events</Navbar.Brand>
+            <Navbar.Brand
+              href="/events"
+              onClick={handleNavigation}
+              style={{ color: theme.palette.text.primary, fontWeight: 700 }}
+            >
+              <Image src={"/logo.png"} width={30} height={30} alt="Logo" />
+            </Navbar.Brand>
           </Navbar>
           <Stack
             alignItems={"center"}
             justifyContent={"center"}
-            minHeight={"90vh"}
+            minHeight={"85vh"}
           >
-            <Animation.Slide in={showLogin} placement="right">
-              {(props, ref) => (
-                <RegistrationForm
-                  {...props}
-                  ref={ref}
-                  handleLoginShow={handleLoginShow}
-                />
-              )}
-            </Animation.Slide>
+            <Box maxWidth={420} width={"100%"}>
+              <Animation.Slide in={showLogin} placement="right">
+                {(props, ref) => (
+                  <RegistrationForm
+                    {...props}
+                    ref={ref}
+                    handleLoginShow={handleLoginShow}
+                  />
+                )}
+              </Animation.Slide>
+            </Box>
           </Stack>
-        </Box>
-        <Box
-          width={{ xs: 0, md: "50%" }}
-          minHeight={{ xs: 0, md: "100%" }}
-          position={"relative"}
-        >
-          <Image
-            src={loginSVG}
-            priority
-            alt="login image"
-            fill
-            style={{ objectFit: "cover", filter: "brightness(0.8)" }}
-          />
         </Box>
       </Stack>
     </>

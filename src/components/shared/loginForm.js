@@ -89,7 +89,7 @@ export default function LoginForm({
     <Paper
       sx={{
         p: { xs: 1, sm: 2, md: 2 },
-        width: { xs: "100%", sm: "90%", md: "80%", lg: "70%" },
+        // width: { xs: "100%", sm: "90%", md: "80%", lg: "70%" },
         bgcolor: "transparent",
       }}
       elevation={0}
@@ -100,7 +100,7 @@ export default function LoginForm({
         alignItems={"center"}
         mb={2}
       >
-        <h2>Login</h2>
+        <h2>Log in</h2>
         {type === "user" && (
           <Link
             as={"a"}
@@ -113,12 +113,12 @@ export default function LoginForm({
       </Stack>
       {type === "user" && (
         <Typography variant="subtitle2" gutterBottom mb={6}>
-          Login into your account
+          Log in to your account
         </Typography>
       )}
       {type !== "user" && (
         <Typography variant="subtitle2" gutterBottom mb={6}>
-          Login as an admin
+          Log in as an admin
         </Typography>
       )}
       <form method="POST" action="#" onSubmit={handleSubmit(onSubmit)}>
