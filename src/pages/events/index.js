@@ -110,7 +110,7 @@ export default function EventListing() {
         alignItems="center"
       >
         <Typography variant="h4" color={"text.primary"}>
-          Events
+          {/* Events */}
         </Typography>
 
         <InputGroup inside style={{ width: sm ? "100%" : 300 }}>
