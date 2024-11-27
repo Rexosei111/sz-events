@@ -83,8 +83,8 @@ export default function EventDetails({ eventSummary }) {
       event?.organiser.id ? "users/me/following/" + event?.organiser.id : null,
     fetcher,
     {
-      revalidateIfStale: false,
-      revalidateOnFocus: false,
+      revalidateIfStale: true,
+      revalidateOnFocus: true,
       revalidateOnReconnect: false,
     }
   );
