@@ -28,11 +28,11 @@ export default function DetailsLayout({ children }) {
           disableGutters={matches ? true : false}
           sx={{ py: 0, bgcolor: "background.default" }}
         >
-          {/* <CustomNavbar
+          <CustomNavbar
             appearance="subtle"
             activeKey={activeKey}
             onSelect={setActiveKey}
-          /> */}
+          />
           {/* <Stack flexDirection={"row"} justifyContent={"flex-start"}>
             <IconButton
               icon={<ArrowBack fontSize="small" />}
