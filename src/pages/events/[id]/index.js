@@ -450,13 +450,13 @@ export default function EventDetails({ eventSummary }) {
               </PrimaryButton> */}
             </Stack>
             {event?.organiser?.name && (
-              <Stack flexDirection={"column"} gap={2} my={2}>
+              <Stack flexDirection={"column"} gap={2} my={8}>
                 <Typography
                   variant="h5"
                   fontWeight={700}
                   color={"text.primary"}
                 >
-                  About organiser
+                  The organiser
                 </Typography>
                 <Paper
                   sx={{
@@ -483,7 +483,7 @@ export default function EventDetails({ eventSummary }) {
                     {event?.organiser?.name}
                   </Typography>
                   <Typography
-                    sx={{ fontSize: 16, textAlign: "center" }}
+                    sx={{ fontSize: 16, textAlign: "center", mt: -2 }}
                     variant="subtitle1"
                   >
                     {event?.organiser?.summary}
@@ -499,7 +499,10 @@ export default function EventDetails({ eventSummary }) {
                       sx={{
                         textTransform: "capitalize",
                         color: "white",
+                        fontSize: 20,
                         mt: 2,
+                        height: 60,
+                        width: 200,
                       }}
                     >
                       Follow

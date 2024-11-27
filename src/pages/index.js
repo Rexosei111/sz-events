@@ -442,7 +442,7 @@ export default function EventDetails({ eventSummary }) {
               </PrimaryButton> */}
             </Stack>
             {event?.organiser?.name && (
-              <Stack flexDirection={"column"} gap={2} my={2}>
+              <Stack flexDirection={"column"} gap={2} my={8}>
                 <Typography
                   variant="h5"
                   fontWeight={700}
