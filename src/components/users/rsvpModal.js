@@ -60,7 +60,7 @@ const attendeeSchema = yup
     via_instagram: yup.boolean().nullable(),
     by_friend: yup.boolean().nullable(),
     friend_name: yup.string().nullable(),
-    first_time: yup.boolean().nullable().default(true),
+    first_time: yup.boolean().nullable(),
   })
   .required();
 
@@ -123,10 +123,17 @@ export default function RSVPModal({
 
   const [occupation, setOccupation] = useState("Select an occupation");
   const [byFriend, setByFriend] = useState(false);
+  const [firstTime, setFirstTime] = useState(null);
   const selectedOccupation = watch("occupation");
 
   const handleFirstTimeClick = (e) => {
-    setValue("first_time", e.target.checked);
+    const value = e.target.value === "true"; // Convert string to boolean
+    setFirstTime(value);
+    setValue("first_time", value, {
+      shouldDirty: true,
+      shouldTouch: true,
+      shouldValidate: true,
+    });
   };
 
   const handleOccupationChange = (event) => {
@@ -142,7 +149,6 @@ export default function RSVPModal({
     console.log(form_data);
   };
   const onSubmit = async (form_data) => {
-    console.log(form_data);
     if (form_data?.occupation && form_data?.occupation === "student") {
       delete form_data?.proffession;
       delete form_data?.other;
@@ -443,30 +449,28 @@ export default function RSVPModal({
                   >
                     Is this your first time at Good Shepherd Conference?
                   </InputLabel>
-                  <RadioGroup
-                    row
-                    aria-labelledby="demo-radio-buttons-group-label"
-                    // value={firstTime}
-                    defaultValue={"yes"}
-                    name="radio-buttons-group"
-                    sx={{ mt: 1 }}
-                    {...register("first_time", {
-                      onChange: handleFirstTimeClick,
-                    })}
-                  >
-                    <FormControlLabel
-                      value={"yes"}
-                      control={<Radio />}
-                      label="Yes"
-                      onClick={handleFirstTimeClick}
-                    />
-                    <FormControlLabel
-                      value={"no"}
-                      control={<Radio />}
-                      label="No"
-                      onClick={handleFirstTimeClick}
-                    />
-                  </RadioGroup>
+                  <Box sx={{ display: "flex", alignItems: "center", gap: 4 }}>
+                    <Box sx={{ display: "flex", alignItems: "center" }}>
+                      <Radio
+                        checked={firstTime === true}
+                        onChange={handleFirstTimeClick}
+                        value="true"
+                        name="radio-buttons"
+                        inputProps={{ "aria-label": "Yes" }}
+                      />
+                      <span>Yes</span>
+                    </Box>
+                    <Box sx={{ display: "flex", alignItems: "center" }}>
+                      <Radio
+                        checked={firstTime === false}
+                        onChange={handleFirstTimeClick}
+                        value="false"
+                        name="radio-buttons"
+                        inputProps={{ "aria-label": "No" }}
+                      />
+                      <span>No</span>
+                    </Box>
+                  </Box>
                 </FormControl>
               </Box>
               <Box width={"100%"}>

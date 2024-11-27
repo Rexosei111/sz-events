@@ -232,6 +232,7 @@ export default function EventDetails({ eventSummary }) {
           >
             {formatDateInCustomFormat(event?.createdAt?.toString())}
           </Typography> */}
+
           <PrimaryButton
             disableElevation
             sx={{
@@ -239,7 +240,7 @@ export default function EventDetails({ eventSummary }) {
               width: 180,
               fontSize: 23,
               "&:hover": {
-                bgcolor: (theme) => theme.palette.primary.main,
+                bgcolor: (theme) => theme.palette.primary.dark,
               },
             }}
             variant="contained"
@@ -401,7 +402,7 @@ export default function EventDetails({ eventSummary }) {
                   width: 180,
                   fontSize: 23,
                   "&:hover": {
-                    bgcolor: (theme) => theme.palette.primary.main,
+                    bgcolor: (theme) => theme.palette.primary.dark,
                   },
                 }}
                 startIcon={<CheckCircle />}
@@ -409,7 +410,26 @@ export default function EventDetails({ eventSummary }) {
               >
                 Register
               </PrimaryButton>
-              <PrimaryButton
+              <Button
+                variant="outlined"
+                sx={{
+                  textTransform: "capitalize",
+                  color: "primary.main",
+                  borderColor: "primary.main",
+                  height: 70,
+                  fontSize: 17,
+                  bgcolor: "white",
+                }}
+                startIcon={<CalendarMonthOutlined />}
+                onClick={() =>
+                  atcb_action({
+                    proKey: process.env.NEXT_PUBLIC_ADD_TO_CALENDER_KEY,
+                  })
+                }
+              >
+                Add to Calender
+              </Button>
+              {/* <PrimaryButton
                 variant="outlined"
                 startIcon={<CalendarMonthOutlined />}
                 onClick={() =>
@@ -420,13 +440,14 @@ export default function EventDetails({ eventSummary }) {
                 sx={{
                   height: 70,
                   fontSize: 17,
+                  bgcolor: "white",
                   "&:hover": {
                     bgcolor: (theme) => theme.palette.primary.dark,
                   },
                 }}
               >
                 Add to Calender
-              </PrimaryButton>
+              </PrimaryButton> */}
             </Stack>
             {event?.organiser?.name && (
               <Stack flexDirection={"column"} gap={2} my={2}>

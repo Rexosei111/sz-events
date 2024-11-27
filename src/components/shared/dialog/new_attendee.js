@@ -8,11 +8,13 @@ import {
   DialogContentText,
   DialogTitle,
   Divider,
+  FormControl,
   FormControlLabel,
   FormGroup,
   InputAdornment,
   InputLabel,
   MenuItem,
+  Radio,
   Stack,
   Typography,
 } from "@mui/material";
@@ -62,6 +64,7 @@ export default function NewAttendee({ open, handleClose, event_id, mutate }) {
 
   const [occupation, setOccupation] = useState("Select an occupation");
   const [byFriend, setByFriend] = useState(false);
+  const [firstTime, setFirstTime] = useState(null);
   const selectedOccupation = watch("occupation");
 
   const handleOccupationChange = (event) => {
@@ -69,6 +72,15 @@ export default function NewAttendee({ open, handleClose, event_id, mutate }) {
     setValue("occupation", event.target.value);
   };
 
+  const handleFirstTimeClick = (e) => {
+    const value = e.target.value === "true"; // Convert string to boolean
+    setFirstTime(value);
+    setValue("first_time", value, {
+      shouldDirty: true,
+      shouldTouch: true,
+      shouldValidate: true,
+    });
+  };
   const handlePublicityChange = (event) => {
     setByFriend(event.target.checked);
   };
@@ -334,6 +346,39 @@ export default function NewAttendee({ open, handleClose, event_id, mutate }) {
                   </Box>
                 </Stack>
               )}
+            </Box>
+            <Box width={"100%"}>
+              <FormControl sx={{ width: "100%", p: 0, color: "black" }}>
+                <InputLabel
+                  id="demo-radio-buttons-group-label"
+                  sx={{ fontSize: 16, px: 0, m: 0, color: "black" }}
+                  shrink
+                >
+                  Is this your first time at Good Shepherd Conference?
+                </InputLabel>
+                <Box sx={{ display: "flex", alignItems: "center", gap: 4 }}>
+                  <Box sx={{ display: "flex", alignItems: "center" }}>
+                    <Radio
+                      checked={firstTime === true}
+                      onChange={handleFirstTimeClick}
+                      value="true"
+                      name="radio-buttons"
+                      inputProps={{ "aria-label": "Yes" }}
+                    />
+                    <span>Yes</span>
+                  </Box>
+                  <Box sx={{ display: "flex", alignItems: "center" }}>
+                    <Radio
+                      checked={firstTime === false}
+                      onChange={handleFirstTimeClick}
+                      value="false"
+                      name="radio-buttons"
+                      inputProps={{ "aria-label": "No" }}
+                    />
+                    <span>No</span>
+                  </Box>
+                </Box>
+              </FormControl>
             </Box>
             <Box width={"100%"}>
               <InputLabel shrink>

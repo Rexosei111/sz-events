@@ -1,8 +1,6 @@
 import { SecondaryButton } from "@/components/btn/baseBtn";
 import { PrimaryLoadingButton } from "@/components/btn/loadingBtn";
-import theme from "@/theme";
 import { DeleteOutline } from "@mui/icons-material";
-import { LoadingButton } from "@mui/lab";
 import {
   Button,
   Dialog,
@@ -60,7 +58,11 @@ export default function AttendeeDeleteConfirmation({
           loading={deleting}
           startIcon={<DeleteOutline />}
           onClick={handleAttendeeDelete}
-          color="primary"
+          sx={{
+            "&:hover": {
+              color: "white",
+            },
+          }}
           disableElevation
         >
           Delete
