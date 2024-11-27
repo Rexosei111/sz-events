@@ -126,8 +126,8 @@ export default function EventDetails({ eventSummary }) {
         title={eventSummary?.name}
         description={eventSummary.summary}
         openGraph={{
-          url: `https://sz-events.vercel.app/events/${eventSummary?.id}`,
-          type: "website",
+          url: `https://gsc.szfamily.org/events/${eventSummary?.id}`,
+          type: "",
           images: [
             {
               url: eventSummary.cover_image,
