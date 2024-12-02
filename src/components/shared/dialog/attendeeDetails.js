@@ -15,6 +15,7 @@ import {
   Check,
   CheckCircleOutline,
   CheckOutlined,
+  Close,
   CloseOutlined,
   CloseRounded,
   DeleteOutline,
@@ -84,8 +85,8 @@ export default function AttendeeDetails({
           justifyContent={"space-between"}
         >
           <Typography variant="h5">Details of Attendee</Typography>
-          <IconButton onClick={() => handleDeleteConfirmation(attendee)}>
-            <DeleteOutline />
+          <IconButton onClick={() => handleClose(null)}>
+            <Close />
           </IconButton>
         </Stack>
       </DialogTitle>

@@ -5,8 +5,20 @@ import React from "react";
 import loginSVG from "../../../public/gsc.jpg";
 import Head from "next/head";
 import { Navbar } from "rsuite";
+import theme from "@/theme";
+import { useRouter } from "next/router";
 
 export default function AdminLoginPage() {
+  const router = useRouter();
+
+  const handleNavigation = (event, url = null) => {
+    event.preventDefault();
+    if (url !== null) {
+      router.push(url);
+    } else {
+      router.push(event.target?.href ?? "/events");
+    }
+  };
   return (
     <>
       <Head>
@@ -20,7 +32,13 @@ export default function AdminLoginPage() {
       >
         <Box width={{ xs: "100%", md: "50%" }} minHeight={"100%"} p={2}>
           <Navbar style={{ backgroundColor: "transparent" }}>
-            <Navbar.Brand href="/events">Home</Navbar.Brand>
+            <Navbar.Brand
+              href="/events"
+              onClick={handleNavigation}
+              style={{ color: theme.palette.text.primary, fontWeight: 700 }}
+            >
+              <Image src={"/logo.png"} width={30} height={30} alt="Logo" />
+            </Navbar.Brand>
           </Navbar>
 
           <Stack
